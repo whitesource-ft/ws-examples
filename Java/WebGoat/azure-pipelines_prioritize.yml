@@ -1,0 +1,41 @@
+trigger:
+- master
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- task: Maven@3
+  inputs:
+    mavenPomFile: 'pom.xml'
+    goals: 'clean install'
+    mavenOptions: -DskipTests=true
+    publishJUnitResults: false
+    javaHomeOption: 'JDKVersion'
+    jdkVersionOption: '1.11'
+    mavenVersionOption: 'Default'
+    mavenAuthenticateFeed: false
+    effectivePomSkip: false
+    sonarQubeRunAnalysis: false
+- task: CmdLine@2
+  inputs:
+    script: |
+      cat <<EOF > eua.config
+      apiKey=$(APIKEY)
+      productName=$(System.TeamProject)
+      projectName=$(Build.Repository.Name)_$(Build.SourceBranchName)_Prioritize
+      enableImpactAnalysis=true
+      requireKnownSha1=false
+      resolveAllDependencies=false
+      maven.resolveDependencies=true
+      maven.aggregateModules=true
+      includes=**/*.*
+      EOF
+      less eua.config
+- task: CmdLine@2
+  inputs:
+    script: |
+      curl -LJO https://github.com/whitesource/unified-agent-distribution/releases/latest/download/wss-unified-agent.jar
+      curl -LJO https://unified-agent.s3.amazonaws.com/xModuleAnalyzer/xModuleAnalyzer-20.12.2.jar
+      java -jar wss-unified-agent.jar -d ./ -analyzeMultiModule multimodule.txt
+      java -jar xModuleAnalyzer-20.12.2.jar -xModulePath multimodule.txt -fsaJarPath ./wss-unified-agent.jar -c ./eua.config -aggregateModules true -euaMode 1

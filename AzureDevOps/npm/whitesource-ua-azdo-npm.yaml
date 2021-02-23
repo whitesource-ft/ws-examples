@@ -1,0 +1,34 @@
+name: 'whitesource-ua-azdo-npm'
+
+trigger:
+- master
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- task: NodeTool@0
+  inputs:
+    versionSpec: '10.x'
+  displayName: 'Install Node.js'
+
+- task: Npm@1
+  displayName: 'NPM Install'
+  inputs:
+    customCommand: install --package-lock
+
+- task: CmdLine@2
+  displayName: 'WhiteSource Scan'
+  inputs:
+    script: |
+      echo Downloading WhiteSource Unified Agent
+      curl -LJO https://github.com/whitesource/unified-agent-distribution/releases/latest/download/wss-unified-agent.jar
+
+      export WS_APIKEY=$(WS_ApiKey)
+      export WS_WSS_URL=$(WS_WssUrl)
+      export WS_RESOLVEALLDEPENDENCIES=false
+      export WS_NPM_RESOLVEDEPENDENCIES=true
+
+      echo WhiteSource Scan
+      java -jar wss-unified-agent.jar -product "$(Build.Repository.Name)" -project "$(Build.DefinitionName)"
+    failOnStderr: false

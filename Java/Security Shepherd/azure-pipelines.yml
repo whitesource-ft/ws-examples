@@ -1,0 +1,32 @@
+trigger:
+- variabletest
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- task: Maven@3
+  inputs:
+    mavenPomFile: 'pom.xml'
+    goals: 'clean install'
+    mavenOptions: -DskipTests=true
+    publishJUnitResults: false
+    javaHomeOption: 'JDKVersion'
+    jdkVersionOption: '1.11'
+    mavenVersionOption: 'Default'
+    mavenAuthenticateFeed: false
+    effectivePomSkip: false
+    sonarQubeRunAnalysis: false
+- task: CmdLine@2
+  displayName: 'WhiteSource Unified Agent Scan'
+  inputs:
+    script: |
+      curl -LJO https://github.com/whitesource/unified-agent-distribution/releases/latest/download/wss-unified-agent.jar
+      echo UA downloaded successfully
+      export WS_ENABLEIMPACTANALYSIS=true
+      export WS_REQUIREKNOWNSHA1=false
+      export WS_RESOLVEALLDEPENDENCIES=false
+      export WS_MAVEN_RESOLVEDEPENDENCIES=true
+      export WS_MAVEN_AGGREGATEMODULES=true
+      java -jar wss-unified-agent.jar -appPath ./target/owaspSecurityShepherd.war -d ./ -apikey $(APIKEY) -product $(System.TeamProject) -project $(Build.Repository.Name)_$(Build.SourceBranchName)_Prioritize
+
