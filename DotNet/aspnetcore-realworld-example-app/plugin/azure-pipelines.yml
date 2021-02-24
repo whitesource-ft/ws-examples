@@ -1,0 +1,56 @@
+# ASP.NET Core (.NET Framework)
+# Build and test ASP.NET Core projects targeting the full .NET Framework.
+# Add steps that publish symbols, save build artifacts, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
+
+trigger:
+  branches:
+    include:
+      - xyzzy
+
+pool:
+  vmImage: 'windows-latest'
+
+variables:
+  solution: '**/*.sln'
+  buildPlatform: 'Any CPU'
+  buildConfiguration: 'Release'
+
+steps:
+- task: NuGetToolInstaller@1
+
+- task: NuGetCommand@2
+  inputs:
+    restoreSolution: '$(solution)'
+
+- task: VSBuild@1
+  inputs:
+    solution: '$(solution)'
+    msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:DesktopBuildPackageLocation="$(build.artifactStagingDirectory)\WebApp.zip" /p:DeployIisAppPath="Default Web Site"'
+    platform: '$(buildPlatform)'
+    configuration: '$(buildConfiguration)'
+
+- task: VSTest@2
+  inputs:
+    platform: '$(buildPlatform)'
+    configuration: '$(buildConfiguration)'
+
+- task: WhiteSource@21
+  inputs:
+    cwd: '$(System.DefaultWorkingDirectory)'
+    projectName: 'aspnetcore-realworld-example-app'
+    configuration: |
+      resolveAllDependencies=false
+      archiveExtractionDepth=7
+      followSymbolicLinks=false
+      ##### nuget #####
+      nuget.runPreStep=true
+      nuget.restoreDependencies=true
+      nuget.resolvePackagesConfigFiles=true
+      nuget.resolveNuspecFiles=true
+      nuget.resolveDependencies=true
+      nuget.resolveCsProjFiles=true
+      nuget.resolveAssetsFiles=true
+      #nuget.preferredEnvironment=
+      #nuget.packagesDirectory=
+      nuget.ignoreSourceFiles=false
