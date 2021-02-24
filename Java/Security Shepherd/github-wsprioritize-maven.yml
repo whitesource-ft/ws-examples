@@ -1,4 +1,5 @@
 # This workflow will build a Java project with Maven and then scan with the WhiteSource Unified Agent for effective vulnerabilities.
+#Please create a branch named prioritize or change the trigger to master branch
 
 name: Whitesource Prioritize Java with Maven
 
@@ -32,4 +33,5 @@ jobs:
         export WS_RESOLVEALLDEPENDENCIES=false
         export WS_MAVEN_RESOLVEDEPENDENCIES=true
         export WS_MAVEN_AGGREGATEMODULES=true
+        export WS_EXCLUDES=**/MobileShepherd/**
         java -jar wss-unified-agent.jar -appPath ./target/owaspSecurityShepherd.war -d ./ -apikey $APIKEY -product GH_${{ github.event.repository.name }} -project ${{ github.ref }}_Prioritize
