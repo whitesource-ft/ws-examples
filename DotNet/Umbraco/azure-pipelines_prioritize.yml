@@ -1,8 +1,3 @@
-# ASP.NET
-# Build and test ASP.NET projects.
-# Add steps that publish symbols, save build artifacts, deploy, and more:
-# https://docs.microsoft.com/azure/devops/pipelines/apps/aspnet/build-aspnet-4
-
 trigger:
 - v8/8.9
 
@@ -33,13 +28,14 @@ steps:
     targetType: 'inline'
     script: |
       Set-Content -Value "apiKey=$(APIKEY)" -Path ./eua.config
-            Add-Content -Value "enableImpactAnalysis=true" -Path ./eua.config
-            Add-Content -Value "requireKnownSha1=false" -Path ./eua.config
-            Add-Content -Value "resolveAllDependencies=false" -Path ./eua.config
-            Add-Content -Value "nuget.resolveDependencies=true" -Path ./eua.config
-            Add-Content -Value "nuget.restoreDependencies=true" -Path ./eua.config
-            Add-Content -Value "includes=**/*.dll **/*.exe" -Path ./eua.config
-            Get-Content -Path ./eua.config
+      Add-Content -Value "enableImpactAnalysis=true" -Path ./eua.config
+      Add-Content -Value "requireKnownSha1=false" -Path ./eua.config
+      Add-Content -Value "resolveAllDependencies=false" -Path ./eua.config
+      Add-Content -Value "nuget.resolveDependencies=true" -Path ./eua.config
+      Add-Content -Value "nuget.restoreDependencies=true" -Path ./eua.config
+      Add-Content -Value "includes=**/*.dll **/*.exe" -Path ./eua.config
+      Add-Content -Value "excludes=**/Umbraco.Test**" -Path ./eua.config
+      Get-Content -Path ./eua.config
 
 - task: CmdLine@2
   inputs:
@@ -50,4 +46,4 @@ steps:
 - task: PowerShell@2
   inputs:
     filePath: './xModuleAnalyzer-NET.ps1'
-    arguments: '-d ./src -c ./eua.config'
+    arguments: '-d ./src -c ./eua.config -productName Umbraco-CMS'
