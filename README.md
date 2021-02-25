@@ -23,5 +23,8 @@ A multi module web application built with Maven using JDK 11.
 
 ## DotNet
 
+### [aspnetcore-realworld-example-app](https://github.com/gothinkster/aspnetcore-realworld-example-app)
+A single module web application built with .NET Framework 5.0 on a windows-latest image.
+
 ### [Umbraco-CMS](https://github.com/umbraco/Umbraco-CMS)
 A multi module web application built with .NET Framework 4.7.2 on a windows-latest image.

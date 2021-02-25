@@ -1,0 +1,39 @@
+trigger:
+- master
+
+pool:
+  vmImage: 'windows-latest'
+
+variables:
+  solution: '**/*.sln'
+  buildPlatform: 'Any CPU'
+  buildConfiguration: 'Release'
+
+steps:
+- task: NuGetToolInstaller@1
+
+- task: NuGetCommand@2
+  inputs:
+    restoreSolution: '$(solution)'
+
+- task: VSBuild@1
+  inputs:
+    solution: '$(solution)'
+    msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:DesktopBuildPackageLocation="$(build.artifactStagingDirectory)\WebApp.zip" /p:DeployIisAppPath="Default Web Site"'
+    platform: '$(buildPlatform)'
+    configuration: '$(buildConfiguration)'
+
+- task: CmdLine@2
+  displayName: 'WhiteSource Unified Agent Scan'
+  inputs:
+    script: |
+      curl -LJO https://github.com/whitesource/unified-agent-distribution/releases/latest/download/wss-unified-agent.jar
+      echo UA downloaded successfully
+      set WS_ENABLEIMPACTANALYSIS=true
+      set WS_REQUIREKNOWNSHA1=false
+      set WS_RESOLVEALLDEPENDENCIES=false
+      set WS_NUGET_RESOLVEDEPENDENCIES=true
+      set WS_NUGET_RESTOREDEPENDENCIES=true
+      set WS_EXCLUDES=**\build** **\tests\**
+      java -jar wss-unified-agent.jar -appPath src\Conduit\bin\Release\net5.0\Conduit.dll -d . -apikey $(APIKEY) -product $(System.TeamProject) -project $(Build.Repository.Name)_$(Build.SourceBranchName)_Prioritize
+
