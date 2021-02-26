@@ -1,6 +1,6 @@
 #Please create a branch named prioritize or change the trigger to master branch
 trigger:
-- prioritize
+- dev
 
 pool:
   vmImage: 'ubuntu-latest'

@@ -6,25 +6,29 @@
 - [Using WhiteSource Unified Agent in an NPM build pipeline](https://github.com/whitesource-ft/ws-examples/tree/main/AzureDevOps/npm)
 
 # Language Specific Scan Examples
-Files beginning with "github" are for [GitHub Actions](https://docs.github.com/en/actions).
+For all examples below, ensure that the branches defined within the .yml file are same as the branch where the file is going to be committed
+##  [GitHub Actions](https://docs.github.com/en/actions)
+YAML files beginning with "github"
 * Add the yml file to a subfolder named workflows underneath the .github folder in the branch you would like to scan and adjust branch triggers (on:) within the yml file.
+    * `.github/workflows/github-wsprioritize-maven.yml`
 * Add a [repository secret](https://docs.github.com/en/actions/reference/encrypted-secrets) named "APIKEY" to the repository with your WhiteSource API Key from the Integrate page
 
-Files labeled azure-pipelines.yml are for use with Azure DevOps and can be added directly to the repository.
+## [Azure DevOps pipelines](https://docs.microsoft.com/en-us/azure/devops/pipelines/?view=azure-devops)
+YAML files containing "azure-pipelines"
+* Ensure the default branch is the same as the .yml file by selecting Repo>Branches followed by the ellipsis on the branch name & "Set as default branch"
+* Create a new pipeline by selecting Pipelines>Create Pipeline>Azure Repos Git> your imported repository, then select starter pipeline and replace contents with the .yml file
 * Add a [pipeline variable](https://docs.microsoft.com/en-us/azure/devops/pipelines/process/variables?view=azure-devops&tabs=yaml%2Cbatch) named "apikey" with your WhiteSource API Key from the integrate page
 
 ## Java
 
-### [Security Shepherd](https://github.com/OWASP/SecurityShepherd)
-A web application built with Maven using JDK 11.  Mobile application is currently excluded for the scan.
+Repository | Package Manager | Environment
+---------- | --------------- | -----------
+[Security Shepherd](https://github.com/OWASP/SecurityShepherd) | Maven | JDK 11 / ubuntu-latest
+[WebGoat](https://github.com/WebGoat/WebGoat) | Maven | JDK 11 / ubuntu-latest
 
-### [WebGoat](https://github.com/WebGoat/WebGoat)
-A multi module web application built with Maven using JDK 11.
+## .NET
 
-## DotNet
-
-### [aspnetcore-realworld-example-app](https://github.com/gothinkster/aspnetcore-realworld-example-app)
-A single module web application built with .NET Framework 5.0 on a windows-latest image.
-
-### [Umbraco-CMS](https://github.com/umbraco/Umbraco-CMS)
-A multi module web application built with .NET Framework 4.7.2 on a windows-latest image.
+Repository | Package Manager | Environment
+---------- | --------------- | -----------
+[aspnetcore-realworld-example-app](https://github.com/gothinkster/aspnetcore-realworld-example-app) | Nuget | .NET Core 3.1 / ubuntu-latest
+[Umbraco-CMS](https://github.com/umbraco/Umbraco-CMS) | Nuget | .NET 4.7.2 / windows-latest
