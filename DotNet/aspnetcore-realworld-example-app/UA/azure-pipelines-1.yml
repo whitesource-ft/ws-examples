@@ -15,11 +15,11 @@ variables:
   solution: '**/*.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
-  WS_APIKEY: "xxxxx"
-  WS_PROJECTNAME: "aspnetcore-realworld-example-app-UA"
+  WS_APIKEY: "d655369afcaa4bedbafed8aeab0b189b972e1e8a1bfa4ead8a4a39e97959b7fe"
+  WS_PROJECTNAME: "aspnetcore-realworld-example-app-UA5"
   WS_RESOLVEALLDEPENDENCIES: "false"
   WS_ENABLEIMPACTANALYSIS: "true"
-  WS_REQUIREKNOWNSHA1: "true"
+  WS_REQUIREKNOWNSHA1: "false"
   WS_NUGET_RUNPRESTEP: "true"
   WS_NUGET_RESTOREDEPENDENCIES: "true"
   WS_NUGET_RESOLVEDEPENDENCIES: "true"
@@ -30,11 +30,15 @@ variables:
   WS_NUGET_IGNORESOURCEFILES: "true"
 
 steps:
-# - task: DotNetCoreCLI@2
-#   inputs:
-#     command: 'restore'
-#     projects: '**/*.csproj'
-#     feedsToUse: 'select'
+- checkout: none
+
+- task: PowerShell@2
+  inputs:
+    targetType: 'inline'
+    script: |
+      git clone https://github.com/gothinkster/aspnetcore-realworld-example-app.git
+      cd aspnetcore-realworld-example-app
+      git checkout 93ed4ba61b600509b62ace9cf57d3c7ccb9f2c96
 
 - task: DotNetCoreCLI@2
   inputs:
@@ -57,4 +61,4 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-      java -jar wss-unified-agent.jar -appPath src\Conduit\bin\Debug\netcoreapp3.1\Conduit.dll -d .
+      java -jar wss-unified-agent.jar -appPath aspnetcore-realworld-example-app\src\Conduit\bin\Debug\netcoreapp3.1\Conduit.dll -d .
