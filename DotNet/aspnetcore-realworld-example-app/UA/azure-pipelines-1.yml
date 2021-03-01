@@ -15,32 +15,46 @@ variables:
   solution: '**/*.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
+  WS_APIKEY: "xxxxx"
+  WS_PROJECTNAME: "aspnetcore-realworld-example-app-UA"
+  WS_RESOLVEALLDEPENDENCIES: "false"
+  WS_ENABLEIMPACTANALYSIS: "true"
+  WS_REQUIREKNOWNSHA1: "true"
+  WS_NUGET_RUNPRESTEP: "true"
+  WS_NUGET_RESTOREDEPENDENCIES: "true"
+  WS_NUGET_RESOLVEDEPENDENCIES: "true"
+  WS_NUGET_RESOLVEPACKAGECONFIGFILES: "true"
+  WS_NUGET_RESOLVENUSPECFILES: "true"
+  WS_NUGET_RESOLVECSPROJFILES: "true"
+  WS_NUGET_RESOLVEASSETSFILES: "true"
+  WS_NUGET_IGNORESOURCEFILES: "true"
 
 steps:
-- task: NuGetToolInstaller@1
+# - task: DotNetCoreCLI@2
+#   inputs:
+#     command: 'restore'
+#     projects: '**/*.csproj'
+#     feedsToUse: 'select'
 
-- task: NuGetCommand@2
+- task: DotNetCoreCLI@2
   inputs:
-    restoreSolution: '$(solution)'
+    command: 'build'
+    projects: '**/*.csproj'
 
-- task: VSBuild@1
+- task: DotNetCoreCLI@2
   inputs:
-    solution: '$(solution)'
-    msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:DesktopBuildPackageLocation="$(build.artifactStagingDirectory)\WebApp.zip" /p:DeployIisAppPath="Default Web Site"'
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
-
-- task: VSTest@2
-  inputs:
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
+    command: 'test'
+    projects: '**/*.csproj'
 
 - task: PowerShell@2
+  displayName: 'Download latest agent'
   inputs:
     targetType: 'inline'
-    script: 'Invoke-WebRequest -OutFile wss-unified-agent.jar https://github.com/whitesource/unified-agent-distribution/releases/latest/download/wss-unified-agent.jar'
+    script: 'Start-BitsTransfer -Source https://github.com/whitesource/unified-agent-distribution/releases/latest/download/wss-unified-agent.jar -Destination wss-unified-agent.jar'
 
 - task: PowerShell@2
+  displayName: 'Perform EUA scan'
   inputs:
     targetType: 'inline'
-    script: 'java -jar wss-unified-agent.jar -c wss-generated-file-eua.config -appPath src\Conduit\bin\Release\netcoreapp3.1\Conduit.dll -d . -apiKey xxxxx -product yyyyy -project aspnetcore-realworld-example-app-UA'
+    script: |
+      java -jar wss-unified-agent.jar -appPath src\Conduit\bin\Debug\netcoreapp3.1\Conduit.dll -d .
