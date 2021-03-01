@@ -7,6 +7,11 @@
 
 # Language Specific Scan Examples
 For all examples below, ensure that the branches defined within the .yml file are same as the branch where the file is going to be committed
+
+## [Native Repo Integrations](https://whitesource.atlassian.net/wiki/spaces/WD/pages/820183063/Repo+Integrations)
+Whitesource.config files
+
+* When a whitesource.config file example exists, you can change [configMode](https://whitesource.atlassian.net/wiki/spaces/WD/pages/697696422/WhiteSource+for+GitHub.com#WhiteSourceforGitHub.com-ScanSettings(scanSettings)) to "LOCAL" and add the file for optimal results with the repo integration
 ##  [GitHub Actions](https://docs.github.com/en/actions)
 YAML files beginning with "github"
 * Add the yml file to a subfolder named workflows underneath the .github folder in the branch you would like to scan and adjust branch triggers (on:) within the yml file.
@@ -21,14 +26,14 @@ YAML files containing "azure-pipelines"
 
 ## Java
 
-Repository | Package Manager | Environment
----------- | --------------- | -----------
-[Security Shepherd](https://github.com/OWASP/SecurityShepherd) | Maven | JDK 11 / ubuntu-latest
-[WebGoat](https://github.com/WebGoat/WebGoat) | Maven | JDK 11 / ubuntu-latest
+Repository | Package Manager | Environment | Branch
+---------- | --------------- | ----------- | ------
+[Security Shepherd](https://github.com/OWASP/SecurityShepherd) | Maven | JDK 11 / ubuntu-latest | dev
+[WebGoat](https://github.com/WebGoat/WebGoat) | Maven | JDK 11 / ubuntu-latest | develop
 
 ## .NET
 
-Repository | Package Manager | Environment
----------- | --------------- | -----------
-[aspnetcore-realworld-example-app](https://github.com/gothinkster/aspnetcore-realworld-example-app) | Nuget | .NET Core 3.1 / ubuntu-latest
-[Umbraco-CMS](https://github.com/umbraco/Umbraco-CMS) | Nuget | .NET 4.7.2 / windows-latest
+Repository | Package Manager | Environment | Branch
+---------- | --------------- | ----------- | ------
+[aspnetcore-realworld-example-app](https://github.com/gothinkster/aspnetcore-realworld-example-app) | Nuget | .NET Core 3.1 / ubuntu-latest | 93ed4ba61b600509b62ace9cf57d3c7ccb9f2c96
+[Umbraco-CMS](https://github.com/umbraco/Umbraco-CMS) | Nuget | .NET 4.7.2 / windows-latest | v8/8.9

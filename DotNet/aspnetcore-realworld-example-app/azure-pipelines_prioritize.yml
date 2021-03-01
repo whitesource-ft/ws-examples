@@ -1,5 +1,6 @@
 # In ADO, select Repos>Commits and search for commit = 93ed4ba
-# Click the ellipsis and create new branched named "93ed4ba"
+# Click the ellipsis and create new branched named "dotnet3.1"
+# alternatively in git - git branch dotnet3.1 93ed4ba61b600509b62ace9cf57d3c7ccb9f2c96
 trigger:
 - 93ed4ba
 
