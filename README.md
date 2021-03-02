@@ -5,13 +5,13 @@
 ## Azure DevOps
 - [Using WhiteSource Unified Agent in an NPM build pipeline](https://github.com/whitesource-ft/ws-examples/tree/main/AzureDevOps/npm)
 
+## Whitesource.config File
+* This config file has been created from the following [link](https://whitesource.atlassian.net/wiki/spaces/WD/pages/1781760001/Unified+Agent+Configuration+Parameters+for+Native+Integrations)
+* You can change [configMode](https://whitesource.atlassian.net/wiki/spaces/WD/pages/697696422/WhiteSource+for+GitHub.com#WhiteSourceforGitHub.com-ScanSettings(scanSettings)) to "LOCAL" and add/modify the file for optimal results with the [repo integration](https://whitesource.atlassian.net/wiki/spaces/WD/pages/820183063/Repo+Integrations)
+
 # Language Specific Scan Examples
 For all examples below, ensure that the branches defined within the .yml file are same as the branch where the file is going to be committed
 
-## [Native Repo Integrations](https://whitesource.atlassian.net/wiki/spaces/WD/pages/820183063/Repo+Integrations)
-Whitesource.config files
-
-* When a whitesource.config file example exists, you can change [configMode](https://whitesource.atlassian.net/wiki/spaces/WD/pages/697696422/WhiteSource+for+GitHub.com#WhiteSourceforGitHub.com-ScanSettings(scanSettings)) to "LOCAL" and add the file for optimal results with the repo integration
 ##  [GitHub Actions](https://docs.github.com/en/actions)
 YAML files beginning with "github"
 * Add the yml file to a subfolder named workflows underneath the .github folder in the branch you would like to scan and adjust branch triggers (on:) within the yml file.
