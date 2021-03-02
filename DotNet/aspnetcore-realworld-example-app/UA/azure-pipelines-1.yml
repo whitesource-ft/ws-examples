@@ -36,7 +36,7 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-      git clone https://github.com/gothinkster/aspnetcore-realworld-example-app.git
+      git clone https://github.com/hugh-whitesource/aspnetcore-realworld-example-app.git
       cd aspnetcore-realworld-example-app
       git checkout 93ed4ba61b600509b62ace9cf57d3c7ccb9f2c96
 
