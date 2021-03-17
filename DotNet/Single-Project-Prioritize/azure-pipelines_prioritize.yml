@@ -1,8 +1,5 @@
-# In ADO, select Repos>Commits and search for commit = 93ed4ba
-# Click the ellipsis and create new branched named "dotnet3.1"
-# alternatively in git - git branch dotnet3.1 93ed4ba61b600509b62ace9cf57d3c7ccb9f2c96
 trigger:
-- dotnet3.1
+- main
 
 pool:
   vmImage: 'windows-latest'
@@ -37,6 +34,6 @@ steps:
       set WS_RESOLVEALLDEPENDENCIES=false
       set WS_NUGET_RESOLVEDEPENDENCIES=true
       set WS_NUGET_RESTOREDEPENDENCIES=true
-      set WS_EXCLUDES=**\build** **\tests\**
+      set WS_EXCLUDES=**\build** **\test**
       java -jar wss-unified-agent.jar -appPath src\Conduit\bin\Release\netcoreapp3.1\Conduit.dll -d . -apikey $(APIKEY) -product $(System.TeamProject) -project $(Build.Repository.Name)_$(Build.SourceBranchName)_Prioritize
 

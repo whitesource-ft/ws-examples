@@ -1,6 +1,5 @@
-#Please create a branch named prioritize or change the trigger to master branch
 trigger:
-- dev
+- main
 
 pool:
   vmImage: 'ubuntu-latest'
@@ -30,5 +29,5 @@ steps:
       export WS_MAVEN_RESOLVEDEPENDENCIES=true
       export WS_MAVEN_AGGREGATEMODULES=true
       export WS_EXCLUDES=**/MobileShepherd/**
-      java -jar wss-unified-agent.jar -appPath ./target/owaspSecurityShepherd.war -d ./ -apikey $(APIKEY) -product $(System.TeamProject) -project $(Build.Repository.Name)_$(Build.SourceBranchName)_Prioritize
+      java -jar wss-unified-agent.jar -appPath ./target/<your war file here>  -d ./ -apikey $(APIKEY) -product $(System.TeamProject) -project $(Build.Repository.Name)_$(Build.SourceBranchName)_Prioritize
 

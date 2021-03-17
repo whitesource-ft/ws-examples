@@ -1,13 +1,10 @@
-# This workflow will build a Java project with Maven and then scan with the WhiteSource Unified Agent for effective vulnerabilities.
-#Please create a branch named prioritize or change the trigger to master branch
-
 name: Whitesource Prioritize Java with Maven
 
 on:
   push:
-    branches: [ develop ]
-#  pull_request:
-#    branches: [ develop ]
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
 
 jobs:
   build:

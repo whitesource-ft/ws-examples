@@ -1,7 +1,5 @@
-#Please create a branch named prioritize or change the trigger to master branch
-
 trigger:
-- develop
+- main
 
 pool:
   vmImage: 'ubuntu-latest'

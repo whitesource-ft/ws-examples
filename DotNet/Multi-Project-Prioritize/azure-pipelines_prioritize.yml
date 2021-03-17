@@ -1,5 +1,5 @@
 trigger:
-- v8/8.9
+- main
 
 pool:
   vmImage: 'windows-latest'
@@ -34,7 +34,7 @@ steps:
       Add-Content -Value "nuget.resolveDependencies=true" -Path ./eua.config
       Add-Content -Value "nuget.restoreDependencies=true" -Path ./eua.config
       Add-Content -Value "includes=**/*.dll **/*.exe" -Path ./eua.config
-      Add-Content -Value "excludes=**/Umbraco.Test**" -Path ./eua.config
+      Add-Content -Value "excludes=**test**" -Path ./eua.config
       Get-Content -Path ./eua.config
 
 - task: CmdLine@2
