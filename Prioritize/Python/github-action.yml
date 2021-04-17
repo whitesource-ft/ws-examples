@@ -1,0 +1,38 @@
+name: Whitesource Prioritize Python
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  prioritize:
+
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.7]
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install virtualenv --user
+        pip install -r requirements.txt
+    - name: WhiteSource Prioritize Scan
+      env:
+        APIKEY: ${{secrets.APIKEY}}
+      run: |
+        curl -LJO https://github.com/whitesource/unified-agent-distribution/releases/latest/download/wss-unified-agent.jar
+        echo UA downloaded successfully
+        export WS_ENABLEIMPACTANALYSIS=true
+        export WS_REQUIREKNOWNSHA1=false
+        export WS_RESOLVEALLDEPENDENCIES=false
+        export WS_PYTHON_RESOLVEDEPENDENCIES=true
+        java -jar wss-unified-agent.jar -appPath ./requirements.txt -d ./ -apikey $APIKEY -product GH_${{ github.event.repository.name }} -project ${{ github.ref }}_Prioritize

@@ -1,0 +1,25 @@
+trigger:
+- main
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'run'
+    projects: 'build/build.csproj'
+
+- script: 'curl -LJO https://github.com/whitesource/unified-agent-distribution/releases/latest/download/wss-unified-agent.jar'
+  displayName: 'Download the latest Unified Agent'
+
+- script: |
+    export WS_ENABLEIMPACTANALYSIS=true
+    export WS_REQUIREKNOWNSHA1=false
+    export WS_RESOLVEALLDEPENDENCIES=false
+    export WS_NUGET_RESOLVEDEPENDENCIES=true
+    export WS_NUGET_RESTOREDEPENDENCIES=true
+    export WS_EXCLUDES='**/build/** **/tests/**'
+    java -jar wss-unified-agent.jar -appPath <path to debug dll> -d ./ -apikey $(APIKEY) -product $(System.TeamProject) -project $(Build.Repository.Name)_$(Build.SourceBranchName)_Prioritize
+  displayName: 'Unified Agent Prioritize Scan'

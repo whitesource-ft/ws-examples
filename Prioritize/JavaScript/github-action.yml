@@ -1,0 +1,43 @@
+name: NPM Prioritize Scan
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  WhiteSource-Prioritize:
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        node-version: ["10.x"]
+
+    steps:
+      - name: Checkout https://github.com/${{ github.repository }}@${{ github.ref }}
+        uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+
+      - name: Set up Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Install dependencies
+        run: |
+          npm install
+      - name: WhiteSource Unified Agent Scan
+        env:
+          WS_APIKEY: ${{secrets.APIKEY}}
+        run: |
+          curl -LJO https://github.com/whitesource/unified-agent-distribution/releases/latest/download/wss-unified-agent.jar
+          echo UA downloaded successfully
+          export WS_ENABLEIMPACTANALYSIS=true
+          export WS_REQUIREKNOWNSHA1=false
+          export WS_RESOLVEALLDEPENDENCIES=false
+          export WS_NPM_RESOLVEDEPENDENCIES=true
+          export WS_NPM_RESOLVELOCKFILE=false
+          java -jar wss-unified-agent.jar -appPath ./package.json -d ./ -product GH_${{ github.event.repository.name }} -project ${{ github.ref }}_Prioritize
