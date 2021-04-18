@@ -1,12 +1,11 @@
-# This workflow will build a Java project with Maven and then scan with the WhiteSource Unified Agent for effective vulnerabilities.
-
+# replace .war with .jar or .ear if needed
 name: Whitesource Prioritize Java with Maven
 
 on:
   push:
-    branches: [ prioritize ]
-#  pull_request:
-#    branches: [ master ]
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
 
 jobs:
   build:
@@ -23,13 +22,14 @@ jobs:
       run: mvn clean install -DskipTests=true
     - name: WhiteSource Unified Agent Scan
       env:
-        APIKEY: ${{secrets.APIKEY}}
+        WS_APIKEY: ${{secrets.APIKEY}}
       run: |
         curl -LJO https://github.com/whitesource/unified-agent-distribution/releases/latest/download/wss-unified-agent.jar
         echo UA downloaded successfully
+        WARFILE=$(find ./ -type f -wholename "*/target/*.war")
         export WS_ENABLEIMPACTANALYSIS=true
         export WS_REQUIREKNOWNSHA1=false
         export WS_RESOLVEALLDEPENDENCIES=false
         export WS_MAVEN_RESOLVEDEPENDENCIES=true
         export WS_MAVEN_AGGREGATEMODULES=true
-        java -jar wss-unified-agent.jar -appPath ./target/owaspSecurityShepherd.war -d ./ -apikey $APIKEY -product GH_${{ github.event.repository.name }} -project ${{ github.ref }}_Prioritize
+        java -jar wss-unified-agent.jar -appPath $WARFILE -d ./ -product GH_${{ github.event.repository.name }} -project ${{ github.ref }}_Prioritize
