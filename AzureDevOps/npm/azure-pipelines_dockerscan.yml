@@ -20,7 +20,7 @@ steps:
   inputs:
     script: |
       curl -LJO https://github.com/whitesource/unified-agent-distribution/releases/latest/download/wss-unified-agent.jar
-      export WS_DOCKER_INCLUDES=.*$(Build.Repository.Name).*
+      export WS_DOCKER_INCLUDES=".*$(Build.Repository.Name).*"
       export WS_DOCKER_LAYERS=true
-      java -jar wss-unified-agent.jar -d ./ -apikey $(APIKEY) -product $(System.TeamProject) -project $(Build.Repository.Name) -docker.scanImages true
+      java -jar wss-unified-agent.jar -apikey $(APIKEY) -product "$(System.TeamProject)" -project "$(Build.Repository.Name)" -docker.scanImages true
 
