@@ -1,4 +1,4 @@
-# add APIKEY as an unprotected environment variable - https://gitlab.com/help/ci/variables/README
+# add APIKEY as an environment variable - https://gitlab.com/help/ci/variables/README
 image: maven:3.8-openjdk-8
 build:
   stage: build
@@ -8,9 +8,9 @@ build:
     mvn clean install -DskipTests=true
     echo build completed successfully
     cat <<EOF > eua.config
-    apiKey=“$APIKEY” 
-    productName=GL_“$CI_PROJECT_DIR”
-    projectName=“$CI_COMMIT_BRANCH”_Prioritize
+    apiKey="$APIKEY"
+    productName=GL_"$CI_PROJECT_DIR"
+    projectName="$CI_COMMIT_BRANCH"_Prioritize
     enableImpactAnalysis=true
     requireKnownSha1=false
     resolveAllDependencies=false
