@@ -34,6 +34,7 @@ steps:
       set WS_RESOLVEALLDEPENDENCIES=false
       set WS_NUGET_RESOLVEDEPENDENCIES=true
       set WS_NUGET_RESTOREDEPENDENCIES=true
+      set WS_FILESYSTEMSCAN=false
       set WS_EXCLUDES=**\build\** **\test**
       java -jar wss-unified-agent.jar -appPath <path to debug dll> -d . -apikey $(APIKEY) -product $(System.TeamProject) -project $(Build.Repository.Name)_$(Build.SourceBranchName)_Prioritize
 

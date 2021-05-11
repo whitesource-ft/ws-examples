@@ -40,4 +40,5 @@ jobs:
           export WS_RESOLVEALLDEPENDENCIES=false
           export WS_NPM_RESOLVEDEPENDENCIES=true
           export WS_NPM_RESOLVELOCKFILE=false
+          export WS_FILESYSTEMSCAN=false
           java -jar wss-unified-agent.jar -appPath ./package.json -d ./ -product GH_${{ github.event.repository.name }} -project ${{ github.ref }}_Prioritize

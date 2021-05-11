@@ -35,4 +35,5 @@ jobs:
         export WS_REQUIREKNOWNSHA1=false
         export WS_RESOLVEALLDEPENDENCIES=false
         export WS_PYTHON_RESOLVEDEPENDENCIES=true
+        export WS_FILESYSTEMSCAN=false
         java -jar wss-unified-agent.jar -appPath ./requirements.txt -d ./ -apikey $APIKEY -product GH_${{ github.event.repository.name }} -project ${{ github.ref }}_Prioritize
