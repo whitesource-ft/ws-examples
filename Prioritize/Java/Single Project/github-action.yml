@@ -32,4 +32,5 @@ jobs:
         export WS_RESOLVEALLDEPENDENCIES=false
         export WS_MAVEN_RESOLVEDEPENDENCIES=true
         export WS_MAVEN_AGGREGATEMODULES=true
+        export WS_FILESYSTEMSCAN=false
         java -jar wss-unified-agent.jar -appPath $WARFILE -d ./ -product GH_${{ github.event.repository.name }} -project ${{ github.ref }}_Prioritize

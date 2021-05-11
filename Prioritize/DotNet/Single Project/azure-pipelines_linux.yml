@@ -20,6 +20,7 @@ steps:
     export WS_RESOLVEALLDEPENDENCIES=false
     export WS_NUGET_RESOLVEDEPENDENCIES=true
     export WS_NUGET_RESTOREDEPENDENCIES=true
+    export WS_FILESYSTEMSCAN=false
     export WS_EXCLUDES='**/build/** **/tests/**'
     java -jar wss-unified-agent.jar -appPath <path to debug dll> -d ./ -apikey $(APIKEY) -product $(System.TeamProject) -project $(Build.Repository.Name)_$(Build.SourceBranchName)_Prioritize
   displayName: 'Unified Agent Prioritize Scan'
