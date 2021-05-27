@@ -22,8 +22,8 @@ steps:
   displayName: 'WhiteSource Unified Agent Scan'
   inputs:
     script: |
-      curl -LJO https://github.com/whitesource/unified-agent-distribution/releases/latest/download/wss-unified-agent.jar
-      echo UA downloaded successfully
+      curl -LJO https://unified-agent.s3.amazonaws.com/wss-unified-agent.jar
+      echo Unified Agent downloaded successfully
       WARFILE=$(find ./ -type f -wholename "*/target/*.war")
       export WS_ENABLEIMPACTANALYSIS=true
       export WS_REQUIREKNOWNSHA1=false
@@ -31,4 +31,4 @@ steps:
       export WS_MAVEN_RESOLVEDEPENDENCIES=true
       export WS_MAVEN_AGGREGATEMODULES=true
       export WS_FILESYSTEMSCAN=false
-      java -jar wss-unified-agent.jar -appPath $WARFILE -d ./ -apikey $(APIKEY) -product GH_${{ github.event.repository.name }} -project ${{ github.ref }}_Prioritize
+      java -jar wss-unified-agent.jar -appPath $WARFILE -d ./ -apikey $(APIKEY) -product $(System.TeamProject) -project $(Build.Repository.Name)_$(Build.SourceBranchName)_Prioritize

@@ -1,0 +1,20 @@
+# add APIKEY as an environment variable - https://gitlab.com/help/ci/variables/README
+image: maven:3.8-openjdk-8
+build:
+  stage: build
+  only:
+    - merge_requests
+  script: |
+    mvn clean install -DskipTests=true
+    echo build completed successfully
+    curl -LJO https://unified-agent.s3.amazonaws.com/wss-unified-agent.jar
+    echo Unified Agent downloaded successfully
+    WARFILE=$(find ./ -type f -wholename "*/target/*.war")
+    export WS_APIKEY="$APIKEY"
+    export WS_ENABLEIMPACTANALYSIS=true
+    export WS_REQUIREKNOWNSHA1=false
+    export WS_RESOLVEALLDEPENDENCIES=false
+    export WS_MAVEN_RESOLVEDEPENDENCIES=true
+    export WS_MAVEN_AGGREGATEMODULES=true
+    export WS_FILESYSTEMSCAN=false
+    java -jar wss-unified-agent.jar -appPath $WARFILE -d ./ -product GL_"$CI_PROJECT_DIR" -project "$CI_COMMIT_BRANCH"_Prioritize

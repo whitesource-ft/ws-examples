@@ -24,8 +24,8 @@ jobs:
       env:
         WS_APIKEY: ${{secrets.APIKEY}}
       run: |
-        curl -LJO https://github.com/whitesource/unified-agent-distribution/releases/latest/download/wss-unified-agent.jar
-        echo UA downloaded successfully
+        curl -LJO https://unified-agent.s3.amazonaws.com/wss-unified-agent.jar
+        echo Unified Agent downloaded successfully
         WARFILE=$(find ./ -type f -wholename "*/target/*.war")
         export WS_ENABLEIMPACTANALYSIS=true
         export WS_REQUIREKNOWNSHA1=false
@@ -34,4 +34,3 @@ jobs:
         export WS_MAVEN_AGGREGATEMODULES=true
         export WS_FILESYSTEMSCAN=false
         java -jar wss-unified-agent.jar -appPath $WARFILE -d ./ -product GH_${{ github.event.repository.name }} -project ${{ github.ref }}_Prioritize
-        
