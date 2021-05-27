@@ -23,4 +23,3 @@ steps:
       export WS_DOCKER_INCLUDES=".*$(Build.Repository.Name).*"
       export WS_DOCKER_LAYERS=true
       java -jar wss-unified-agent.jar -apikey $(APIKEY) -product "$(System.TeamProject)" -project "$(Build.Repository.Name)" -docker.scanImages true
-

@@ -24,3 +24,4 @@ steps:
     export WS_EXCLUDES='**/build/** **/tests/**'
     java -jar wss-unified-agent.jar -appPath <path to debug dll> -d ./ -apikey $(APIKEY) -product $(System.TeamProject) -project $(Build.Repository.Name)_$(Build.SourceBranchName)_Prioritize
   displayName: 'Unified Agent Prioritize Scan'
+  
