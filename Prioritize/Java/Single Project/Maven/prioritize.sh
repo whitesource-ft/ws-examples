@@ -29,16 +29,16 @@
 # ./prioritize.sh
 
 #### Build application & check JAVA_HOME
-echo  $JAVA_HOME
+echo JAVA_HOME: $JAVA_HOME
 mvn clean install -DskipTests=true
 
 #### Run WS Prioritize
-curl -LJO https://github.com/whitesource/unified-agent-distribution/releases/latest/download/wss-unified-agent.jar
-echo UA downloaded successfully
+curl -LJO https://unified-agent.s3.amazonaws.com/wss-unified-agent.jar
+echo Unified Agent downloaded successfully
 # replace .war with .jar or .ear if needed
 export WARFILE=$(find ./ -type f -wholename "*/target/*.war")
-export WS_APIKEY=503ab5d74f03468abe4a757c9fcb6bcb4536d5e2e46246b5b9d95676f6692fc7
-export WS_USERKEY=d2f4b03ff48740bc95ad7906b3a11610098a779020b84e67a5c0f1b85d164303
+export WS_APIKEY=<your-api-key>
+export WS_USERKEY=<your-user-key>
 export WS_ENABLEIMPACTANALYSIS=true
 export WS_REQUIREKNOWNSHA1=false
 export WS_RESOLVEALLDEPENDENCIES=false
