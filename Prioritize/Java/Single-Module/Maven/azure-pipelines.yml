@@ -1,6 +1,6 @@
 # replace .war with .jar or .ear if needed
 trigger:
-- main
+- release*
 
 pool:
   vmImage: 'ubuntu-latest'

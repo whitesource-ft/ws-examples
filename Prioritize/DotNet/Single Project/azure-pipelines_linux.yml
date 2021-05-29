@@ -1,5 +1,5 @@
 trigger:
-- main
+- release*
 
 pool:
   vmImage: 'ubuntu-latest'
@@ -15,6 +15,7 @@ steps:
   displayName: 'Download the latest Unified Agent'
 
 - script: |
+    #TODO - move to env variables
     export WS_ENABLEIMPACTANALYSIS=true
     export WS_REQUIREKNOWNSHA1=false
     export WS_RESOLVEALLDEPENDENCIES=false

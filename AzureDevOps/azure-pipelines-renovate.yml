@@ -15,6 +15,7 @@ steps:
   displayName: 'WS-Scan'
 
 - script: |
+    #TODO - move to env variables
     export RENOVATE_ENDPOINT='https://dev.azure.com/<your-organization>/'
     export RENOVATE_PLATFORM='azure'
     export RENOVATE_REPOSITORIES='$(System.TeamProject)/$(Build.Repository.Name)'

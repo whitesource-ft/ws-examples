@@ -2,9 +2,9 @@ name: Whitesource Prioritize Java with Gradle
 
 on:
   push:
-    branches: [ main ]
+    branches: [ release* ]
   pull_request:
-    branches: [ main ]
+    branches: [ release* ]
 
 jobs:
   WhiteSource-Prioritize:
@@ -24,10 +24,13 @@ jobs:
       run: ./gradlew build -x test
     - name: WhiteSource Prioritize Scan
       env:
+        GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
         WS_APIKEY: ${{secrets.APIKEY}}
+        WS_USERKEY: ${{secrets.USERKEY}}
       run: |
         cat <<EOF > eua.config
         apiKey=$WS_APIKEY
+        userKey=$WS_USERKEY
         productName=GH_${{ github.event.repository.name }}
         projectName=${{ github.ref }}_Prioritize
         enableImpactAnalysis=true
@@ -37,6 +40,7 @@ jobs:
         gradle.aggregateModules=true
         fileSystemScan=false
         includes=**/*.jar
+        generateProjectDetailsJson=true
         EOF
         cat eua.config
         echo config created successfully

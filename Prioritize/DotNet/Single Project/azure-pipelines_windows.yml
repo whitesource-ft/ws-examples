@@ -1,5 +1,5 @@
 trigger:
-- main
+- release*
 
 pool:
   vmImage: 'windows-latest'
@@ -27,6 +27,7 @@ steps:
   displayName: 'WhiteSource Unified Agent Scan'
   inputs:
     script: |
+      #TODO - move to env variables
       curl -LJO https://github.com/whitesource/unified-agent-distribution/releases/latest/download/wss-unified-agent.jar
       echo UA downloaded successfully
       set WS_ENABLEIMPACTANALYSIS=true

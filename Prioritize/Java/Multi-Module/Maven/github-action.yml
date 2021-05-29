@@ -2,9 +2,9 @@ name: Whitesource Prioritize Java with Maven
 
 on:
   push:
-    branches: [ main ]
+    branches: [ release* ]
   pull_request:
-    branches: [ main ]
+    branches: [ release* ]
 
 jobs:
   build:
@@ -13,18 +13,22 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Set up JDK 1.11
-      uses: actions/setup-java@v1
+    - name: Set up JDK
+      uses: actions/setup-java@v2
       with:
-        java-version: 1.11
+        java-version: '8'
+        distribution: 'adopt'
     - name: Build with Maven
       run: mvn clean install -DskipTests=true
     - name: WhiteSource Unified Agent Scan
       env:
-        APIKEY: ${{secrets.APIKEY}}
+        GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+        WS_APIKEY: ${{secrets.APIKEY}}
+        WS_USERKEY: ${{secrets.USERKEY}}
       run: |
         cat <<EOF > eua.config
-        apiKey=$APIKEY
+        apiKey=$WS_APIKEY
+        userKey=$WS_USERKEY
         productName=GH_${{ github.event.repository.name }}
         projectName=${{ github.ref }}_Prioritize
         enableImpactAnalysis=true
@@ -34,6 +38,7 @@ jobs:
         maven.aggregateModules=true
         fileSystemScan=false
         includes=**/*.jar
+        generateProjectDetailsJson=true
         EOF
         cat eua.config
         echo config created successfully

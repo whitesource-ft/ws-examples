@@ -19,6 +19,7 @@ steps:
 - task: CmdLine@2
   inputs:
     script: |
+      #TODO - move to env variables
       curl -LJO https://github.com/whitesource/unified-agent-distribution/releases/latest/download/wss-unified-agent.jar
       export WS_DOCKER_INCLUDES=".*$(Build.Repository.Name).*"
       export WS_DOCKER_LAYERS=true
