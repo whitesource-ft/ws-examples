@@ -2,9 +2,9 @@ name: Whitesource Prioritize Python
 
 on:
   push:
-    branches: [ main ]
+    branches: [ release* ]
   pull_request:
-    branches: [ main ]
+    branches: [ release* ]
 
 jobs:
   prioritize:
@@ -36,6 +36,7 @@ jobs:
         WS_RESOLVEALLDEPENDENCIES: false
         WS_PYTHON_RESOLVEDEPENDENCIES: true
         WS_FILESYSTEMSCAN: false
+        WS_GENERATEPROJECTDETAILSJSON: true
       run: |
         curl -LJO https://unified-agent.s3.amazonaws.com/wss-unified-agent.jar
         echo Unified Agent downloaded successfully

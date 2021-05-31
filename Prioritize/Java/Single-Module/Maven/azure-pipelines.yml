@@ -18,17 +18,22 @@ steps:
     mavenAuthenticateFeed: false
     effectivePomSkip: false
     sonarQubeRunAnalysis: false
-- task: CmdLine@2
-  displayName: 'WhiteSource Unified Agent Scan'
-  inputs:
-    script: |
-      curl -LJO https://unified-agent.s3.amazonaws.com/wss-unified-agent.jar
-      echo Unified Agent downloaded successfully
-      WARFILE=$(find ./ -type f -wholename "*/target/*.war")
-      export WS_ENABLEIMPACTANALYSIS=true
-      export WS_REQUIREKNOWNSHA1=false
-      export WS_RESOLVEALLDEPENDENCIES=false
-      export WS_MAVEN_RESOLVEDEPENDENCIES=true
-      export WS_MAVEN_AGGREGATEMODULES=true
-      export WS_FILESYSTEMSCAN=false
-      java -jar wss-unified-agent.jar -appPath $WARFILE -d ./ -apikey $(APIKEY) -product $(System.TeamProject) -project $(Build.Repository.Name)_$(Build.SourceBranchName)_Prioritize
+
+- script: |
+    curl -LJO https://unified-agent.s3.amazonaws.com/wss-unified-agent.jar
+    echo Unified Agent downloaded successfully
+    java -jar wss-unified-agent.jar -appPath <path to debug dll> -d ./
+  env:
+    WS_APIKEY: $(APIKEY)
+    WS_USERKEY: $(USERKEY)
+    WS_PRODUCTNAME: AZDO_$(System.TeamProject)
+    WS_PROJECTNAME: $(Build.Repository.Name)_$(Build.SourceBranchName)_Prioritize
+    WS_ENABLEIMPACTANALYSIS: true
+    WS_REQUIREKNOWNSHA1: false
+    WS_RESOLVEALLDEPENDENCIES: false
+    WS_MAVEN_RESOLVEDEPENDENCIES: true
+    WS_MAVEN_AGGREGATEMODULES: true
+    WS_FILESYSTEMSCAN: false
+    WS_EXCLUDES: '**/build/** **/tests/**'
+  displayName: 'Unified Agent Prioritize Scan'
+    

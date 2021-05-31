@@ -41,6 +41,7 @@ jobs:
           WS_NPM_RESOLVEDEPENDENCIES: true
           WS_NPM_RESOLVELOCKFILE: false
           WS_FILESYSTEMSCAN: false
+          WS_GENERATEPROJECTDETAILSJSON: true
         run: |
           curl -LJO https://unified-agent.s3.amazonaws.com/wss-unified-agent.jar
           echo Unified Agent downloaded successfully

@@ -11,18 +11,21 @@ steps:
     command: 'run'
     projects: 'build/build.csproj'
 
-- script: 'curl -LJO https://github.com/whitesource/unified-agent-distribution/releases/latest/download/wss-unified-agent.jar'
-  displayName: 'Download the latest Unified Agent'
-
 - script: |
-    #TODO - move to env variables
-    export WS_ENABLEIMPACTANALYSIS=true
-    export WS_REQUIREKNOWNSHA1=false
-    export WS_RESOLVEALLDEPENDENCIES=false
-    export WS_NUGET_RESOLVEDEPENDENCIES=true
-    export WS_NUGET_RESTOREDEPENDENCIES=true
-    export WS_FILESYSTEMSCAN=false
-    export WS_EXCLUDES='**/build/** **/tests/**'
-    java -jar wss-unified-agent.jar -appPath <path to debug dll> -d ./ -apikey $(APIKEY) -product $(System.TeamProject) -project $(Build.Repository.Name)_$(Build.SourceBranchName)_Prioritize
+    curl -LJO https://unified-agent.s3.amazonaws.com/wss-unified-agent.jar
+    echo Unified Agent downloaded successfully
+    java -jar wss-unified-agent.jar -appPath <path to debug dll> -d ./
+  env:
+    WS_APIKEY: $(APIKEY)
+    WS_USERKEY: $(USERKEY)
+    WS_PRODUCTNAME: AZDO_$(System.TeamProject)
+    WS_PROJECTNAME: $(Build.Repository.Name)_$(Build.SourceBranchName)_Prioritize
+    WS_ENABLEIMPACTANALYSIS: true
+    WS_REQUIREKNOWNSHA1: false
+    WS_RESOLVEALLDEPENDENCIES: false
+    WS_NUGET_RESOLVEDEPENDENCIES: true
+    WS_NUGET_RESTOREDEPENDENCIES: true
+    WS_FILESYSTEMSCAN: false
+    WS_EXCLUDES: '**/build/** **/tests/**'
   displayName: 'Unified Agent Prioritize Scan'
   

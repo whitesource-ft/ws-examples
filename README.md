@@ -31,3 +31,40 @@ on:
     branches: [ release* ]
 ```
 
+### Pipeline Log Publishing
+
+* Publish the whitesource logs by adding the following commands depending on each pipeline
+
+### Azure DevOps Pipelines
+
+```
+- publish: $(System.DefaultWorkingDirectory)/whitesource
+  artifact: Whitesource-Logs
+```
+### GitHub Actions
+
+```
+- name: 'Upload Artifact'
+  uses: actions/upload-artifact@v2
+  with:
+    name: Whitesource-Logs
+    path: whitesource
+    retention-days: 1
+```
+
+### Prioritize Troubleshooting
+* Add -viaDebug true at the end of the unified agent command
+* Add the following section after the java -jar unified agent call to upload all logs as artifacts that can be downloaded for viewing.
+
+* Important items
+  * App.json file will have the elementid & method that should be tracked down
+  * log should tell you if java or jdeps is a problem
+  * %TEMP% in Windows instead of /tmp/
+
+```
+cp -r whitesource Whitesource-Logs
+cp -r /tmp/whitesource* Whitesource-Logs
+# uncomment for multimodule analyzer projects
+# cp -r /tmp/MultiModuleAnalyzer* Whitesource-Logs
+```
+
