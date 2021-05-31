@@ -19,8 +19,10 @@ steps:
 - task: CmdLine@2
   inputs:
     script: |
-      curl -LJO https://github.com/whitesource/unified-agent-distribution/releases/latest/download/wss-unified-agent.jar
-      export WS_DOCKER_INCLUDES=".*$(Build.Repository.Name).*"
-      export WS_DOCKER_LAYERS=true
+      curl -LJO https://unified-agent.s3.amazonaws.com/wss-unified-agent.jar
+      echo Unified Agent downloaded successfully
       java -jar wss-unified-agent.jar -apikey $(APIKEY) -product "$(System.TeamProject)" -project "$(Build.Repository.Name)" -docker.scanImages true
-
+    env:
+      WS_DOCKER_INCLUDES: ".*$(Build.Repository.Name).*"
+      WS_DOCKER_LAYERS: true
+    displayName: WhiteSource Docker Image Scan

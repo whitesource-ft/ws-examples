@@ -1,5 +1,5 @@
 trigger:
-- main
+- release*
 
 pool:
   vmImage: 'windows-latest'
@@ -23,18 +23,20 @@ steps:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
 
-- task: CmdLine@2
-  displayName: 'WhiteSource Unified Agent Scan'
-  inputs:
-    script: |
-      curl -LJO https://github.com/whitesource/unified-agent-distribution/releases/latest/download/wss-unified-agent.jar
-      echo UA downloaded successfully
-      set WS_ENABLEIMPACTANALYSIS=true
-      set WS_REQUIREKNOWNSHA1=false
-      set WS_RESOLVEALLDEPENDENCIES=false
-      set WS_NUGET_RESOLVEDEPENDENCIES=true
-      set WS_NUGET_RESTOREDEPENDENCIES=true
-      set WS_FILESYSTEMSCAN=false
-      set WS_EXCLUDES=**\build\** **\test**
-      java -jar wss-unified-agent.jar -appPath <path to debug dll> -d . -apikey $(APIKEY) -product $(System.TeamProject) -project $(Build.Repository.Name)_$(Build.SourceBranchName)_Prioritize
-
+- script: |
+    curl -LJO https://unified-agent.s3.amazonaws.com/wss-unified-agent.jar
+    echo Unified Agent downloaded successfully
+    java -jar wss-unified-agent.jar -appPath <path to debug dll> -d ./
+  env:
+    WS_APIKEY: $(APIKEY)
+    WS_USERKEY: $(USERKEY)
+    WS_PRODUCTNAME: AZDO_$(System.TeamProject)
+    WS_PROJECTNAME: $(Build.Repository.Name)_$(Build.SourceBranchName)_Prioritize
+    WS_ENABLEIMPACTANALYSIS: true
+    WS_REQUIREKNOWNSHA1: false
+    WS_RESOLVEALLDEPENDENCIES: false
+    WS_NUGET_RESOLVEDEPENDENCIES: true
+    WS_NUGET_RESTOREDEPENDENCIES: true
+    WS_FILESYSTEMSCAN: false
+    WS_EXCLUDES: '**/build/** **/tests/**'
+  displayName: 'Unified Agent Prioritize Scan'

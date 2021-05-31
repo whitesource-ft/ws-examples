@@ -14,19 +14,57 @@ For all examples below, ensure that the branches defined within the .yml file ar
 YAML files beginning with "github"
 * Add the yml file to a subfolder named workflows underneath the .github folder in the branch you would like to scan and adjust branch triggers (on:) within the yml file.
     * `.github/workflows/github-action.yml`
-* Add a [repository secret](https://docs.github.com/en/actions/reference/encrypted-secrets) named "APIKEY" to the repository with your WhiteSource API Key from the Integrate page
+* Add a [repository secret](https://docs.github.com/en/actions/reference/encrypted-secrets) named "APIKEY" to the repository with your WhiteSource API Key from the Integrate page and "USERKEY" from your profile page
 
 ## [Azure DevOps pipelines](https://docs.microsoft.com/en-us/azure/devops/pipelines/?view=azure-devops)
 YAML files containing "azure-pipelines"
 * Ensure the default branch is the same as the .yml file or replace branch name in trigger.
 * Create a new pipeline by selecting Pipelines>Create Pipeline>Azure Repos Git> your imported repository, then select starter pipeline and replace contents with the .yml file
-* Add a [pipeline variable](https://docs.microsoft.com/en-us/azure/devops/pipelines/process/variables?view=azure-devops&tabs=yaml%2Cbatch) named "apikey" with your WhiteSource API Key from the integrate page
+* Add a [pipeline variable](https://docs.microsoft.com/en-us/azure/devops/pipelines/process/variables?view=azure-devops&tabs=yaml%2Cbatch) named "apikey" with your WhiteSource API Key from the integrate page & "userkey" from your profile page
 
 ## Branching
-The default for many of these yml files is enabled to scan on every push and is not recommended for production. It is recommended to run prioritize on pull requests to a protected branch.  An example of this config for GitHub actions can be seen below
+The default for many of these yml files is enabled to scan on every push & pull request to a release branch.  It is recommended to run prioritize on pull requests to a protected branch.  An example of this config for GitHub actions can be seen below
 
 ```
 on:
   pull_request:
-    branches: [ release** ]
+    branches: [ release* ]
 ```
+
+### Pipeline Log Publishing
+
+* Publish the whitesource logs by adding the following commands depending on each pipeline
+
+### Azure DevOps Pipelines
+
+```
+- publish: $(System.DefaultWorkingDirectory)/whitesource
+  artifact: Whitesource-Logs
+```
+### GitHub Actions
+
+```
+- name: 'Upload Artifact'
+  uses: actions/upload-artifact@v2
+  with:
+    name: Whitesource-Logs
+    path: whitesource
+    retention-days: 1
+```
+
+### Prioritize Troubleshooting
+* Add -viaDebug true at the end of the unified agent command
+* Add the following section after the java -jar unified agent call to upload all logs as artifacts that can be downloaded for viewing.
+
+* Important items
+  * App.json file will have the elementid & method that should be tracked down
+  * log should tell you if java or jdeps is a problem
+  * %TEMP% in Windows instead of /tmp/
+
+```
+cp -r whitesource Whitesource-Logs
+cp -r /tmp/whitesource* Whitesource-Logs
+# uncomment for multimodule analyzer projects
+# cp -r /tmp/MultiModuleAnalyzer* Whitesource-Logs
+```
+

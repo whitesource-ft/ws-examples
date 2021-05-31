@@ -1,5 +1,5 @@
 trigger:
-- main
+- release*
 
 pool:
   vmImage: 'ubuntu-latest'
@@ -30,6 +30,7 @@ steps:
       maven.resolveDependencies=true
       maven.aggregateModules=true
       fileSystemScan=false
+      generateProjectDetailsJson=true
       includes=**/*.jar
       EOF
       cat eua.config

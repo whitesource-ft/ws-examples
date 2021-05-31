@@ -35,7 +35,7 @@ steps:
       Add-Content -Value "nuget.restoreDependencies=true" -Path ./eua.config
       Add-Content -Value "fileSystemScan=false" -Path ./eua.config
       Add-Content -Value "includes=**/*.dll **/*.exe" -Path ./eua.config
-      Add-Content -Value "excludes=**test**" -Path ./eua.config
+      Add-Content -Value "excludes=**/tests/**" -Path ./eua.config
       Get-Content -Path ./eua.config
 
 - task: CmdLine@2

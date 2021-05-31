@@ -1,4 +1,5 @@
-name: Whitesource Prioritize Python
+# replace .war with .jar or .ear if needed
+name: Whitesource Prioritize Java with Maven
 
 on:
   push:
@@ -7,37 +8,37 @@ on:
     branches: [ release* ]
 
 jobs:
-  prioritize:
+  build:
 
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        python-version: [3.7]
 
     steps:
     - uses: actions/checkout@v2
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v2
+    - name: Set up JDK
+      uses: actions/setup-java@v2
       with:
-        python-version: ${{ matrix.python-version }}
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install virtualenv --user
-        pip install -r requirements.txt
-    - name: WhiteSource Prioritize Scan
+        java-version: '8'
+        distribution: 'adopt'
+    - name: Build with Maven
+      run: mvn clean install -DskipTests=true
+    - name: WhiteSource Unified Agent Scan
       env:
+        GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
         WS_APIKEY: ${{secrets.APIKEY}}
         WS_USERKEY: ${{secrets.USERKEY}}
+        WS_WSS_URL: https://saas.whitesourcesoftware.com/agent
         WS_PRODUCTNAME: GH_${{github.event.repository.name}}
         WS_PROJECTNAME: ${{github.ref}}_Prioritize
         WS_ENABLEIMPACTANALYSIS: true
         WS_REQUIREKNOWNSHA1: false
         WS_RESOLVEALLDEPENDENCIES: false
-        WS_PYTHON_RESOLVEDEPENDENCIES: true
+        WS_MAVEN_RESOLVEDEPENDENCIES: true
+        WS_MAVEN_AGGREGATEMODULES: true
         WS_FILESYSTEMSCAN: false
         WS_GENERATEPROJECTDETAILSJSON: true
       run: |
         curl -LJO https://unified-agent.s3.amazonaws.com/wss-unified-agent.jar
         echo Unified Agent downloaded successfully
-        java -jar wss-unified-agent.jar -appPath ./requirements.txt -d ./
+        WARFILE=$(find ./ -type f -wholename "*/target/*.war")
+        java -jar wss-unified-agent.jar -appPath $WARFILE -d ./
+        
