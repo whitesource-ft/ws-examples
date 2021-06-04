@@ -14,7 +14,9 @@ steps:
 - script: |
     curl -LJO https://unified-agent.s3.amazonaws.com/wss-unified-agent.jar
     echo Unified Agent downloaded successfully
-    java -jar wss-unified-agent.jar -appPath <path to debug dll> -d ./
+    CSPROJ=$(basename $(find ./ -type f -wholename "*/src/*.csproj") .csproj)
+    DLL=$(find ./ -type f -wholename "*/publish/*$CSPROJ.dll")
+    java -jar wss-unified-agent.jar -appPath $DLL -d ./
   env:
     WS_APIKEY: $(APIKEY)
     WS_USERKEY: $(USERKEY)

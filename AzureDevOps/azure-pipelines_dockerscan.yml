@@ -1,8 +1,13 @@
 
-  # project name does not matter, it is set by docker.projectNameFormat 
-  # default is <Image Name> <Image Tag> <Image ID>
-  # repositoryNameAndTag = <Image Name> <Image Tag>
-  # repositoryName = <Image Name>
+# project name does not matter, it is set by docker.projectNameFormat 
+# default is <Image Name> <Image Tag> <Image ID>
+# repositoryNameAndTag = <Image Name> <Image Tag>
+# repositoryName = <Image Name>
+
+# To remove the base image from findings, use the following paramaters
+#    WS_DOCKER_EXCLUDEBASEIMAGE: true
+#    WS_DOCKER_DOCKERFILEPATH: ./Dockerfile
+
 
 pool:
   vmImage: 'ubuntu-latest'
@@ -16,13 +21,15 @@ steps:
     action: 'Run a Docker Compose command'
     dockerComposeCommand: 'build'
 
-- task: CmdLine@2
-  inputs:
-    script: |
-      curl -LJO https://unified-agent.s3.amazonaws.com/wss-unified-agent.jar
-      echo Unified Agent downloaded successfully
-      java -jar wss-unified-agent.jar -apikey $(APIKEY) -product "$(System.TeamProject)" -project "$(Build.Repository.Name)" -docker.scanImages true
-    env:
-      WS_DOCKER_INCLUDES: ".*$(Build.Repository.Name).*"
-      WS_DOCKER_LAYERS: true
-    displayName: WhiteSource Docker Image Scan
+
+- script: |
+    curl -LJO https://unified-agent.s3.amazonaws.com/wss-unified-agent.jar
+    echo Unified Agent downloaded successfully
+    java -jar wss-unified-agent.jar  -product "$(System.TeamProject)" -project "doesnotmatter" -docker.scanImages true
+  env:
+    WS_APIKEY: $(APIKEY)
+    WS_DOCKER_INCLUDES: ".*$(Build.Repository.Name).*"
+    WS_DOCKER_LAYERS: true
+    WS_DOCKER_PROJECTNAMEFORMAT: repositoryNameAndTag
+  displayName: WhiteSource Docker Image Scan
+  

@@ -1,4 +1,6 @@
 # add github_com_token & renovate_token as environment variables
+# renovate_token should be an ADO token with admin access to the repos that you would like merge requests opened for
+# github_com token is used for https://docs.renovatebot.com/self-hosting/#githubcom-token-for-release-notes
 
 trigger:
 - master
