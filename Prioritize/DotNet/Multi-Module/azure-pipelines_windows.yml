@@ -38,11 +38,9 @@ steps:
       Add-Content -Value "excludes=**/tests/**" -Path ./eua.config
       Get-Content -Path ./eua.config
 
-- task: CmdLine@2
-  inputs:
-    script: |
-      curl -LJO https://github.com/whitesource-ft/xModuleAnalyzer-NET/releases/download/0.0.1/xModuleAnalyzer-NET.zip
-      unzip ./xModuleAnalyzer-NET.zip
+- script: |
+    curl -LJO https://github.com/whitesource-ft/xModuleAnalyzer-NET/blob/main/xModuleAnalyzer-NET.ps1
+    echo "xModuleAnalyzer-NET downloaded successfully"
 - task: PowerShell@2
   inputs:
     filePath: './xModuleAnalyzer-NET.ps1'

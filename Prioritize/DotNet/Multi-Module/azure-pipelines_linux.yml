@@ -6,22 +6,19 @@ pool:
 
 steps:
 
-- task: DotNetCoreCLI@2
-  inputs:
-    command: 'run'
-    projects: 'build/build.csproj'
+- script: ./build.sh
+  displayName: 'Build DotNET projects'
 
 - script: |
     curl -LJO https://unified-agent.s3.amazonaws.com/wss-unified-agent.jar
     echo Unified Agent downloaded successfully
-    CSPROJ=$(basename $(find ./src -type f -wholename "*.csproj") .csproj)
-    DLL=$(find ./ -type f -wholename "*/bin/Release/*/$CSPROJ.dll")
-    java -jar wss-unified-agent.jar -appPath $DLL -d ./src
+    curl -LJO https://github.com/whitesource-ft/xModuleAnalyzer-NET/blob/main/xModuleAnalyzer-NET.sh
+    echo xModuleAnalyzer-NET downloaded successfully
+    chmod +x ./xModuleAnalyzer-NET.sh && ./xModuleAnalyzer-NET.sh
   env:
     WS_APIKEY: $(APIKEY)
     WS_USERKEY: $(USERKEY)
     WS_PRODUCTNAME: AZDO_$(System.TeamProject)
-    WS_PROJECTNAME: $(Build.Repository.Name)_$(Build.SourceBranchName)_Prioritize
     WS_ENABLEIMPACTANALYSIS: true
     WS_REQUIREKNOWNSHA1: false
     WS_RESOLVEALLDEPENDENCIES: false
