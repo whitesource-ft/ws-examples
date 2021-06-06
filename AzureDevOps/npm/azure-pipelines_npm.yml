@@ -31,9 +31,8 @@ steps:
   }
   inputs:
     script: |
-      echo Downloading WhiteSource Unified Agent
       curl -LJO https://unified-agent.s3.amazonaws.com/wss-unified-agent.jar
-
+      echo Unified Agent downloaded successfully
       echo WhiteSource Scan
-      java -jar wss-unified-agent.jar -product "$(Build.Repository.Name)" -project "$(Build.DefinitionName)"
+      java -jar wss-unified-agent.jar -product "AZDO_$(Build.Repository.Name)" -project "$(Build.DefinitionName)"
     failOnStderr: false

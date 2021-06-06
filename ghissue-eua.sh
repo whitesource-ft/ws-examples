@@ -1,7 +1,6 @@
 #!/bin/bash
 # Add the following after calling the unified agent in a github-action.yml file from the WhiteSource Field Tookit
-#         chmod +x ./ghissue-eua.sh
-#         ./ghissue-eua.sh
+#         chmod +x ./ghissue-eua.sh && ./ghissue-eua.sh
 # Known issue - this script will not work on the first scan as EUA needs to process on the backend before results are available.
 # TODO - Add ERROR handling
 APIURL=https://saas.whitesourcesoftware.com

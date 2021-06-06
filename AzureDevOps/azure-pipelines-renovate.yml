@@ -12,8 +12,8 @@ steps:
 - task: WhiteSource@21
   inputs:
     cwd: '$(System.DefaultWorkingDirectory)'
-    projectName: '$(Build.Repository.Name)_$(Build.SourceBranchName)_ADOplugin'
-  displayName: 'WS-Scan'
+    projectName: '$(Build.Repository.Name)_$(Build.SourceBranchName)'
+  displayName: 'WS Unified Agent Scan'
 
 - script: |
     docker run --rm -e GITHUB_COM_TOKEN=$(GITHUB_COM_TOKEN) -e RENOVATE_TOKEN=$(RENOVATE_TOKEN) -e RENOVATE_CONFIG -e RENOVATE_ENDPOINT -e RENOVATE_PLATFORM -e RENOVATE_REPOSITORIES renovate/renovate

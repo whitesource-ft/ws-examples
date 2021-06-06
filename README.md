@@ -33,21 +33,21 @@ on:
 
 ## Pipeline Log Publishing
 
-* Publish the whitesource logs by adding the following commands depending on each pipeline
+* Publish the whitesource folder with logs & reports by adding the following commands depending on each pipeline
 
 ### Azure DevOps Pipelines
 
 ```
 - publish: $(System.DefaultWorkingDirectory)/whitesource
-  artifact: Whitesource-Logs
+  artifact: Whitesource
 ```
 ### GitHub Actions
 
 ```
-- name: 'Upload WhiteSource Logs'
+- name: 'Upload WhiteSource folder'
   uses: actions/upload-artifact@v2
   with:
-    name: Whitesource-Logs
+    name: Whitesource
     path: whitesource
     retention-days: 1
 ```
