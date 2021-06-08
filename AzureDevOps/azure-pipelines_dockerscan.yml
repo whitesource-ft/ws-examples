@@ -1,4 +1,4 @@
-
+# WS_DOCKER_INCLUDES shoudl be the name of the docker image you would like to scan
 # project name does not matter, it is set by docker.projectNameFormat 
 # default is <Image Name> <Image Tag> <Image ID>
 # repositoryNameAndTag = <Image Name> <Image Tag>
