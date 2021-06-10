@@ -1,4 +1,8 @@
 #!/bin/bash
+# Prerequisites 
+# apt install jq curl
+# WS_GENERATEPROJECTDETAILSJSON: true
+
 # Add the following after calling the unified agent in any pipeline file to save reports to the ./whitesource folder
 # then use your pipeline publish feature to save the ./whitesource folder as an artifact
 #         chmod +x ./pipelinereports.sh && ./pipelinereports.sh
