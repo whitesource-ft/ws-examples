@@ -25,9 +25,13 @@ steps:
 - script: |
     curl -LJO https://unified-agent.s3.amazonaws.com/wss-unified-agent.jar
     echo Unified Agent downloaded successfully
-    java -jar wss-unified-agent.jar  -product "$(System.TeamProject)" -project "doesnotmatter" -docker.scanImages true
+    java -jar wss-unified-agent.jar
   env:
     WS_APIKEY: $(APIKEY)
+    WS_USERKEY: $(USERKEY)
+    WS_PRODUCTNAME: $(System.TeamProject)
+    WS_PROJECTNAME: doesnotmatter
+    WS_DOCKER_SCANIMAGES: true
     WS_DOCKER_INCLUDES: ".*$(Build.Repository.Name).*"
     WS_DOCKER_LAYERS: true
     WS_DOCKER_PROJECTNAMEFORMAT: repositoryNameAndTag

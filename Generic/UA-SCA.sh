@@ -1,4 +1,5 @@
 #!/bin/bash
+# Generic example for scanning for dependencies with the WhiteSource Unified Agent 
 
 export WS_APIKEY=<your-api-key>
 export WS_USERKEY=<your-user-key>
