@@ -37,6 +37,7 @@ steps:
       Add-Content -Value "includes=**/*.dll **/*.exe" -Path ./eua.config
       Add-Content -Value "excludes=**/tests/**" -Path ./eua.config
       Get-Content -Path ./eua.config
+  displayName: 'Create whitesource config'
 
 - script: |
     curl -LJO https://github.com/whitesource-ft/xModuleAnalyzer-NET/blob/main/xModuleAnalyzer-NET.ps1
@@ -44,4 +45,5 @@ steps:
 - task: PowerShell@2
   inputs:
     filePath: './xModuleAnalyzer-NET.ps1'
-    arguments: '-d ./src -c ./eua.config -productName AZDO_$(System.TeamProject)'
+    arguments: '-d ./ -c ./eua.config -productName AZDO_$(System.TeamProject)'
+  displayName: 'Unified Agent Prioritize Scan'

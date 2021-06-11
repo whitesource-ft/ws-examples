@@ -7,9 +7,8 @@
 # Ensure the aws cli is configured with the correct login information - https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-quickstart.html
 # aws configure
 
-# Ensure docker is has a user and is logged in to AWS - # https://docs.aws.amazon.com/AmazonECR/latest/userguide/registry_auth.html
-# aws ecr get-login-password --region <region> | docker login -u AWS -p <password> <aws_account_id>.dkr.ecr.<region>.amazonaws.com
-
+# Ensure docker is logged in to AWS - # https://docs.aws.amazon.com/AmazonECR/latest/userguide/registry_auth.html
+# aws ecr get-login-password --region <region> | docker login --username AWS --password-stdin <aws_account_id>.dkr.ecr.<region>.amazonaws.com
 
 # default images pulled is 10 - uncomment and change below value for more
 # export WS_DOCKER_PULL_MAXIMAGES=10 
