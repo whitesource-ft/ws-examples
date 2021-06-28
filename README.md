@@ -31,40 +31,46 @@ on:
     branches: [ release* ]
 ```
 
-### Pipeline Log Publishing
+## Pipeline Log Publishing
 
-* Publish the whitesource logs by adding the following commands depending on each pipeline
+* Publish the whitesource folder with logs & reports by adding the following commands depending on each pipeline
 
 ### Azure DevOps Pipelines
 
 ```
 - publish: $(System.DefaultWorkingDirectory)/whitesource
-  artifact: Whitesource-Logs
+  artifact: Whitesource
 ```
 ### GitHub Actions
 
 ```
-- name: 'Upload Artifact'
+- name: 'Upload WhiteSource folder'
   uses: actions/upload-artifact@v2
   with:
-    name: Whitesource-Logs
+    name: Whitesource
     path: whitesource
     retention-days: 1
 ```
 
-### Prioritize Troubleshooting
+## Prioritize Troubleshooting
 * Add -viaDebug true at the end of the unified agent command
-* Add the following section after the java -jar unified agent call to upload all logs as artifacts that can be downloaded for viewing.
+* Publish the following folders using your pipeline publish tool - GitHub Action example below
+  * /tmp/whitesource*
+  * /tmp/ws-ua*
 
 * Important items
   * App.json file will have the elementid & method that should be tracked down
   * log should tell you if java or jdeps is a problem
   * %TEMP% in Windows instead of /tmp/
-
+#### GitHub Prioritize Log Publish
 ```
-cp -r whitesource Whitesource-Logs
-cp -r /tmp/whitesource* Whitesource-Logs
-# uncomment for multimodule analyzer projects
-# cp -r /tmp/MultiModuleAnalyzer* Whitesource-Logs
+    - name: 'Upload Prioritize Logs'
+      uses: actions/upload-artifact@v2
+      with:
+        name: Prioritize-Logs
+        path: |
+          /tmp/whitesource*
+          /tmp/ws-ua*
+        retention-days: 1
 ```
 

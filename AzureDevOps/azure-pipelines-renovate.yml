@@ -1,4 +1,6 @@
 # add github_com_token & renovate_token as environment variables
+# renovate_token should be an ADO token with admin access to the repos that you would like merge requests opened for
+# github_com token is used for https://docs.renovatebot.com/self-hosting/#githubcom-token-for-release-notes
 
 trigger:
 - master
@@ -10,8 +12,8 @@ steps:
 - task: WhiteSource@21
   inputs:
     cwd: '$(System.DefaultWorkingDirectory)'
-    projectName: '$(Build.Repository.Name)_$(Build.SourceBranchName)_ADOplugin'
-  displayName: 'WS-Scan'
+    projectName: '$(Build.Repository.Name)_$(Build.SourceBranchName)'
+  displayName: 'WS Unified Agent Scan'
 
 - script: |
     docker run --rm -e GITHUB_COM_TOKEN=$(GITHUB_COM_TOKEN) -e RENOVATE_TOKEN=$(RENOVATE_TOKEN) -e RENOVATE_CONFIG -e RENOVATE_ENDPOINT -e RENOVATE_PLATFORM -e RENOVATE_REPOSITORIES renovate/renovate
