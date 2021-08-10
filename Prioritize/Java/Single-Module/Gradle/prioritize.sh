@@ -16,8 +16,9 @@ echo  JAVA_HOME:$JAVA_HOME
 #### Run WS Prioritize
 curl -LJO https://unified-agent.s3.amazonaws.com/wss-unified-agent.jar
 echo Unified Agent downloaded successfully
-# replace .jar with .war or .ear if needed
-export WARFILE=$(find ./ -type f -wholename "*./build/*.jar")
+# replace .war with .ear or the following for WARFILE if needed
+# JARFILE=$(find ./build/libs -type f -wholename "*.jar" ! -wholename "*javadoc*" ! -wholename "*groovydoc*" ! -wholename "*sources*")
+export WARFILE=$(find ./build/libs -type f -wholename "*.war")
 export WS_APIKEY=<your-api-key>
 export WS_USERKEY=<your-user-key>
 export WS_ENABLEIMPACTANALYSIS=true

@@ -1,4 +1,5 @@
-# replace .war with .jar or .ear if needed
+# replace .war with .ear or the following for WARFILE if needed
+# JARFILE=$(find ./build/libs -type f -wholename "*.jar" ! -wholename "*javadoc*" ! -wholename "*groovydoc*" ! -wholename "*sources*")
 name: Whitesource Prioritize Java with Gradle
 
 on:
@@ -41,6 +42,6 @@ jobs:
       run: |
         curl -LJO https://unified-agent.s3.amazonaws.com/wss-unified-agent.jar
         echo Unified Agent downloaded successfully
-        WARFILE=$(find ./ -type f -wholename "*/target/*.war")
+        WARFILE=$(find ./build/libs -type f -wholename "*.war")
         java -jar wss-unified-agent.jar -appPath $WARFILE -d ./
         
