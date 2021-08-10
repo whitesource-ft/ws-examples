@@ -38,6 +38,8 @@ jobs:
         resolveAllDependencies=false
         gradle.resolveDependencies=true
         gradle.aggregateModules=true
+        gradle.preferredEnvironment=wrapper
+        gradle.wrapperPath=./gradlew
         fileSystemScan=false
         generateProjectDetailsJson=true
         includes=**/*.jar
