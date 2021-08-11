@@ -38,7 +38,7 @@ steps:
   inputs:
     script: |
       curl -LJO https://unified-agent.s3.amazonaws.com/wss-unified-agent.jar
-      curl -o xModuleAnalyzer.jar https://unified-agent.s3.amazonaws.com/xModuleAnalyzer/xModuleAnalyzer-21.3.2.jar
+      curl -LJO https://unified-agent.s3.amazonaws.com/xModuleAnalyzer/xModuleAnalyzer.jar
       java -jar wss-unified-agent.jar -d ./ -analyzeMultiModule multimodule.txt
       echo 'multimodule.txt contents'
       cat multimodule.txt

@@ -38,6 +38,8 @@ jobs:
         resolveAllDependencies=false
         gradle.resolveDependencies=true
         gradle.aggregateModules=true
+        gradle.preferredEnvironment=wrapper
+        gradle.wrapperPath=./gradlew
         fileSystemScan=false
         generateProjectDetailsJson=true
         includes=**/*.jar
@@ -45,7 +47,7 @@ jobs:
         cat eua.config
         echo config created successfully
         curl -LJO https://unified-agent.s3.amazonaws.com/wss-unified-agent.jar
-        curl -o xModuleAnalyzer.jar https://unified-agent.s3.amazonaws.com/xModuleAnalyzer/xModuleAnalyzer-21.4.1.jar
+        curl -LJO https://unified-agent.s3.amazonaws.com/xModuleAnalyzer/xModuleAnalyzer.jar
         echo Unified Agent downloaded successfully
         java -jar wss-unified-agent.jar -d ./ -analyzeMultiModule multimodule.txt
         echo 'multimodule.txt contents'
