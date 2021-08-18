@@ -1,0 +1,51 @@
+# add APIKEY as an environment variable - https://gitlab.com/help/ci/variables/README
+default:
+  image: timbru31/java-node:latest
+
+stages:
+  - build
+  - scan
+  - deploy
+
+before_script:
+  - NPM_PACKAGE_NAME=$(node -p "require('./package.json').name")
+  - NPM_PACKAGE_VERSION=$(node -p "require('./package.json').version")
+  - NPM_PKG="$NPM_PACKAGE_NAME@$NPM_PACKAGE_VERSION"
+  - NPM_APP_ENTRY_POINT=$(node -p "require('./package.json').main")
+  - NPM_IS_PRIVATE=$(node -p "require('./package.json').private")
+
+cache:
+  key: "cache-$NPM_PKG-$CI_PIPELINE_ID"
+  paths:
+  - ${CI_PROJECT_DIR}/
+
+npm_build:
+  stage: build
+  script:
+    - echo "CI_PROJECT_DIR - $CI_PROJECT_DIR"
+    - echo "Package - $NPM_PKG"
+    - |
+      if [ -f "./package-lock.json" ] ; then
+        npm install
+      else
+        npm install --package-lock
+      fi
+  tags:
+    - docker-runner
+
+ws_scan:
+  stage: scan
+  variables:
+    WS_APIKEY: "$API_KEY"
+    WS_WSS_URL: "https://saas-eu.whitesourcesoftware.com/agent"
+    WS_PRODUCTNAME: "$CI_PROJECT_NAME"
+    WS_PROJECTNAME: "$CI_COMMIT_REF_NAME"
+    WS_RESOLVEALLDEPENDENCIES: "false"
+    WS_NPM_RESOLVEDEPENDENCIES: "true"
+  script:
+    - echo "Downloading WhiteSource Unified Agent"
+    - curl -LJO https://unified-agent.s3.amazonaws.com/wss-unified-agent.jar
+    - echo "WhiteSource Scan"
+    - java -jar ./wss-unified-agent.jar
+  tags:
+    - docker-runner
