@@ -11,10 +11,10 @@ YAML files beginning with "github"
 YAML files containing "azure-pipelines"
 * Ensure the default branch is the same as the .yml file or replace branch name in trigger.
 * Create a new pipeline by selecting Pipelines>Create Pipeline>Azure Repos Git> your imported repository, then select starter pipeline and replace contents with the .yml file
-* Add a [pipeline variable](https://docs.microsoft.com/en-us/azure/devops/pipelines/process/variables?view=azure-devops&tabs=yaml%2Cbatch) named "apikey" with your WhiteSource API Key from the integrate page & "userkey" from your profile page
+* Add a [pipeline variable](https://docs.microsoft.com/en-us/azure/devops/pipelines/process/variables?view=azure-devops&tabs=yaml%2Cbatch) named "apiKey" with your WhiteSource API Key from the integrate page & "userKey" from your profile page
 
 ## Branching
-The default for many of these yml files is enabled to scan on every push & pull request to a release branch.  It is recommended to run prioritize on pull requests to a protected branch.  An example of this config for GitHub actions can be seen below
+The default for many of these yml files is enabled to scan on every push & pull request to a release branch.  It is recommended to run Prioritize on pull requests to a protected branch.  An example of this config for GitHub actions can be seen below
 
 ```
 on:
@@ -24,7 +24,7 @@ on:
 
 ## Pipeline Log Publishing
 
-* Publish the whitesource folder with logs & reports by adding the following commands depending on each pipeline
+* Publish the `whitesource` folder with logs & reports by adding the following commands depending on each pipeline
 
 ### Azure DevOps Pipelines
 
@@ -38,19 +38,19 @@ on:
 - name: 'Upload WhiteSource folder'
   uses: actions/upload-artifact@v2
   with:
-    name: Whitesource
+    name: WhiteSource
     path: whitesource
     retention-days: 1
 ```
 ## Adding Prioritize Comment Links to GitHub Issues
-Add the following lines after the unified agent command
+Add the following lines after the Unified Agent command
 ```
 curl -LJO https://raw.githubusercontent.com/whitesource-ft/ws-examples/main/ghissue-eua.sh 
 chmod +x ./ghissue-eua.sh && ./ghissue-eua.sh
 ```
 
 ## Prioritize Troubleshooting
-* Add -viaDebug true at the end of the unified agent command
+* Add ```-viaDebug true``` at the end of the Unified Agent command
 * Publish the following folders using your pipeline publish tool - GitHub Action example below
   * /tmp/whitesource*
   * /tmp/ws-ua*
