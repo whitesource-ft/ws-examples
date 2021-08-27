@@ -25,11 +25,12 @@ steps:
     chmod +x wss_agent.sh;
     ./wss_agent.sh -appPath ./package.json -d ./ -product ADO-NodeGoat -project ADO-NodeGoat;
   env:
-    WS_APIKEY: <key>
+    WS_APIKEY: $(APIKEY)
+    WS_USERKEY: $(USERKEY)
     WS_WSS_URL: https://saas-eu.whitesourcesoftware.com/agent
     WS_ENABLEIMPACTANALYSIS: true
     WS_RESOLVEALLDEPENDENCIES: false
-    REQUIREKNOWNSHA1: false
+    WS_REQUIREKNOWNSHA1: false
     WS_FILESYSTEMSCAN: false
     WS_NPM_RESOLVEDEPENDENCIES: true
     WS_NPM_RESOLVELOCKFILE: false
