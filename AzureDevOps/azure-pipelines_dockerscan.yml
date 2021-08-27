@@ -35,6 +35,5 @@ steps:
     WS_DOCKER_INCLUDES: ".*$(Build.Repository.Name).*"
     WS_DOCKER_LAYERS: true
     WS_DOCKER_PROJECTNAMEFORMAT: repositoryNameAndTag
-    WS_FILESYSTEMSCAN: false
   displayName: WhiteSource Docker Image Scan
   
