@@ -20,20 +20,21 @@ steps:
   displayName: 'npm install'
   
 - script: |
-    curl -LJO https://github.com/whitesource/unified-agent-distribution/raw/master/standAlone/wss_agent.sh; 
-    echo Unified Agent downloaded successfully;
-    chmod +x wss_agent.sh;
-    ./wss_agent.sh -appPath ./package.json -d ./ -product ADO-NodeGoat -project ADO-NodeGoat;
+    curl -LJO https://unified-agent.s3.amazonaws.com/wss-unified-agent.jar
+    echo Unified Agent downloaded successfully
+    java -jar wss-unified-agent.jar -appPath ./package.json -d ./
+    
   env:
     WS_APIKEY: $(APIKEY)
     WS_USERKEY: $(USERKEY)
-    WS_WSS_URL: https://saas-eu.whitesourcesoftware.com/agent
+    WS_WSS_URL: $(WSS_URL)
+    WS_PROJECTNAME: "ADO-NodeGoat"
+    WS_PRODUCTNAME: "ADO-NodeGoat"
     WS_ENABLEIMPACTANALYSIS: true
     WS_RESOLVEALLDEPENDENCIES: false
     WS_REQUIREKNOWNSHA1: false
     WS_FILESYSTEMSCAN: false
     WS_NPM_RESOLVEDEPENDENCIES: true
     WS_NPM_RESOLVELOCKFILE: false
-    WS_NPM_RUNPRESTEP: false
     
   displayName: 'Unified Agent Prioritize Scan'
