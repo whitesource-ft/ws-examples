@@ -15,10 +15,13 @@ jobs:
       - node/install
       # npm install packages
       - node/install-packages
-      # execute WhiteSource scan, curling the latest unified agent. Remeber to set environment variables (api key, url, project name and product name, they need to be upper case too)
+      # execute WhiteSource scan, curling the latest unified agent. Remeber to set environmental variables (api key, url, project name and product name)
+      - run: 
+          name: Download WhiteSource
+          command: bash <(curl -LJO https://unified-agent.s3.amazonaws.com/wss-unified-agent.jar)
       - run: 
           name: Run WhiteSource
-          command: bash <(curl -s -L https://github.com/whitesource/unified-agent-distribution/raw/master/standAlone/wss_agent.sh)
+          command: bash <(./wss_agent.sh)
 workflows:
   example-workflow:
     jobs:
