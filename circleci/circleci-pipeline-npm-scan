@@ -21,7 +21,7 @@ jobs:
           command: bash <(curl -LJO https://unified-agent.s3.amazonaws.com/wss-unified-agent.jar)
       - run: 
           name: Run WhiteSource
-          command: bash <(./wss_agent.sh)
+          command: bash <(java -jar wss-unified-agent.jar)
 workflows:
   example-workflow:
     jobs:
