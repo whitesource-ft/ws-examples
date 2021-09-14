@@ -16,12 +16,18 @@ jobs:
       # npm install packages
       - node/install-packages
       # execute WhiteSource scan, curling the latest unified agent. Remeber to set environmental variables (api key, url, project name and product name)
+       # WS_APIKEY
+      # WS_WSS_URL
+      # WS_PRODUCTNAME
+      # WS_PROJECTNAME
+      # WS_RESOLVEALLDEPENDENCIES: false
+      # WS_NPM_RESOLVEDEPENDENCIES: true
       - run: 
           name: Download WhiteSource
           command: bash <(curl -LJO https://unified-agent.s3.amazonaws.com/wss-unified-agent.jar)
       - run: 
           name: Run WhiteSource
-          command: bash <(java -jar wss-unified-agent.jar)
+          command: java -jar wss-unified-agent.jar
 workflows:
   example-workflow:
     jobs:
