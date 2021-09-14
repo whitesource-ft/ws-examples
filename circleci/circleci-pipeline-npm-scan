@@ -16,7 +16,7 @@ jobs:
       # npm install packages
       - node/install-packages
       # execute WhiteSource scan, curling the latest unified agent. Remeber to set environmental variables (api key, url, project name and product name)
-       # WS_APIKEY
+      # WS_APIKEY
       # WS_WSS_URL
       # WS_PRODUCTNAME
       # WS_PROJECTNAME
