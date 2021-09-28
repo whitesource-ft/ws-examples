@@ -13,3 +13,24 @@ This repository contains examples of different ways to scan open source componen
 ## Langauge Specific Unified Agent Examples
 ### [Android](Android)
 ### [Swift](Swift)
+
+## Pipeline Log Publishing
+
+* Publish the `whitesource` folder with logs & reports by adding the following commands depending on each pipeline
+
+### Azure DevOps Pipelines
+
+```
+- publish: $(System.DefaultWorkingDirectory)/whitesource
+  artifact: Whitesource
+```
+### GitHub Actions
+
+```
+- name: 'Upload WhiteSource folder'
+  uses: actions/upload-artifact@v2
+  with:
+    name: WhiteSource
+    path: whitesource
+    retention-days: 1
+```

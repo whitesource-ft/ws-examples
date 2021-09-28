@@ -21,27 +21,6 @@ on:
   pull_request:
     branches: [ release* ]
 ```
-
-## Pipeline Log Publishing
-
-* Publish the `whitesource` folder with logs & reports by adding the following commands depending on each pipeline
-
-### Azure DevOps Pipelines
-
-```
-- publish: $(System.DefaultWorkingDirectory)/whitesource
-  artifact: Whitesource
-```
-### GitHub Actions
-
-```
-- name: 'Upload WhiteSource folder'
-  uses: actions/upload-artifact@v2
-  with:
-    name: WhiteSource
-    path: whitesource
-    retention-days: 1
-```
 ## Adding Prioritize Comment Links to GitHub Issues
 Add the following lines after the Unified Agent command
 ```
