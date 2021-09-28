@@ -6,6 +6,7 @@
 
 # Add the following after calling the unified agent in any pipeline file to save reports from the scanned project to the whitesource logs folder
 # then use your pipeline publish feature to save the whitesource log folder as an artifact as shown in the README
+#         curl -LJO https://raw.githubusercontent.com/whitesource-ft/ws-examples/main/pipelinereports.sh
 #         chmod +x ./pipelinereports.sh && ./pipelinereports.sh
 
 WS_PROJECTTOKEN=$(jq -r '.projects | .[] | .projectToken' ./whitesource/scanProjectDetails.json)

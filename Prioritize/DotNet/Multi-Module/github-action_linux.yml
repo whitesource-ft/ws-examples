@@ -36,7 +36,7 @@ jobs:
       run: |
         curl -LJO https://unified-agent.s3.amazonaws.com/wss-unified-agent.jar
         echo Unified Agent downloaded successfully
-        curl -LJO https://github.com/whitesource-ft/xModuleAnalyzer-NET/blob/main/xModuleAnalyzer-NET.sh
+        curl -LJO https://raw.githubusercontent.com/whitesource-ft/xModuleAnalyzer-NET/main/xModuleAnalyzer-NET.sh
         echo xModuleAnalyzer-NET downloaded successfully
         chmod +x ./xModuleAnalyzer-NET.sh && ./xModuleAnalyzer-NET.sh
         
