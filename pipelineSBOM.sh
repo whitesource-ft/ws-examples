@@ -1,6 +1,6 @@
 #!/bin/bash
 # Prerequisites 
-# apt install jq curl python3
+# apt install jq curl python3 python3-pip
 # WS_GENERATEPROJECTDETAILSJSON: true
 # WS_USERKEY
 # WS_APIKEY
@@ -9,6 +9,8 @@
 # then use your pipeline publish feature to save the whitesource log folder as an artifact as shown in the README
 #         curl -LJO https://raw.githubusercontent.com/whitesource-ft/ws-examples/main/pipelineSBOM.sh
 #         chmod +x ./pipelineSBOM.sh && ./pipelineSBOM.sh
+
+# More information & usage regarding WS SBOM generator can be found at https://github.com/whitesource-ps/ws-sbom-spdx-report
 
 WS_PROJECTTOKEN=$(jq -r '.projects | .[] | .projectToken' ./whitesource/scanProjectDetails.json)
 APIURL=https://saas.whitesourcesoftware.com
