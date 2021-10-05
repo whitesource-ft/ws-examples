@@ -13,7 +13,6 @@
 # More information & usage regarding WS SBOM generator can be found at https://github.com/whitesource-ps/ws-sbom-spdx-report
 
 WS_PROJECTTOKEN=$(jq -r '.projects | .[] | .projectToken' ./whitesource/scanProjectDetails.json)
-APIURL=https://saas.whitesourcesoftware.com
 
 git clone https://github.com/whitesource-ps/ws-sbom-report.git && cd ./ws-sbom-report
 pip3 install -r requirements.txt
