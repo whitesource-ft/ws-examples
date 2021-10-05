@@ -18,7 +18,7 @@ declare -a servers=("saas" "saas-eu" "app" "app-eu")
 for i in "${servers[@]}"
 do
     if [ $1 = $i ]; then
-        WS_URL="http://$i.whitesourcesoftware.com"
+        WS_URL="https://$i.whitesourcesoftware.com"
     fi
 done
 
