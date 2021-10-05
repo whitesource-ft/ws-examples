@@ -12,10 +12,25 @@
 
 # More information & usage regarding WS SBOM generator can be found at https://github.com/whitesource-ps/ws-sbom-spdx-report
 
+# Routing to the right WS instance
+declare -a servers=("saas" "saas-eu" "app" "app-eu")
+
+for i in "${servers[@]}"
+do
+    if [ $1 = $i ]; then
+        WS_URL="http://$i.whitesourcesoftware.com"
+    fi
+done
+
+if [ -z $WS_URL ]; then
+    echo "No valid WhiteSource server URL provided"
+    exit 1
+fi
+
 WS_PROJECTTOKEN=$(jq -r '.projects | .[] | .projectToken' ./whitesource/scanProjectDetails.json)
 
 git clone https://github.com/whitesource-ps/ws-sbom-report.git && cd ./ws-sbom-report
 pip3 install -r requirements.txt
 cd ./sbom_report
 
-python3 ./sbom_report.py -u $WS_USERKEY -k $WS_APIKEY -s $WS_PROJECTTOKEN -t tv -o ../../whitesource
+python3 ./sbom_report.py -u $WS_USERKEY -k $WS_APIKEY -s $WS_PROJECTTOKEN -a $WS_URL -t tv -o ../../whitesource
