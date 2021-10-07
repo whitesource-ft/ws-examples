@@ -39,6 +39,7 @@ echo Unified Agent downloaded successfully
 export WARFILE=$(find ./ -type f -wholename "*/target/*.war")
 export WS_APIKEY=<your-api-key>
 export WS_USERKEY=<your-user-key>
+export WS_WSS_URL=https://saas.whitesourcesoftware.com/agent
 export WS_ENABLEIMPACTANALYSIS=true
 export WS_REQUIREKNOWNSHA1=false
 export WS_RESOLVEALLDEPENDENCIES=false

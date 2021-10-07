@@ -4,21 +4,32 @@
 # WS_GENERATEPROJECTDETAILSJSON: true
 
 # Add the following after calling the unified agent in a github-action.yml file from the WhiteSource Field Tookit
-#         chmod +x ./ghissue-eua.sh && ./ghissue-eua.sh
+#         chmod +x ./ghissue-eua.sh && ./ghissue-eua.sh WS_URL
+#         WS_URL options: saas, saas-eu, app, app-eu
 # Known issue - this script will not work on the first scan as EUA needs to process on the backend before results are available.
 # TODO - Add ERROR handling
-APIURL=https://saas.whitesourcesoftware.com
+
 WS_PROJECTTOKEN=$(jq -r '.projects | .[] | .projectToken' ./whitesource/scanProjectDetails.json)
 echo "productName" $WS_PRODUCTNAME
 echo "projectName" $WS_PROJECTNAME
 echo "projectToken" $WS_PROJECTTOKEN
 
+# Routing to the right WS instance
+declare -a servers=("saas" "saas-eu" "app" "app-eu")
+
+for i in "${servers[@]}"
+do
+    if [ $1 = $i ]; then
+        WS_URL="https://$i.whitesourcesoftware.com"
+    fi
+done
+
 ### getProjectAlertsbyType
-curl --request POST $APIURL'/api/v1.3' --header 'Content-Type: application/json' --header 'Accept-Charset: UTF-8'  --data-raw '{   'requestType' : 'getProjectAlertsByType',   'userKey' : '$WS_USERKEY', 'alertType': 'SECURITY_VULNERABILITY',  'projectToken': '$WS_PROJECTTOKEN','format' : 'json'}' | jq '.alerts[]' >>alerts.json
+curl --request POST $WS_URL'/api/v1.3' --header 'Content-Type: application/json' --header 'Accept-Charset: UTF-8'  --data-raw '{   'requestType' : 'getProjectAlertsByType',   'userKey' : '$WS_USERKEY', 'alertType': 'SECURITY_VULNERABILITY',  'projectToken': '$WS_PROJECTTOKEN','format' : 'json'}' | jq '.alerts[]' >>alerts.json
 echo "saving alerts.json"
 
 ### getProjectSecurityAlertsbyVulnerabilityReport - finds Red Shields
-curl --request POST $APIURL'/api/v1.3' --header 'Content-Type: application/json' --header 'Accept-Charset: UTF-8'  --data-raw '{   'requestType' : 'getProjectSecurityAlertsByVulnerabilityReport',   'userKey' : '$WS_USERKEY',   'projectToken': '$WS_PROJECTTOKEN', 'format' : 'json'}' | jq -r '.alerts[] | select(.euaShield=="RED") | .vulnerabilityId' >> redshields.txt
+curl --request POST $WS_URL'/api/v1.3' --header 'Content-Type: application/json' --header 'Accept-Charset: UTF-8'  --data-raw '{   'requestType' : 'getProjectSecurityAlertsByVulnerabilityReport',   'userKey' : '$WS_USERKEY',   'projectToken': '$WS_PROJECTTOKEN', 'format' : 'json'}' | jq -r '.alerts[] | select(.euaShield=="RED") | .vulnerabilityId' >> redshields.txt
 echo 'saving redshields.txt'
 
 redshieldlist=`cat redshields.txt`

@@ -22,6 +22,8 @@ steps:
     script: |
       cat <<EOF > eua.config
       apiKey=$(APIKEY)
+      userKey=$(USERKEY)
+      wss.url=https://saas.whitesourcesoftware.com/agent
       productName=$(System.TeamProject)
       projectName=$(Build.Repository.Name)_$(Build.SourceBranchName)_Prioritize
       enableImpactAnalysis=true

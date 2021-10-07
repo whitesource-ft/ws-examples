@@ -9,6 +9,8 @@ build:
     echo build completed successfully
     cat <<EOF > eua.config
     apiKey="$APIKEY"
+    userKey="$USERKEY"
+    wss.url=https://saas.whitesourcesoftware.com/agent
     productName=GL_"$CI_PROJECT_DIR"
     projectName="$CI_COMMIT_BRANCH"_Prioritize
     enableImpactAnalysis=true
