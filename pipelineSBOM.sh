@@ -9,7 +9,7 @@
 # then use your pipeline publish feature to save the whitesource log folder as an artifact as shown in the README
 #         curl -LJO https://raw.githubusercontent.com/whitesource-ft/ws-examples/main/pipelineSBOM.sh
 #         chmod +x ./pipelineSBOM.sh && ./pipelineSBOM.sh WS_URL
-#         URL options: saas, saas-eu, app, app-eu
+#         WS_URL options: saas, saas-eu, app, app-eu
 
 # More information & usage regarding WS SBOM generator can be found at https://github.com/whitesource-ps/ws-sbom-spdx-report
 
