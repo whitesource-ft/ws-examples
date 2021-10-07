@@ -1,6 +1,14 @@
 pipeline {
   agent any
 
+  environment {
+       WS_APIKEY = "${APIKEY}" //Taken from Jenkins Global Environment Variables 
+       WS_WSS_URL = "${WSURL}" //Taken from Jenkins Global Environment Variables
+       WS_USERKEY = "${USERKEY}" //Taken from Jenkins Global Environment Variables
+       WS_PRODUCTNAME = "Jenkins_Pipeline"
+       WS_PROJECTNAME = "${JOB_NAME}"
+   }
+
   tools {
     maven "mvn_3.6.3"
   }
@@ -18,22 +26,22 @@ pipeline {
         sh 'mvn clean install -DskipTests'
       }
     }
+
     stage('Download WS Script') {
       steps {
                 script {
                     if (fileExists('./wss-unified-agent.jar')) {
                         echo "File already exists"
                     } else {
-                            sh 'curl -LJO https://github.com/whitesource/unified-agent-distribution/releases/latest/download/wss-unified-agent.jar'
+                            sh 'curl -LJO https://unified-agent.s3.amazonaws.com/wss-unified-agent.jar'
                         }
                     }
              }
     }
                        
     stage('Run WS Script') {
-      steps {
-        # APIKEY and URL can taken from Jenkins Global Environment Variables  
-        sh 'java -jar wss-unified-agent.jar -apiKey ${APIKEY} -wss.url ${URL} -product Jenkins_Pipeline -project ${JOB_NAME}'
+      steps { 
+        sh 'java -jar wss-unified-agent.jar'
       }
     }
   }

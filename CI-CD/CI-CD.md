@@ -2,12 +2,12 @@
 This repository contains tool specific examples of how to scan using the WhiteSource Unified Agent within a CI/CD pipeline.
 
 * [AzureDevOps](AzureDevops)
+* [CodeFresh](CodeFresh)
 * [CircleCI](CircleCI)
 * [GitHub](GitHub)
 * [GitLab](GitLab)
 * [GoogleCloudBuild](GoogleCloudBuild)
 * [Jenkins](Jenkins)
-* [CodeFresh](CodeFresh)
 
 
 ## Pipeline Log Publishing
