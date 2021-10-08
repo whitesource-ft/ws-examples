@@ -2,11 +2,10 @@
 # Prerequisites:
 # apt install jq curl
 # WS_GENERATEPROJECTDETAILSJSON: true
+# WS_PRODUCTNAME
+# WS_PROJECTNAME
+# WS_USERKEY
 
-# Add the following after calling the unified agent in a github-action.yml file from the WhiteSource Field Tookit
-#         chmod +x ./ghissue-eua.sh && ./ghissue-eua.sh WS_URL
-#         WS_URL options: saas, saas-eu, app, app-eu
-# Known issue - this script will not work on the first scan as EUA needs to process on the backend before results are available.
 # TODO - Add ERROR handling
 
 WS_PROJECTTOKEN=$(jq -r '.projects | .[] | .projectToken' ./whitesource/scanProjectDetails.json)
