@@ -1,6 +1,6 @@
 echo "Downloading WS"
 if ! [ -f ./wss-unified-agent.jar ]; then
-  curl -fSL -R -JO https://github.com/whitesource/unified-agent-distribution/releases/latest/download/wss-unified-agent.jar
+  curl -fSL -R -JO https://unified-agent.s3.amazonaws.com/wss-unified-agent.jar
 fi
 echo "Exceute WS"
 export WS_APIKEY=${APIKEY} #Taken from Jenkins Global Environment Variables
