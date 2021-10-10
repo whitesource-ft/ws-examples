@@ -40,12 +40,7 @@ on:
   pull_request:
     branches: [ release* ]
 ```
-## Adding Prioritize Comment Links to GitHub Issues
-Add the following lines after the Unified Agent command to add comments to your GitHub issues that are created by the WhiteSource GitHub integration.  These comments will indicate if the vulnerability has a redshield and provide a link to the WhiteSource UI for further examination.
-```
-curl -LJO https://raw.githubusercontent.com/whitesource-ft/ws-examples/main/ghissue-eua.sh 
-chmod +x ./ghissue-eua.sh && ./ghissue-eua.sh saas
-```
+## [Adding Prioritize Comment Links to GitHub Issues](../Scripts/Scripts.md)
 
 ## Prioritize Troubleshooting
 * Add ```-viaDebug true``` at the end of the Unified Agent command
@@ -57,6 +52,7 @@ chmod +x ./ghissue-eua.sh && ./ghissue-eua.sh saas
   * App.json file will have the elementid & method that should be tracked down
   * The log should mention if java or jdeps is a problem
   * %TEMP% should be used in Windows instead of /tmp/
+  
 ### GitHub Prioritize Log Publish
 ```
     - name: 'Upload Prioritize Logs'
