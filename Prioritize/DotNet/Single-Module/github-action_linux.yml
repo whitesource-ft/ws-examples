@@ -37,7 +37,7 @@ jobs:
       run: |
         curl -LJO https://unified-agent.s3.amazonaws.com/wss-unified-agent.jar
         echo Unified Agent downloaded successfully
-        CSPROJ=$(basename $(find ./src -type f -wholename "*.csproj") .csproj)
-        DLL=$(find ./ -type f -wholename "*/bin/Release/*/$CSPROJ.dll")
+        CSPROJ=$(basename $(find ./src -type f -wholename "*.csproj" ! -wholename "*build*" ! -wholename "*test*") .csproj)
+        DLL=$(find ./ -type f -wholename "*/bin/Release/*/$CSPROJ.dll" ! -wholename "*build*" ! -wholename "*test*")
         java -jar wss-unified-agent.jar -appPath $DLL -d ./src
         
