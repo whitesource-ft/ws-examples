@@ -39,5 +39,6 @@ jobs:
         echo Unified Agent downloaded successfully
         CSPROJ=$(basename $(find ./src -type f -wholename "*.csproj" ! -wholename "*build*" ! -wholename "*test*") .csproj)
         DLL=$(find ./ -type f -wholename "*/bin/Release/*/$CSPROJ.dll" ! -wholename "*build*" ! -wholename "*test*")
+        echo $DLL will be added to appPath
         java -jar wss-unified-agent.jar -appPath $DLL -d ./src
         

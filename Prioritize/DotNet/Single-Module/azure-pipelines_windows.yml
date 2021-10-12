@@ -23,10 +23,16 @@ steps:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
 
-- script: |
-    curl -LJO https://unified-agent.s3.amazonaws.com/wss-unified-agent.jar
-    echo Unified Agent downloaded successfully
-    java -jar wss-unified-agent.jar -appPath <path to publish dll> -d ./
+- task: PowerShell@2
+  inputs:
+    targetType: 'inline'
+    script: |
+      $CSPROJ=(Get-ChildItem -Path ./src -Recurse -Filter '*.csproj' | Foreach-Object {$_.BaseName})
+      $DLL=(Get-ChildItem -Path ./ -Recurse -Filter "$CSPROJ.dll" | where{$_.DirectoryName -match "bin\\Release" -and $_.DirectoryName -notmatch "test"} | Select-Object -ExpandProperty FullName)
+      echo $DLL will be added to appPath
+      wget https://unified-agent.s3.amazonaws.com/wss-unified-agent.jar -OutFile wss-unified-agent.jar
+      echo Unified Agent downloaded successfully
+      java -jar wss-unified-agent.jar -appPath $DLL -d ./
   env:
     WS_APIKEY: $(APIKEY)
     WS_USERKEY: $(USERKEY)

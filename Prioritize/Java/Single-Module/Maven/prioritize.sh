@@ -37,6 +37,7 @@ curl -LJO https://unified-agent.s3.amazonaws.com/wss-unified-agent.jar
 echo Unified Agent downloaded successfully
 # replace .war with .jar or .ear if needed
 export WARFILE=$(find ./ -type f -wholename "*/target/*.war")
+echo $WARFILE will be added to appPath
 export WS_APIKEY=<your-api-key>
 export WS_USERKEY=<your-user-key>
 export WS_WSS_URL=https://saas.whitesourcesoftware.com/agent
