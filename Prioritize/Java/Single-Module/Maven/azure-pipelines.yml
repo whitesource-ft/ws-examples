@@ -22,7 +22,9 @@ steps:
 - script: |
     curl -LJO https://unified-agent.s3.amazonaws.com/wss-unified-agent.jar
     echo Unified Agent downloaded successfully
-    java -jar wss-unified-agent.jar -appPath <path to debug dll> -d ./
+    WARFILE=$(find ./ -type f -wholename "*/target/*.war")
+    echo $WARFILE will be added to appPath
+    java -jar wss-unified-agent.jar -appPath $WARFILE -d ./
   env:
     WS_APIKEY: $(APIKEY)
     WS_USERKEY: $(USERKEY)

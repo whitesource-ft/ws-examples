@@ -19,6 +19,7 @@ echo Unified Agent downloaded successfully
 # replace .war with .ear or the following for WARFILE if needed
 # JARFILE=$(find ./build/libs -type f -wholename "*.jar" ! -wholename "*javadoc*" ! -wholename "*groovydoc*" ! -wholename "*sources*")
 export WARFILE=$(find ./build/libs -type f -wholename "*.war")
+echo $WARFILE will be added to appPath
 export WS_APIKEY=<your-api-key>
 export WS_USERKEY=<your-user-key>
 export WS_WSS_URL=https://saas.whitesourcesoftware.com/agent
