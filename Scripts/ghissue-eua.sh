@@ -49,7 +49,7 @@ PROJECTID=$(jq -r --arg REDSHIELDVULN $REDSHIELDVULN '. | select(.vulnerability.
 echo "PROJECTID:" $PROJECTID
 
 ### Construct Link
-EUALINK="$APIURL/Wss/WSS.html#!libraryVulnerabilities;uuid=$KEYUUID;project=$PROJECTID"
+EUALINK="$WS_URL/Wss/WSS.html#!libraryVulnerabilities;uuid=$KEYUUID;project=$PROJECTID"
 echo $EUALINK
 
 gh issue comment $GHISSUE --body "Red Shield Alert - An effective vulnerability has been found in your open-source code demanding urgent remediation steps.  $EUALINK"
