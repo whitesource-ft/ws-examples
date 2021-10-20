@@ -40,7 +40,7 @@ on:
   pull_request:
     branches: [ release* ]
 ```
-## [Adding Prioritize Comment Links to GitHub Issues](../Scripts/Scripts.md)
+## [Adding Prioritize Comment Links to GitHub Issues](../Scripts/README.md)
 
 ## Prioritize Troubleshooting
 * Add ```-viaDebug true``` at the end of the Unified Agent command
