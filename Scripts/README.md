@@ -16,7 +16,7 @@ The following prequisites need to be met for the script to work
 
 ```
 curl -LJO https://raw.githubusercontent.com/whitesource-ft/ws-examples/main/Scripts/ghissue-eua.sh 
-chmod +x ./ghissue-eua.sh && ./ghissue-eua.sh saas
+chmod +x ./ghissue-eua.sh && ./ghissue-eua.sh WS_URL
 ```
 WS_URL options: saas, saas-eu, app, app-eu
 
@@ -36,7 +36,7 @@ The following prequisites need to be met for the script to work
 
 ```
 curl -LJO https://raw.githubusercontent.com/whitesource-ft/ws-examples/main/Scripts/ghissue-prioritize.sh 
-chmod +x ./ghissue-prioritize.sh && ./ghissue-prioritize.sh saas
+chmod +x ./ghissue-prioritize.sh && ./ghissue-prioritize.sh WS_URL
 ```
 WS_URL options: saas, saas-eu, app, app-eu
 
