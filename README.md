@@ -17,4 +17,4 @@ If you can't find something, use search to [search in this repository](https://d
 
 ## [Prioritize Scans by Language](Prioritize/Prioritize-Examples.md)
 
-## [Scripts](Scripts/Scripts.md)
+## [Scripts](Scripts/README.md)
