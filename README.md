@@ -11,10 +11,10 @@ If you can't find something, use search to [search in this repository](https://d
 <br>
 
 
-## [CI-CD by Pipeline](CI-CD/CI-CD.md)
+## [CI-CD by Pipeline](CI-CD)
 
 ## [Generic by Use Case](Generic)
 
-## [Prioritize Scans by Language](Prioritize/Prioritize-Examples.md)
+## [Prioritize Scans by Language](Prioritize)
 
-## [Scripts](Scripts/README.md)
+## [Scripts](Scripts)
