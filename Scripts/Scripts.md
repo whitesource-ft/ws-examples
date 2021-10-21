@@ -52,7 +52,7 @@ The following prequisites need to be met for the script to work
   * WS_USERKEY
 
 ```
-         curl -LJO https://raw.githubusercontent.com/whitesource-ft/ws-examples/main/pipelinereports.sh
+         curl -LJO https://raw.githubusercontent.com/whitesource-ft/ws-examples/main/Scripts/pipelinereports.sh
          chmod +x ./pipelinereports.sh && ./pipelinereports.sh WS_URL
          
 ```
