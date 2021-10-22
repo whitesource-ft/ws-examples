@@ -1,4 +1,4 @@
-name: Go build with WhiteSource Scan
+name: Whitesource Unified Agent Scan - GO
 
 on:
   push:

@@ -1,4 +1,4 @@
-name: LUA build with WhiteSource Scan
+name: Whitesource Unified Agent Scan - LUA
 
 on:
   push:
