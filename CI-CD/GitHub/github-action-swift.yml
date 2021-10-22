@@ -1,4 +1,4 @@
-name: Swift build with WhiteSource Scan
+name: Whitesource Unified Agent Scan - Swift
 
 on:
   push:
