@@ -33,7 +33,6 @@ steps:
       maven.aggregateModules=true
       fileSystemScan=false
       generateProjectDetailsJson=true
-      includes=**/*.jar
       EOF
       cat eua.config
 - task: CmdLine@2
@@ -41,7 +40,7 @@ steps:
     script: |
       curl -LJO https://unified-agent.s3.amazonaws.com/wss-unified-agent.jar
       curl -LJO https://unified-agent.s3.amazonaws.com/xModuleAnalyzer/xModuleAnalyzer.jar
-      java -jar wss-unified-agent.jar -d ./ -analyzeMultiModule multimodule.txt
+      java -jar wss-unified-agent.jar -d ./ -analyzeMultiModuleExclusions '**/*docs*' -analyzeMultiModule multimodule.txt
       echo 'multimodule.txt contents'
       cat multimodule.txt
       java -jar xModuleAnalyzer.jar -xModulePath multimodule.txt -fsaJarPath ./wss-unified-agent.jar -c ./eua.config -aggregateModules true

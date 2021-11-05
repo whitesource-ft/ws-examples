@@ -6,24 +6,18 @@
 # WS_PROJECTNAME
 # WS_USERKEY
 # WS_APIKEY
+# WS_WSS_URL
 
 # TODO - Add ERROR handling
 # TODO - use libraryname + CVE instead of just CVE, ignores too many right now
 
 WS_PROJECTTOKEN=$(jq -r '.projects | .[] | .projectToken' ./whitesource/scanProjectDetails.json)
+WS_URL=$(echo $WS_WSS_URL | awk -F "agent" '{print $1}')
 echo "productName" $WS_PRODUCTNAME
 echo "projectName" $WS_PROJECTNAME
 echo "projectToken" $WS_PROJECTTOKEN
+echo "wssUrl" $WS_URL
 
-# Routing to the right WS instance
-declare -a servers=("saas" "saas-eu" "app" "app-eu")
-
-for i in "${servers[@]}"
-do
-    if [ $1 = $i ]; then
-        WS_URL="https://$i.whitesourcesoftware.com"
-    fi
-done
 
 ### getProjectAlertsbyType
 curl --request POST $WS_URL'/api/v1.3' --header 'Content-Type: application/json' --header 'Accept-Charset: UTF-8'  --data-raw '{   'requestType' : 'getProjectAlertsByType',   'userKey' : '$WS_USERKEY', 'alertType': 'SECURITY_VULNERABILITY',  'projectToken': '$WS_PROJECTTOKEN','format' : 'json'}' | jq '.alerts[]' >>alerts.json
