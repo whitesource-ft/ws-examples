@@ -18,5 +18,7 @@ pipelines:
             - export WS_WSS_URL=https://saas.whitesourcesoftware.com/agent
             - export WS_RESOVEALLDEPENENCIES=false
             - export WS_NPM_RESOVEDEPENENCIES=true
+            - export WS_PRODUCTNAME=$BITBUCKET_REPO_FULL_NAME
+            - export WS_PROJECTNAME=$BITBUCKET_COMMIT
             - echo "Running WS"
-            - java -jar wss-unified-agent.jar -product $BITBUCKET_REPO_FULL_NAME -project $BITBUCKET_COMMIT
+            - java -jar wss-unified-agent.jar
