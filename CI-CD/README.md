@@ -6,6 +6,7 @@ This repository contains tool specific examples of how to scan using the WhiteSo
 * [CircleCI](CircleCI)
 * [GitHub](GitHub)
 * [GitLab](GitLab)
+* [Bitbucket](Bitbucket)
 * [GoogleCloudBuild](GoogleCloudBuild)
 * [Jenkins](Jenkins)
 

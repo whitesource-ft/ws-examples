@@ -1,0 +1,22 @@
+image: atlassian/default-image:latest
+
+pipelines:
+  default:
+    - step:
+        name: NPM Build
+        caches:
+          - node
+        script:
+          - npm install
+
+    - step:
+        name: "Run WhiteSource Scan"
+        script:
+            - echo "Downloading unified agent"
+            - curl -LJO https://unified-agent.s3.amazonaws.com/wss-unified-agent.jar
+            - export WS_APIKEY=$APIKEY #add as variable to the pipeline
+            - export WS_WSS_URL=https://saas.whitesourcesoftware.com/agent
+            - export WS_RESOVEALLDEPENENCIES=false
+            - export WS_NPM_RESOVEDEPENENCIES=true
+            - echo "Running WS"
+            - java -jar wss-unified-agent.jar -product $BITBUCKET_REPO_FULL_NAME -project $BITBUCKET_COMMIT
