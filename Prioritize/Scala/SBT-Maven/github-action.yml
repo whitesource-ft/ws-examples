@@ -1,4 +1,4 @@
-name: Whitesource Prioritize DotNET Core
+name: WhiteSource Prioritize Scala with SBT & Maven
 
 on:
   push:
@@ -13,12 +13,20 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - uses: actions/setup-dotnet@v1
+    - name: Set up JDK 
+      uses: actions/setup-java@v2
       with:
-        dotnet-version: 3.1.402
-    - name: Build 
-      run: dotnet build -c Release
+        java-version: '8'
+        distribution: 'adopt'
+    - name: SBT Package
+      run: |
+        sbt package
+        sbt makePom
+        mv $(find ./ -type f -wholename "*/target/*.pom") ./pom.xml
+        mvn clean install -DskipTests=true
+
     - name: WhiteSource Unified Agent Scan
+      continue-on-error: true
       env:
         GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
         WS_APIKEY: ${{secrets.APIKEY}}
@@ -29,16 +37,13 @@ jobs:
         WS_ENABLEIMPACTANALYSIS: true
         WS_REQUIREKNOWNSHA1: false
         WS_RESOLVEALLDEPENDENCIES: false
-        WS_NUGET_RESOLVEDEPENDENCIES: true
-        WS_NUGET_RUNPRESTEP: true
+        WS_MAVEN_RESOLVEDEPENDENCIES: true
+        WS_MAVEN_AGGREGATEMODULES: true
         WS_FILESYSTEMSCAN: false
         WS_GENERATEPROJECTDETAILSJSON: true
-        WS_EXCLUDES: '**/build/** **/tests/**'
       run: |
         curl -LJO https://unified-agent.s3.amazonaws.com/wss-unified-agent.jar
         echo Unified Agent downloaded successfully
-        CSPROJ=$(basename $(find ./src -type f -wholename "*.csproj" ! -wholename "*build*" ! -wholename "*test*") .csproj)
-        DLL=$(find ./ -type f -wholename "*/bin/Release/*/$CSPROJ.dll" ! -wholename "*build*" ! -wholename "*test*")
-        echo $DLL will be added to appPath
-        java -jar wss-unified-agent.jar -appPath $DLL -d ./src
-        
+        JARFILE=$(find ./ -type f -wholename "*/target/*.jar")
+        echo $JARFILE will be added to appPath
+        java -jar wss-unified-agent.jar -appPath $JARFILE -d ./
