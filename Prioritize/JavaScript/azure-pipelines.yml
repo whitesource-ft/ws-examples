@@ -12,11 +12,11 @@ pool:
 steps:
 - task: NodeTool@0
   inputs:
-    versionSpec: '10.x'
+    versionSpec: '12.x'
   displayName: 'Install Node.js'
 
 - script: |
-    npm install
+    npm install --only=prod
   displayName: 'npm install'
   
 - script: |

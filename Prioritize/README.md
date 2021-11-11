@@ -9,6 +9,7 @@ This repository contains language specific examples of different ways to scan us
   * [Single-Module](Java/Single-Module)
 * [Javascript](JavaScript)
 * [Python](Python)
+* [Scala](Scala)
 
 For all examples above, make sure to change the branches defined within the .yml file according to your needs.  Refer to [Branching](#Branching) for best practices
 
@@ -47,6 +48,7 @@ on:
 * Publish the following folders using your pipeline publish tool, [GitHub Prioritize Log Publish example](#GitHub-Prioritize-Log-Publish)
   * /tmp/whitesource*
   * /tmp/ws-ua*
+* For GitHub actions use ```continue-on-error: true``` in the Priortize step if the step is failing before the log publish
 
 * Important items
   * App.json file will have the elementid & method that should be tracked down
@@ -60,6 +62,7 @@ on:
       with:
         name: Prioritize-Logs
         path: |
+          ${{github.workspace}}/whitesource
           /tmp/whitesource*
           /tmp/ws-ua*
         retention-days: 1
