@@ -12,7 +12,7 @@ build:
     userKey=$USERKEY
     wss.url=https://saas.whitesourcesoftware.com/agent
     productName=GL_$CI_PROJECT_DIR
-    projectName=$CI_COMMIT_BRANCH_Prioritize
+    projectName=$CI_COMMIT_BRANCH/_Prioritize
     enableImpactAnalysis=true
     requireKnownSha1=false
     resolveAllDependencies=false
