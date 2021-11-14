@@ -40,8 +40,8 @@ ws_scan:
     WS_WSS_URL: "https://saas-eu.whitesourcesoftware.com/agent"
     WS_PRODUCTNAME: $CI_PROJECT_NAME
     WS_PROJECTNAME: $CI_COMMIT_REF_NAME
-    WS_RESOLVEALLDEPENDENCIES: "false"
-    WS_NPM_RESOLVEDEPENDENCIES: "true"
+    WS_RESOLVEALLDEPENDENCIES: false
+    WS_NPM_RESOLVEDEPENDENCIES: true
   script:
     - echo "Downloading WhiteSource Unified Agent"
     - curl -LJO https://unified-agent.s3.amazonaws.com/wss-unified-agent.jar
