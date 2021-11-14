@@ -11,8 +11,8 @@ build:
     echo Unified Agent downloaded successfully
     WARFILE=$(find ./ -type f -wholename "*/target/*.war")
     echo $WARFILE will be added to appPath
-    export WS_APIKEY="$APIKEY"
-    export WS_USERKEY=$USERKEY"
+    export WS_APIKEY=$APIKEY
+    export WS_USERKEY=$USERKEY
     export WS_WSS_URL=https://saas.whitesourcesoftware.com/agent
     export WS_ENABLEIMPACTANALYSIS=true
     export WS_REQUIREKNOWNSHA1=false
@@ -20,4 +20,6 @@ build:
     export WS_MAVEN_RESOLVEDEPENDENCIES=true
     export WS_MAVEN_AGGREGATEMODULES=true
     export WS_FILESYSTEMSCAN=false
-    java -jar wss-unified-agent.jar -appPath $WARFILE -d ./ -product GL_"$CI_PROJECT_DIR" -project "$CI_COMMIT_BRANCH"_Prioritize
+    export WS_PRODUCTNAME=GL_$CI_PROJECT_DIR
+    export WS_PROJECTNAME=$CI_COMMIT_BRANCH_Prioritize
+    java -jar wss-unified-agent.jar -appPath $WARFILE -d ./
