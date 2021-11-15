@@ -47,7 +47,7 @@ chmod +x ./ghissue-prioritize.sh && ./ghissue-prioritize.sh
 ## Reports Within a Pipeline
 
 Any WhiteSource report can also be published as a part of the pipeline.
-Add the following after calling the unified agent in any pipeline file to save reports from the scanned project to the whitesource logs folder then use your [pipeline publish](CI-CD/CI-CD.md#Pipeline-Log-Publishing) feature to save the whitesource log folder as an artifact
+Add the following after calling the unified agent in any pipeline file to save reports from the scanned project to the whitesource logs folder then use your [pipeline publish](../CI-CD#Pipeline-Log-Publishing) feature to save the whitesource log folder as an artifact
 
 <br>
 The following prequisites need to be met for the script to work
@@ -74,7 +74,7 @@ The following prequisites need to be met for the script to work
 
 ## Pipeline SBOM Generation
 
-Add the following after calling the unified agent in any pipeline to create an SPDX tag value output from the scanned project to the whitesource logs folder then use your [pipeline publish](CI-CD/CI-CD.md#Pipeline-Log-Publishing) feature to save the whitesource log folder as an artifact
+Add the following after calling the unified agent in any pipeline to create an SPDX tag value output from the scanned project to the whitesource logs folder then use your [pipeline publish](../CI-CD#Pipeline-Log-Publishing) feature to save the whitesource log folder as an artifact
 
 <br>
 The following prequisites need to be met for the below example to work
