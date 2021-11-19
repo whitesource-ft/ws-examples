@@ -68,3 +68,9 @@ on:
         retention-days: 1
 ```
 
+### Single Folder Log Publish
+If your pipeline publish does not allow for multi folder publishing like GitHub actions, then add the following script after your scan to copy all required folders to the whitesource folder. [AzureDevOps](../CI-CD#Azure-DevOps-Pipelines) is a good example where only single folder publishing is allowed.
+```
+if [ ! -d "/tmp/whitesource*" ] ; then cp /tmp/whitesource* ./whitesource ; else echo "/tmp/whitesource* does not exist" ; fi
+if [ ! -d "/tmp/ws-ua*" ] ; then cp /tmp/whitesource* ./whitesource ; else echo "/tmp/ws-ua* does not exist" ; fi
+```
