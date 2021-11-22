@@ -17,8 +17,6 @@ pipelines:
             - export WS_APIKEY=$APIKEY #add as a variable to the pipeline
             - export WS_USERKEY=$USERKEY #add as a variable to the pipeline
             - export WS_WSS_URL=https://saas.whitesourcesoftware.com/agent
-            - export WS_RESOVEALLDEPENENCIES=false
-            - export WS_NPM_RESOVEDEPENENCIES=true
             - export WS_PRODUCTNAME=$BITBUCKET_REPO_SLUG
             - export WS_PROJECTNAME=$BITBUCKET_BRANCH
             - echo "Running Whitesouce"
