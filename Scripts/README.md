@@ -92,6 +92,7 @@ The following prequisites need to be met for the below example to work
 ```
         export WS_PROJECTTOKEN=$(jq -r '.projects | .[] | .projectToken' ./whitesource/scanProjectDetails.json)
         export WS_URL=$(echo $WS_WSS_URL | awk -F "agent" '{print $1}')
+        curl -LJO https://raw.githubusercontent.com/whitesource-ps/ws-sbom-generator/master/spdx_tools-0.7.0a3_ws-py3-none-any.whl
         pip install spdx_tools-0.7.0a3_ws-py3-none-any.whl
         pip install ws_sbom_generator
         sbom_generator -u $WS_USERKEY -k $WS_APIKEY -s $WS_PROJECTTOKEN -a $WS_URL -t tv -o ./whitesource
