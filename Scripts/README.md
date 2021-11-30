@@ -95,7 +95,7 @@ The following prequisites need to be met for the below example to work
         curl -LJO https://raw.githubusercontent.com/whitesource-ps/ws-sbom-generator/master/spdx_tools-0.7.0a3_ws-py3-none-any.whl
         pip install spdx_tools-0.7.0a3_ws-py3-none-any.whl
         pip install ws_sbom_generator
-        sbom_generator -u $WS_USERKEY -k $WS_APIKEY -s $WS_PROJECTTOKEN -a $WS_URL -t tv -o ./whitesource
+        ws_bom_generator -u $WS_USERKEY -k $WS_APIKEY -s $WS_PROJECTTOKEN -a $WS_URL -t tv -o ./whitesource
 ```
 
 
