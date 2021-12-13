@@ -4,25 +4,26 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 
-steps:
+variables:
+  group: 'WhiteSource Keys'
+  buildConfiguration: 'Release'
 
-- task: DotNetCoreCLI@2
-  inputs:
-    command: 'run'
-    projects: 'build/build.csproj'
+steps:
+- script: dotnet build --configuration $(buildConfiguration)
+  displayName: 'dotnet build $(buildConfiguration)'
 
 - script: |
     curl -LJO https://unified-agent.s3.amazonaws.com/wss-unified-agent.jar
     echo Unified Agent downloaded successfully
     CSPROJ=$(basename $(find ./src -type f -wholename "*.csproj" ! -wholename "*build*" ! -wholename "*test*") .csproj)
-    DLL=$(find ./ -type f -wholename "*/bin/Release/*/$CSPROJ.dll" ! -wholename "*build*" ! -wholename "*test*")
+    DLL=$(find ./ -type f -wholename "*/bin/$(buildConfiguration)/*/$CSPROJ.dll" ! -wholename "*build*" ! -wholename "*test*")
     echo $DLL will be added to appPath
-    java -jar wss-unified-agent.jar -appPath $DLL -d ./src
+    java -jar wss-unified-agent.jar -appPath $DLL -d $PWD/src
   env:
-    WS_APIKEY: $(APIKEY)
-    WS_USERKEY: $(USERKEY)
-    WS_WSS_URL: https://saas.whitesourcesoftware.com/agent
-    WS_PRODUCTNAME: AZDO_$(System.TeamProject)
+    WS_APIKEY: $(WS_APIKEY)
+    WS_USERKEY: $(WS_USERKEY)
+    WS_WSS_URL: https://app.whitesourcesoftware.com/agent
+    WS_PRODUCTNAME: AZ_$(System.TeamProject)
     WS_PROJECTNAME: $(Build.Repository.Name)_$(Build.SourceBranchName)_Prioritize
     WS_ENABLEIMPACTANALYSIS: true
     WS_REQUIREKNOWNSHA1: false
