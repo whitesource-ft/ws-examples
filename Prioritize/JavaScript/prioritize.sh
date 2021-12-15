@@ -15,7 +15,7 @@
 
 #### Build application & check JAVA_HOME
 echo JAVA_HOME: $JAVA_HOME
-npm install
+npm install --only=prod
 
 #### Run WS Prioritize
 curl -LJO https://unified-agent.s3.amazonaws.com/wss-unified-agent.jar

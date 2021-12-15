@@ -4,6 +4,10 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 
+variables:
+  group: 'WhiteSource Keys'
+  buildConfiguration: 'Release'
+
 steps:
 
 - script: ./build.sh
@@ -19,7 +23,7 @@ steps:
     WS_APIKEY: $(APIKEY)
     WS_USERKEY: $(USERKEY)
     WS_WSS_URL: https://saas.whitesourcesoftware.com/agent
-    WS_PRODUCTNAME: AZDO_$(System.TeamProject)
+    WS_PRODUCTNAME: AZ_$(System.TeamProject)
     WS_ENABLEIMPACTANALYSIS: true
     WS_REQUIREKNOWNSHA1: false
     WS_RESOLVEALLDEPENDENCIES: false

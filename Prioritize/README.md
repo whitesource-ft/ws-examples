@@ -9,6 +9,7 @@ This repository contains language specific examples of different ways to scan us
   * [Single-Module](Java/Single-Module)
 * [Javascript](JavaScript)
 * [Python](Python)
+* [Scala](Scala)
 
 For all examples above, make sure to change the branches defined within the .yml file according to your needs.  Refer to [Branching](#Branching) for best practices
 
@@ -47,6 +48,7 @@ on:
 * Publish the following folders using your pipeline publish tool, [GitHub Prioritize Log Publish example](#GitHub-Prioritize-Log-Publish)
   * /tmp/whitesource*
   * /tmp/ws-ua*
+* For GitHub actions use ```continue-on-error: true``` in the Priortize step if the step is failing before the log publish
 
 * Important items
   * App.json file will have the elementid & method that should be tracked down
@@ -60,8 +62,35 @@ on:
       with:
         name: Prioritize-Logs
         path: |
+          ${{github.workspace}}/whitesource
           /tmp/whitesource*
           /tmp/ws-ua*
         retention-days: 1
 ```
 
+### Single Folder Log Publish
+If your pipeline publish does not allow for multi folder publishing like GitHub actions, then add the following script after your scan to copy all required folders to the whitesource folder. [AzureDevOps](../CI-CD#Azure-DevOps-Pipelines) is a good example where only single folder publishing is allowed.
+
+#### Azure DevOps Linux based machines (Bash script)
+```
+if [ -d "/tmp/whitesource*" ] ; then cp /tmp/whitesource* ./whitesource ; else echo "/tmp/whitesource* does not exist" ; fi
+if [ -d "/tmp/ws-ua*" ] ; then cp /tmp/whitesource* ./whitesource ; else echo "/tmp/ws-ua* does not exist" ; fi
+```
+#### Azure DevOps Windows based machines (Powershell script)
+```
+- task: PowerShell@2
+  inputs:
+    targetType: 'inline'
+    script: |
+      $Folder = "$env:USERPROFILE\appdata\local\temp\whitesource*"
+      if (Test-Path -Path $Folder)
+      {
+        Write-Host "Copying Prioritize logs"
+        cp -R $Folder $(System.DefaultWorkingDirectory)/whitesource/
+      }
+      else
+      {
+        Write-Host "No Prioritize logs found"
+      } 
+  displayName: 'Copy WhiteSource Prioritize Logs'
+```

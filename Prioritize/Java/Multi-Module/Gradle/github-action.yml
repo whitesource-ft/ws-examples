@@ -18,6 +18,15 @@ jobs:
       with:
         java-version: '8'
         distribution: 'adopt'
+    - uses: actions/cache@v2
+      with:
+        path: |
+          ~/.gradle/caches
+          ~/.gradle/wrapper
+        key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+        restore-keys: |
+          ${{ runner.os }}-gradle-
+            
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
     - name: Build with Gradle
@@ -43,14 +52,13 @@ jobs:
         gradle.wrapperPath=./gradlew
         fileSystemScan=false
         generateProjectDetailsJson=true
-        includes=**/*.jar
         EOF
         cat eua.config
         echo config created successfully
         curl -LJO https://unified-agent.s3.amazonaws.com/wss-unified-agent.jar
         curl -LJO https://unified-agent.s3.amazonaws.com/xModuleAnalyzer/xModuleAnalyzer.jar
         echo Unified Agent downloaded successfully
-        java -jar wss-unified-agent.jar -d ./ -analyzeMultiModule multimodule.txt
+        java -jar wss-unified-agent.jar -d $PWD -analyzeMultiModule multimodule.txt
         echo 'multimodule.txt contents'
         cat multimodule.txt
         java -jar xModuleAnalyzer.jar -xModulePath multimodule.txt -fsaJarPath ./wss-unified-agent.jar -c ./eua.config -aggregateModules true

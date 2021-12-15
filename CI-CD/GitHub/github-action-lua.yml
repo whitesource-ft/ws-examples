@@ -15,11 +15,8 @@ on:
         luaVersion: 5.4.3
     - name: Setup Luarocks
       uses: leafo/gh-actions-luarocks@v4
-    - name: Setup dependencies
-      run: |
-        luarocks install <dependency1>
-        luarocks install <dependency2>
-        luarocks install lua-path
+    - name: LuaRocks Build
+      run: luarocks build --tree=./
     - name: WhiteSource Unified Agent Scan
       env:
         WS_APIKEY: ${{secrets.APIKEY}}
