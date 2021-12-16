@@ -12,11 +12,9 @@ variables:
 - name: aws_region
   value: 'us-east-1'
 - name: aws_account_id
-  value: '449231454740'
+  value: '<aws accoun id>'
 - name: image
-  value: 'myjenkins-blueocean'
-- name: imageTag
-  value: 1.1
+  value: '<image name>'
 stages:
 - stage: __default
   jobs:
@@ -32,7 +30,6 @@ stages:
           aws configure set aws_secret_access_key $(AWS_SECRET_ACCESS_KEY)
           aws configure set region $(aws_region)
           aws ecr get-login-password --region $(aws_region) | docker login --username AWS --password-stdin $(aws_account_id).dkr.ecr.$(aws_region).amazonaws.com
-          docker pull $(aws_account_id).dkr.ecr.$(aws_region).amazonaws.com/$(image):1.1
     - task: CmdLine@2
       env:
         WS_APIKEY: $(APIKEY)
