@@ -37,7 +37,7 @@ declare -a projects=( $(cat $PROJECT_DETAILS | jq -r '.projects[] | (.projectTok
 
 for project in "${projects[@]}"; do
     IFS=, read projectToken projectName <<< "$project"
-    printf "\nAlerts for project: ${BL}%s${NC}\n" "$projectName"
+    printf "\nWhiteSource Vulnerability Alerts for project: ${BL}%s${NC}\n" "$projectName"
     apiRes="$(curl -s -X POST -H "Content-Type: application/json" -d '{ "requestType": "getProjectAlertsByType", "alertType": "SECURITY_VULNERABILITY", "userKey": "'"$WS_USERKEY"'", "projectToken": '"$projectToken"' }' $WS_API_URL)"
 
     # High severity CVEs
@@ -56,4 +56,5 @@ for project in "${projects[@]}"; do
     printf "${RD}$cveH${NC}\n"
     printf "${YW}$cveM${NC}\n"
     printf "${GN}$cveL${NC}\n"
+    printf "\n"
 done
