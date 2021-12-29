@@ -97,3 +97,47 @@ The following prequisites need to be met for the below example to work
 ```
 
 More information & usage regarding the [WS SBOM generator](https://github.com/whitesource-ps/ws-sbom-spdx-report)
+
+
+## [Display Vulnerabilities Affecting a Project](list-project-alerts.sh)
+
+The [list-project-alerts](list-project-alerts.sh) script can be added to the CI/CD pipeline (or executed independently) following the WhiteSource Unified Agent scan, to list vulnerabilities affecting the last scanned project(s).  
+
+This script parses the `scanProjectDetails.json` file to get the `name` and `projectToken` of the project(s) created/updated during the last scan, and then uses WhiteSource's [getProjectAlertsByType](https://whitesource.atlassian.net/wiki/spaces/WD/pages/1651769359/Alerts+API#Project.2) API request to retrieve all the vulnerability alerts associated with that project. It then prints them to the standard output (`stdout`), sorted by severity and optionally color-coded.
+
+<br>
+The following prequisites need to be met for the script to work
+<br>
+
+* `jq curl` must be installed
+* ENV variables must be set
+  * `WS_GENERATEPROJECTDETAILSJSON: true`
+  * `WS_USERKEY` (admin assignment is required)
+  * `WS_WSS_URL`
+  
+```
+./list-project-alerts.sh
+
+Alerts for project: vulnerable-node
+Alerts: 10 High, 4 Medium, 2 Low
+
+[H] CVE-2017-16138 - mime-1.3.4.tgz
+[H] CVE-2015-8858 - uglify-js-2.3.0.tgz
+[H] CVE-2017-1000228 - ejs-0.8.8.tgz
+[H] CVE-2017-1000048 - qs-4.0.0.tgz
+[H] CVE-2020-8203 - lodash-4.17.11.tgz
+[H] CVE-2021-23337 - lodash-4.17.11.tgz
+[H] CVE-2019-5413 - morgan-1.6.1.tgz
+[H] CVE-2019-10744 - lodash-4.17.11.tgz
+[H] CVE-2017-16119 - fresh-0.3.0.tgz
+[H] CVE-2015-8857 - uglify-js-2.3.0.tgz
+[M] CVE-2020-28500 - lodash-4.17.11.tgz
+[M] CVE-2017-16137 - debug-2.2.0.tgz
+[M] CVE-2019-14939 - mysql-2.12.0.tgz
+[M] WS-2018-0080 - mysql-2.12.0.tgz
+[L] WS-2018-0589 - nwmatcher-1.3.9.tgz
+[L] WS-2017-0280 - mysql-2.12.0.tgz
+```
+
+See known limitations [here](list-project-alerts.sh).  
+

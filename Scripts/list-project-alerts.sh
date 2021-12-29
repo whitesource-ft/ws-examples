@@ -12,7 +12,7 @@
 # WS_USERKEY (admin assignment is required)
 # WS_WSS_URL
 
-# Known Issues:
+# Known Limitations:
 # The API response will be filtered by default based on the .cvss3_severity
 # property. If a given vulnerability alert does not have a CVSS3 severity (i.e.
 # the .vulnerability.cvss3_severity property is blank), that alert will not be
