@@ -1,14 +1,26 @@
 # Scripts
 This repository contains scripts for use with WhiteSource Unified agent scanning within a CI/CD pipeline.
 
-## [Adding Red Shield Comment Links to GitHub Issues](ghissue-eua.sh)
+- [Adding Red Shield Comment Links to GitHub Issues](#adding-red-shield-comment-links-to-github-issues)
+- [Adding Red Shield Comments Links to GitHub Issues and Closing Green Shield Issues](#adding-red-shield-comments-links-to-github-issues-and-closing-green-shield-issues)
+- [Reports Within a Pipeline](#reports-within-a-pipeline)
+- [Pipeline SBOM Generation](#pipeline-sbom-generation)
+- [Display Vulnerabilities Affecting a Project](#display-vulnerabilities-affecting-a-project)
+
+<br>
+<hr>
+
+## Adding Red Shield Comment Links to GitHub Issues
+
+[ghissue-eua.sh](ghissue-eua.sh)  
+
 Add the following lines after the Unified Agent command in a GitHub action to add comments to your GitHub issues that are created by the WhiteSource GitHub integration.  These comments will indicate if the vulnerability has a redshield and provide a link to the WhiteSource UI for further examination.
 
 <br>
 The following prequisites need to be met for the script to work
 <br>
 
-* ```jq awk``` must be installed
+* `jq awk` must be installed
   * 99.9% of pipelines have these pre-installed
 * ENV variables must be set
   * WS_GENERATEPROJECTDETAILSJSON: true
@@ -22,14 +34,20 @@ curl -LJO https://raw.githubusercontent.com/whitesource-ft/ws-examples/main/Scri
 chmod +x ./ghissue-eua.sh && ./ghissue-eua.sh
 ```
 
-## [Adding Red Shield Comments Links to GitHub Issues & Closing Green Shield Issues](ghissue-prioritize.sh)
+<br>
+<hr>
+
+## Adding Red Shield Comments Links to GitHub Issues and Closing Green Shield Issues
+
+[ghissue-prioritize.sh](ghissue-prioritize.sh)  
+
 Add the following lines after the Unified Agent command in a GitHub action to add comments to your GitHub issues that are created by the WhiteSource GitHub integration.  These comments will indicate if the vulnerability has a redshield and provide a link to the WhiteSource UI for further examination.  If a the vulnerability has a green shield a comment will be made, the issue will be closed, and the vulnerability will be ignored in WhiteSource.
 
 <br>
 The following prequisites need to be met for the script to work
 <br>
 
-* ```jq awk``` must be installed
+* `jq awk` must be installed
   * 99.9% of pipelines have these pre-installed
 * ENV variables must be set
   * WS_GENERATEPROJECTDETAILSJSON: true
@@ -44,6 +62,9 @@ curl -LJO https://raw.githubusercontent.com/whitesource-ft/ws-examples/main/Scri
 chmod +x ./ghissue-prioritize.sh && ./ghissue-prioritize.sh
 ```
 
+<br>
+<hr>
+
 ## Reports Within a Pipeline
 
 Any WhiteSource report can also be published as a part of the pipeline.
@@ -53,7 +74,7 @@ Add the following after calling the unified agent in any pipeline file to save r
 The following prequisites need to be met for the script to work
 <br>
 
-* ```jq awk``` must be installed
+* `jq awk` must be installed
   * 99.9% of pipelines have these pre-installed
 * ENV variables must be set
   * WS_GENERATEPROJECTDETAILSJSON: true
@@ -71,6 +92,8 @@ The following prequisites need to be met for the script to work
         curl --output ./whitesource/duediligencereport.pdf --request POST $WS_URL'/api/v1.3' --header 'Content-Type: application/json'  --data-raw '{"requestType":"getProjectDueDiligenceReport","userKey":"$WS_USERKEY","projectToken":"$WS_PROJECTTOKEN"}'
 ```
 
+<br>
+<hr>
 
 ## Pipeline SBOM Generation
 
@@ -80,7 +103,7 @@ Add the following after calling the unified agent in any pipeline to create an S
 The following prequisites need to be met for the below example to work
 <br>
 
-* ```jq awk python3 python3-pip``` must be installed
+* `jq awk python3 python3-pip` must be installed
   * 99.9% of pipelines have these pre-installed
 * ENV variables must be set
   * WS_GENERATEPROJECTDETAILSJSON: true
@@ -99,9 +122,14 @@ The following prequisites need to be met for the below example to work
 More information & usage regarding the [WS SBOM generator](https://github.com/whitesource-ps/ws-sbom-spdx-report)
 
 
-## [Display Vulnerabilities Affecting a Project](list-project-alerts.sh)
+<br>
+<hr>
 
-The [list-project-alerts](list-project-alerts.sh) script can be added to the CI/CD pipeline (or executed independently) following the WhiteSource Unified Agent scan, to list vulnerabilities affecting the last scanned project(s).  
+## Display Vulnerabilities Affecting a Project
+
+[list-project-alerts.sh](list-project-alerts.sh)  
+
+This script can be added to the CI/CD pipeline (or executed independently) following the WhiteSource Unified Agent scan, to list vulnerabilities affecting the last scanned project(s).  
 
 This script parses the `scanProjectDetails.json` file to get the `name` and `projectToken` of the project(s) created/updated during the last scan, and then uses WhiteSource's [getProjectAlertsByType](https://whitesource.atlassian.net/wiki/spaces/WD/pages/1651769359/Alerts+API#Project.2) API request to retrieve all the vulnerability alerts associated with that project. It then prints them to the standard output (`stdout`), sorted by severity and optionally color-coded.
 
@@ -139,5 +167,8 @@ Alerts: 10 High, 4 Medium, 2 Low
 [L] WS-2017-0280 - mysql-2.12.0.tgz
 ```
 
-See known limitations [here](list-project-alerts.sh).  
+See known limitations [here](list-project-alerts.sh).
+
+<br>
+<hr>
 
