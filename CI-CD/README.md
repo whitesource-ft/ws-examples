@@ -1,6 +1,7 @@
 # Examples by CI/CD Tool
 This repository contains tool specific examples of how to scan using the WhiteSource Unified Agent within a CI/CD pipeline.
 
+* [AWSCodeBuild](AWSCodeBuild)
 * [AzureDevOps](AzureDevOps)
 * [Bitbucket](Bitbucket)
 * [CodeFresh](CodeFresh)
