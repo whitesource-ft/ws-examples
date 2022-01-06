@@ -1,12 +1,11 @@
-# add APIKEY as an environment variable - https://gitlab.com/help/ci/variables/README
+# add APIKEY and USERKEY as an environment variable - https://gitlab.com/help/ci/variables/README
 default:
   image: timbru31/java-node:latest
 
 stages:
   - build
   - scan
-  - deploy
-
+  
 before_script:
   - NPM_PACKAGE_NAME=$(node -p "require('./package.json').name")
   - NPM_PACKAGE_VERSION=$(node -p "require('./package.json').version")
@@ -37,6 +36,7 @@ ws_scan:
   stage: scan
   variables:
     WS_APIKEY: $API_KEY
+    WS_USERKEY: $USER_KEY
     WS_WSS_URL: "https://saas-eu.whitesourcesoftware.com/agent"
     WS_PRODUCTNAME: $CI_PROJECT_NAME
     WS_PROJECTNAME: $CI_COMMIT_REF_NAME
