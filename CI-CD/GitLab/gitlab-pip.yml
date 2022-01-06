@@ -1,0 +1,43 @@
+# add APIKEY and USERKEY as an environment variable - https://gitlab.com/help/ci/variables/README
+default:
+    image: rappdw/docker-java-python
+
+stages:
+  - build
+  - scan
+
+pip_build:
+  image: rappdw/docker-java-python
+  stage: build
+  script: "pip install -r requirements.txt"
+  tags: 
+  - docker-runner
+
+  cache:
+    key: "cache-$PIP_PKG-$CI_PIPELINE_ID"
+    paths:
+    - ${CI_PROJECT_DIR}/
+
+ws_scan:
+  stage: scan
+  variables:
+    WS_APIKEY: $API_KEY
+    WS_USERKEY: $USER_KEY
+    WS_WSS_URL: "https://saas.whitesourcesoftware.com/agent"
+    WS_PRODUCTNAME: $CI_PROJECT_NAME
+    WS_PROJECTNAME: $CI_COMMIT_REF_NAME
+  script:
+    - echo "Downloading WhiteSource Unified Agent"
+    - curl -LJO https://unified-agent.s3.amazonaws.com/wss-unified-agent.jar
+    - echo "WhiteSource Scan"
+    - java -jar ./wss-unified-agent.jar
+    - curl "http://wss-gls-app:5678/securityReport?repoId=$CI_PROJECT_ID&repoName=$CI_PROJECT_NAME&ownerName=$CI_PROJECT_NAMESPACE&branchName=$CI_COMMIT_REF_NAME&defaultBranchName=$CI_DEFAULT_BRANCH&commitId=$CI_COMMIT_SHA" -o gl-dependency-scanning-report-ws.json
+  artifacts: 
+    paths:
+      - gl-dependency-scanning-report-ws.json
+    reports:  
+      dependency_scanning:
+        - gl-dependency-scanning-report-ws.json
+    expire_in: 30 days
+  tags:
+    - docker-runner
