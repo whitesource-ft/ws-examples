@@ -36,7 +36,7 @@ ws_scan:
   stage: scan
   variables:
     WS_APIKEY: $API_KEY
-    WS_APIKEY: $USER_KEY
+    WS_USERKEY: $USER_KEY
     WS_WSS_URL: "https://saas-eu.whitesourcesoftware.com/agent"
     WS_PRODUCTNAME: $CI_PROJECT_NAME
     WS_PROJECTNAME: $CI_COMMIT_REF_NAME
