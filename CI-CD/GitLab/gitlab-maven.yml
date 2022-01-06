@@ -1,4 +1,4 @@
-# add APIKEY as an environment variable - https://gitlab.com/help/ci/variables/README
+# add APIKEY and USERKEY as an environment variable - https://gitlab.com/help/ci/variables/README
 default:
   image: maven:3.8-openjdk-11
 
@@ -14,7 +14,7 @@ maven_build:
   - docker-runner
 
 cache:
-  key: "cache-$NPM_PKG-$CI_PIPELINE_ID"
+  key: "cache-$MVN_PKG-$CI_PIPELINE_ID"
   paths:
   - ${CI_PROJECT_DIR}/
 
