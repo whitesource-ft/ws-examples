@@ -31,3 +31,5 @@ ws_scan:
     - curl -LJO https://unified-agent.s3.amazonaws.com/wss-unified-agent.jar
     - echo "WhiteSource Scan"
     - java -jar ./wss-unified-agent.jar
+   tags:
+    - docker-runner
