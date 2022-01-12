@@ -29,13 +29,13 @@ pipeline {
 
     stage('Download WS Script') {
       steps {
-                script {
-                    if (fileExists('./wss-unified-agent.jar')) {
-                        echo "File already exists"
-                    } else {
-                            sh 'curl -LJO https://unified-agent.s3.amazonaws.com/wss-unified-agent.jar'
-                        }
-                    }
+                sh '''if ! [ -f ./wss-unified-agent.jar ] 
+                then curl -fSL -R -JO https://unified-agent.s3.amazonaws.com/wss-unified-agent.jar 
+                if [[ "$(curl -sL https://unified-agent.s3.amazonaws.com/wss-unified-agent.jar.sha256)" != "$(sha256sum wss-unified-agent.jar)" ]] ;
+                then echo "Integrity Check Failed" 
+                exit -7 
+                fi 
+                fi'''
              }
     }
     
