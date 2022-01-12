@@ -17,7 +17,7 @@ pipeline {
   stages {
     stage('Cloning Git') {
       steps {
-        git 'https://github.com/lukebroganws/NodeGoat'
+        git 'https://github.com/Some/Java/Project/URL'
       }
     }
     
