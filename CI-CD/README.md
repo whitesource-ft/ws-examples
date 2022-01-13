@@ -11,6 +11,7 @@ This repository contains tool specific examples of how to scan using the WhiteSo
 * [GitLab](GitLab)
 * [GoogleCloudBuild](GoogleCloudBuild)
 * [Jenkins](Jenkins)
+* [TeamCity](TeamCity)
 
 
 ## Pipeline Log Publishing
