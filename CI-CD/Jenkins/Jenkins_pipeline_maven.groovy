@@ -29,12 +29,18 @@ pipeline {
 
     stage('Download WS Script') {
       steps {
-                sh '''if ! [ -f ./wss-unified-agent.jar ] 
-                then curl -fSL -R -JO https://unified-agent.s3.amazonaws.com/wss-unified-agent.jar 
-                if [[ "$(curl -sL https://unified-agent.s3.amazonaws.com/wss-unified-agent.jar.sha256)" != "$(sha256sum wss-unified-agent.jar)" ]] ;
-                then echo "Integrity Check Failed" 
-                fi 
-                fi'''
+              script {
+                    echo "Downloading WhiteSource Unified Agent and Checking Integrity"
+                    sh 'curl -LJO https://unified-agent.s3.amazonaws.com/wss-unified-agent.jar'
+                    ua_jar_checksum=sh(returnStdout: true, script: "sha256sum 'wss-unified-agent.jar'")
+                    ua_integrity_file=sh(returnStdout: true, script: "curl -sL https://unified-agent.s3.amazonaws.com/wss-unified-agent.jar.sha256")
+                    if ("${ua_integrity_file}" == "${ua_jar_checksum}") {
+                        echo "Integrity Check Passed"
+                    } else {
+                        echo "Integrity Check Failed"
+                        exit 1
+                        }
+                  }
              }
     }
                        
