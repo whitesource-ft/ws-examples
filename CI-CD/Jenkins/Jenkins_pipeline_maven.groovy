@@ -33,7 +33,6 @@ pipeline {
                 then curl -fSL -R -JO https://unified-agent.s3.amazonaws.com/wss-unified-agent.jar 
                 if [[ "$(curl -sL https://unified-agent.s3.amazonaws.com/wss-unified-agent.jar.sha256)" != "$(sha256sum wss-unified-agent.jar)" ]] ;
                 then echo "Integrity Check Failed" 
-                exit -7 
                 fi 
                 fi'''
              }
