@@ -35,7 +35,7 @@ object WebGoat : BuildType({
                 echo "Exceute WS"
                 export WS_APIKEY=${'$'}{APIKEY} #Taken from TeamCity Environment Variables
                 export WS_USERKEY=${'$'}{USERKEY} #Taken from TeamCity Environment Variables
-                export WS_WSS_URL="https://saas-eu.whitesourcesoftware.com/agent"
+                export WS_WSS_URL="https://saas.whitesourcesoftware.com/agent"
                 export WS_PRODUCTNAME=TC_${'$'}{TEAMCITY_PROJECT_NAME}
                 export WS_PROJECTNAME=${'$'}{TEAMCITY_BUILDCONF_NAME}
                 java -jar wss-unified-agent.jar
