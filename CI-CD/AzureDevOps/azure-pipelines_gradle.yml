@@ -33,9 +33,7 @@ steps:
     WS_PRODUCTNAME: AZDO_$(System.TeamProject)
     WS_PROJECTNAME: $(Build.Repository.Name)_$(Build.SourceBranchName)
     WS_RESOLVEALLDEPENDENCIES: false
-    WS_ENABLEIMPACTANALYSIS: false
     WS_FILESYSTEMSCAN: false
     WS_GRADLE_RESOLVEDEPENDENCIES: true
     WS_GRADLE_AGGREGATEMODULES: true
-    WS_GRADLE_DOWNLOADMISSINGDEPENDENCIES: false
   displayName: 'WhiteSource Scan'
