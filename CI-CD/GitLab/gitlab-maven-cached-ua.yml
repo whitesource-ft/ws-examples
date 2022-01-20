@@ -37,14 +37,15 @@ ws_scan:
     latestRelease="$(echo "$res" | jq -s '.[] | sort_by(.published_at) | last')"
     latestVer="$(echo "$latestRelease" | jq -rs '.[] | .tag_name')"
     latestVerDate="$(date -d "$(echo "$latestRelease" | jq -rs '.[] | .published_at')" +%s)"
-    curVerDate="$(stat -c %Y "${CI_PROJECT_DIR}/wss-unified-agent.jar")"
+    curVerDate="$(stat -c %Y "${CI_PROJECT_DIR}/wss-unified-agent.jar" 2>/dev/null)"
+    [ $? -gt 0 ] && curVerDate=0
     if [ $latestVerDate -gt $curVerDate ] ; then
         echo "Downloading WhiteSource Unified Agent latest version ($latestVer)"
         curl -LJO https://unified-agent.s3.amazonaws.com/wss-unified-agent.jar
     else
         echo "Already using the latest version of the WhiteSource Unified Agent"
     fi
-    
+
     echo "WhiteSource Scan"
     java -jar ./wss-unified-agent.jar
    tags:
