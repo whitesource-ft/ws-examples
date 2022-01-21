@@ -31,6 +31,8 @@ export WS_DOCKER_SCANIMAGES=true
 export WS_DOCKER_LAYERS=true
 export WS_DOCKER_PROJECTNAMEFORMAT=repositoryNameAndTag
 export WS_FILESYSTEMSCAN=false
+export WS_ARCHIVEEXTRACTIONDEPTH=2
+export WS_ARCHIVEINCLUDES='**/*war **/*ear **/*zip **/*whl **/*tar.gz **/*tgz **/*tar **/*car **/*jar'
 curl -LJO https://unified-agent.s3.amazonaws.com/wss-unified-agent.jar
 echo Unified Agent downloaded successfully
 java -jar wss-unified-agent.jar 

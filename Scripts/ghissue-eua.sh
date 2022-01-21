@@ -11,10 +11,10 @@
 
 WS_PROJECTTOKEN=$(jq -r '.projects | .[] | .projectToken' ./whitesource/scanProjectDetails.json)
 WS_URL=$(echo $WS_WSS_URL | awk -F "agent" '{print $1}')
-echo "productName" $WS_PRODUCTNAME
-echo "projectName" $WS_PROJECTNAME
-echo "projectToken" $WS_PROJECTTOKEN
-echo "wssUrl" $WS_URL
+echo "WS_PRODUCTNAME=" $WS_PRODUCTNAME
+echo "WS_PROJECTNAME=" $WS_PROJECTNAME
+echo "WS_PROJECTTOKEN=" $WS_PROJECTTOKEN
+echo "WS_URL=" $WS_URL
 
 ### getProjectAlertsbyType
 curl --request POST $WS_URL'/api/v1.3' --header 'Content-Type: application/json' --header 'Accept-Charset: UTF-8'  --data-raw '{   'requestType' : 'getProjectAlertsByType',   'userKey' : '$WS_USERKEY', 'alertType': 'SECURITY_VULNERABILITY',  'projectToken': '$WS_PROJECTTOKEN','format' : 'json'}' | jq '.alerts[]' >>alerts.json
@@ -23,6 +23,7 @@ echo "saving alerts.json"
 ### getProjectSecurityAlertsbyVulnerabilityReport - finds Red Shields
 curl --request POST $WS_URL'/api/v1.3' --header 'Content-Type: application/json' --header 'Accept-Charset: UTF-8'  --data-raw '{   'requestType' : 'getProjectSecurityAlertsByVulnerabilityReport',   'userKey' : '$WS_USERKEY',   'projectToken': '$WS_PROJECTTOKEN', 'format' : 'json'}' | jq -r '.alerts[] | select(.euaShield=="RED") | .vulnerabilityId' >> redshields.txt
 echo 'saving redshields.txt'
+cat redshields.txt && echo "cat of redshields"
 
 redshieldlist=`cat redshields.txt`
 ### Get CVE by Red Shield
@@ -31,7 +32,7 @@ do
 echo "REDSHIELDVULN:"$REDSHIELDVULN
 
 ## Get Github issue number by CVE
-GHISSUE=$(gh issue list -S $REDSHIELDVULN --json number --jq '.[] | .number ')
+GHISSUE=$(gh issue list -S "$REDSHIELDVULN in:title" --json number --jq '.[] | .number ')
 echo "GHISSUE:"$GHISSUE
 
 ### Get keyUuid
