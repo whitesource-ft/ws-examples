@@ -14,13 +14,13 @@ This repository contains scripts for use with WhiteSource Unified agent scanning
 
 [ghissue-eua.sh](ghissue-eua.sh)  
 
-Add the following lines after the Unified Agent command in a GitHub action to add comments to your GitHub issues that are created by the WhiteSource GitHub integration.  These comments will indicate if the vulnerability has a redshield and provide a link to the WhiteSource UI for further examination.
+Add the following lines after the Unified Agent command in a GitHub action to add comments to your GitHub issues that are created by the WhiteSource GitHub integration. These comments will indicate if the vulnerability has a red shield and provide a link to the WhiteSource UI for further examination.  
 
 <br>
-The following prequisites need to be met for the script to work
-<br>
 
-* `jq awk` must be installed
+**Prerequisites:**  
+
+* `jq` and `awk` must be installed
   * 99.9% of pipelines have these pre-installed
 * ENV variables must be set
   * WS_GENERATEPROJECTDETAILSJSON: true
@@ -28,6 +28,10 @@ The following prequisites need to be met for the script to work
   * WS_PRODUCTNAME
   * WS_PROJECTNAME
   * WS_WSS_URL
+
+<br>
+
+**Execution:**  
 
 ```
 curl -LJO https://raw.githubusercontent.com/whitesource-ft/ws-examples/main/Scripts/ghissue-eua.sh 
@@ -41,13 +45,13 @@ chmod +x ./ghissue-eua.sh && ./ghissue-eua.sh
 
 [ghissue-prioritize.sh](ghissue-prioritize.sh)  
 
-Add the following lines after the Unified Agent command in a GitHub action to add comments to your GitHub issues that are created by the WhiteSource GitHub integration.  These comments will indicate if the vulnerability has a redshield and provide a link to the WhiteSource UI for further examination.  If a the vulnerability has a green shield a comment will be made, the issue will be closed, and the vulnerability will be ignored in WhiteSource.
+Add the following lines after the Unified Agent command in a GitHub action to add comments to your GitHub issues that are created by the WhiteSource GitHub integration. These comments will indicate if the vulnerability has a red shield and provide a link to the WhiteSource UI for further examination.  If a the vulnerability has a green shield a comment will be made, the issue will be closed, and the vulnerability will be ignored in WhiteSource.  
 
 <br>
-The following prequisites need to be met for the script to work
-<br>
 
-* `jq awk` must be installed
+**Prerequisites:**  
+
+* `jq` and `awk` must be installed
   * 99.9% of pipelines have these pre-installed
 * ENV variables must be set
   * WS_GENERATEPROJECTDETAILSJSON: true
@@ -56,6 +60,10 @@ The following prequisites need to be met for the script to work
   * WS_PROJECTNAME
   * WS_APIKEY
   * WS_WSS_URL
+
+<br>
+
+**Execution:**  
 
 ```
 curl -LJO https://raw.githubusercontent.com/whitesource-ft/ws-examples/main/Scripts/ghissue-prioritize.sh 
@@ -67,29 +75,33 @@ chmod +x ./ghissue-prioritize.sh && ./ghissue-prioritize.sh
 
 ## Reports Within a Pipeline
 
-Any WhiteSource report can also be published as a part of the pipeline.
-Add the following after calling the unified agent in any pipeline file to save reports from the scanned project to the whitesource logs folder then use your [pipeline publish](../CI-CD#Pipeline-Log-Publishing) feature to save the whitesource log folder as an artifact
+Any WhiteSource report can also be published as a part of the pipeline.  
+Add the following snippet after calling the Unified Agent in any pipeline file to save reports from the scanned project to the `./whitesource` logs folder, then use your [pipeline publish](../CI-CD#Pipeline-Log-Publishing) feature to save the whitesource log folder as an artifact.  
 
 <br>
-The following prequisites need to be met for the script to work
-<br>
 
-* `jq awk` must be installed
+**Prerequisites:**  
+
+* `jq` and `awk` must be installed
   * 99.9% of pipelines have these pre-installed
 * ENV variables must be set
   * WS_GENERATEPROJECTDETAILSJSON: true
   * WS_USERKEY
   * WS_WSS_URL
 
+<br>
+
+**Execution:**  
+
 ```
-        export WS_PROJECTTOKEN=$(jq -r '.projects | .[] | .projectToken' ./whitesource/scanProjectDetails.json)
-        export WS_URL=$(echo $WS_WSS_URL | awk -F "agent" '{print $1}')
-         #RiskReport-Example
-        curl --output ./whitesource/riskreport.pdf --request POST $WS_URL'/api/v1.3' --header 'Content-Type: application/json'  --data-raw '{"requestType":"getProjectRiskReport","userKey":"$WS_USERKEY","projectToken":"$WS_PROJECTTOKEN"}'
-         #InventoryReport-Example
-        curl --output ./whitesource/inventoryreport.xlsx --request POST $WS_URL'/api/v1.3' --header 'Content-Type: application/json'  --data-raw '{"requestType":"getProductInventoryReport","userKey":"$WS_USERKEY","projectToken":"$WS_PROJECTTOKEN"}'
-         #DueDiligenceReport-Example
-        curl --output ./whitesource/duediligencereport.pdf --request POST $WS_URL'/api/v1.3' --header 'Content-Type: application/json'  --data-raw '{"requestType":"getProjectDueDiligenceReport","userKey":"$WS_USERKEY","projectToken":"$WS_PROJECTTOKEN"}'
+export WS_PROJECTTOKEN=$(jq -r '.projects | .[] | .projectToken' ./whitesource/scanProjectDetails.json)
+export WS_URL=$(echo $WS_WSS_URL | awk -F "agent" '{print $1}')
+  #RiskReport-Example
+curl --output ./whitesource/riskreport.pdf --request POST $WS_URL'/api/v1.3' --header 'Content-Type: application/json'  --data-raw '{"requestType":"getProjectRiskReport","userKey":"$WS_USERKEY","projectToken":"$WS_PROJECTTOKEN"}'
+  #InventoryReport-Example
+curl --output ./whitesource/inventoryreport.xlsx --request POST $WS_URL'/api/v1.3' --header 'Content-Type: application/json'  --data-raw '{"requestType":"getProductInventoryReport","userKey":"$WS_USERKEY","projectToken":"$WS_PROJECTTOKEN"}'
+  #DueDiligenceReport-Example
+curl --output ./whitesource/duediligencereport.pdf --request POST $WS_URL'/api/v1.3' --header 'Content-Type: application/json'  --data-raw '{"requestType":"getProjectDueDiligenceReport","userKey":"$WS_USERKEY","projectToken":"$WS_PROJECTTOKEN"}'
 ```
 
 <br>
@@ -97,13 +109,13 @@ The following prequisites need to be met for the script to work
 
 ## Pipeline SBOM Generation
 
-Add the following after calling the unified agent in any pipeline to create an SPDX tag value output from the scanned project to the whitesource logs folder then use your [pipeline publish](../CI-CD#Pipeline-Log-Publishing) feature to save the whitesource log folder as an artifact
+Add the following snippet after calling the Unified Agent in any pipeline to create an SPDX tag value output from the scanned project to the `./whitesource` logs folder, then use your [pipeline publish](../CI-CD#Pipeline-Log-Publishing) feature to save the whitesource log folder as an artifact.  
 
 <br>
-The following prequisites need to be met for the below example to work
-<br>
 
-* `jq awk python3 python3-pip` must be installed
+**Prerequisites:**  
+
+* `jq`, `awk`, `python3` and `python3-pip` must be installed
   * 99.9% of pipelines have these pre-installed
 * ENV variables must be set
   * WS_GENERATEPROJECTDETAILSJSON: true
@@ -111,12 +123,15 @@ The following prequisites need to be met for the below example to work
   * WS_APIKEY
   * WS_WSS_URL
 
+<br>
+
+**Execution:**  
 
 ```
-        export WS_PROJECTTOKEN=$(jq -r '.projects | .[] | .projectToken' ./whitesource/scanProjectDetails.json)
-        export WS_URL=$(echo $WS_WSS_URL | awk -F "agent" '{print $1}')
-        pip install ws-sbom-generator
-        ws_sbom_generator -u $WS_USERKEY -k $WS_APIKEY -s $WS_PROJECTTOKEN -a $WS_URL -t tv -o ./whitesource
+export WS_PROJECTTOKEN=$(jq -r '.projects | .[] | .projectToken' ./whitesource/scanProjectDetails.json)
+export WS_URL=$(echo $WS_WSS_URL | awk -F "agent" '{print $1}')
+pip install ws-sbom-generator
+ws_sbom_generator -u $WS_USERKEY -k $WS_APIKEY -s $WS_PROJECTTOKEN -a $WS_URL -t tv -o ./whitesource
 ```
 
 More information & usage regarding the [WS SBOM generator](https://github.com/whitesource-ps/ws-sbom-spdx-report)
@@ -131,21 +146,27 @@ More information & usage regarding the [WS SBOM generator](https://github.com/wh
 
 This script can be added to the CI/CD pipeline (or executed independently) following the WhiteSource Unified Agent scan, to list vulnerabilities affecting the last scanned project(s).  
 
-This script parses the `scanProjectDetails.json` file to get the `name` and `projectToken` of the project(s) created/updated during the last scan, and then uses WhiteSource's [getProjectAlertsByType](https://whitesource.atlassian.net/wiki/spaces/WD/pages/1651769359/Alerts+API#Project.2) API request to retrieve all the vulnerability alerts associated with that project. It then prints them to the standard output (`stdout`), sorted by severity and optionally color-coded.
+This script parses the `scanProjectDetails.json` file to get the `name` and `projectToken` of the project(s) created/updated during the last scan, and then uses WhiteSource's [getProjectAlertsByType](https://whitesource.atlassian.net/wiki/spaces/WD/pages/1651769359/Alerts+API#Project.2) API request to retrieve all the vulnerability alerts associated with that project. It then prints them to the standard output (`stdout`), sorted by severity and optionally color-coded.  
 
 <br>
-The following prequisites need to be met for the script to work
-<br>
 
-* `jq curl` must be installed
+**Prerequisites:**  
+
+* `jq` and `curl` must be installed
 * ENV variables must be set
   * `WS_GENERATEPROJECTDETAILSJSON: true`
   * `WS_USERKEY` (admin assignment is required)
   * `WS_WSS_URL`
-  
+
+<br>
+
+**Execution:**  
+
 ```
 ./list-project-alerts.sh
-
+```
+**Sample Output:**  
+```
 Alerts for project: vulnerable-node
 Alerts: 10 High, 4 Medium, 2 Low
 
@@ -167,8 +188,32 @@ Alerts: 10 High, 4 Medium, 2 Low
 [L] WS-2017-0280 - mysql-2.12.0.tgz
 ```
 
-See known limitations [here](list-project-alerts.sh).
+See known limitations [here](list-project-alerts.sh).  
 
 <br>
 <hr>
 
+## Cache the Latest Version of the Unified Agent
+
+[cache-ua.sh](cache-ua.sh)  
+
+This script allows caching of the [WhiteSource Unified Agent](https://whitesource.atlassian.net/wiki/spaces/WD/pages/1140852201/Getting+Started+with+the+Unified+Agent), so you can periodically check for updates and download the latest version only if needed, rather than redundantly downloading prior to every scan.  
+
+The [cache-ua.sh](cache-ua.sh) script can be added to the CI/CD pipeline on a static/hosted build agent (prior to the Unified Agent scan task), or triggered independently, manually or by a scheduled task.  
+
+<br>
+
+**Prerequisites:**  
+
+* `jq` and `curl` must be installed
+
+<br>
+
+**Execution:**  
+
+```
+curl -LJO https://raw.githubusercontent.com/whitesource-ft/ws-examples/main/Scripts/cache-ua.sh.sh 
+chmod +x ./cache-ua.sh.sh && ./cache-ua.sh.sh
+```
+
+See additional example for implementation within a build pipeline under [CI-CD](https://github.com/whitesource-ft/ws-examples/tree/main/CI-CD) (`*-cached-ua.yml`).  
