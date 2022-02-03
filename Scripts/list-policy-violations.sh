@@ -16,15 +16,22 @@
 # WS_CHECKPOLICIES: true
 
 jsonFile="./whitesource/policyRejectionSummary.json"
-libCount="$(cat $jsonFile | jq -r '.summary.totalRejectedLibraries')"
 
 ShowLibSystemPath=true
 
 echo ""
 echo "WhiteSource Policy Violations"
 echo "============================="
+if [[ ! -f $jsonFile ]] ; then
+    echo "[ERROR] File not found: $jsonFile"
+    echo "Make sure to specify the correct working directory and that the last agent scan had WS_CHECKPOLICIES=true"
+    exit
+fi
+
 if [[ -v WS_PRODUCTNAME ]]; then echo "Product: $WS_PRODUCTNAME" ; fi
 if [[ -v WS_PROJECTNAME ]]; then echo "Product: $WS_PROJECTNAME" ; fi
+
+libCount="$(cat $jsonFile | jq -r '.summary.totalRejectedLibraries')"
 echo "Total Rejected Libraries: $libCount"
 echo ""
 
