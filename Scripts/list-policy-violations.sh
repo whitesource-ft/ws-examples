@@ -32,6 +32,10 @@ if [[ -v WS_PRODUCTNAME ]]; then echo "Product: $WS_PRODUCTNAME" ; fi
 if [[ -v WS_PROJECTNAME ]]; then echo "Product: $WS_PROJECTNAME" ; fi
 
 libCount="$(cat $jsonFile | jq -r '.summary.totalRejectedLibraries')"
+if (($libCount == 0)) ; then
+    echo "All dependencies conform with open source policies."
+    exit
+fi
 echo "Total Rejected Libraries: $libCount"
 echo ""
 
