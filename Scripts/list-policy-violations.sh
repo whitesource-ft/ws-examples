@@ -17,7 +17,10 @@
 
 jsonFile="./whitesource/policyRejectionSummary.json"
 
-ShowLibSystemPath=true
+ShowLibSystemPath=false
+if [[ "$1" =~ ^(--includePath|-p)$ ]] ; then
+    ShowLibSystemPath=true
+fi
 
 echo ""
 echo "WhiteSource Policy Violations"
@@ -34,6 +37,7 @@ if [[ -v WS_PROJECTNAME ]]; then echo "Product: $WS_PROJECTNAME" ; fi
 libCount="$(cat $jsonFile | jq -r '.summary.totalRejectedLibraries')"
 if (($libCount == 0)) ; then
     echo "All dependencies conform with open source policies."
+    echo ""
     exit
 fi
 echo "Total Rejected Libraries: $libCount"
