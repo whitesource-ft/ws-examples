@@ -262,7 +262,7 @@ Policy Type: VULNERABILITY_SCORE
 Rejected Libraries:
   log4j-1.2.13.jar  (/build/gl/easybuggy/target/easybuggy-1-SNAPSHOT/WEB-INF/lib/log4j-1.2.13.jar)
   commons-fileupload-1.3.1.jar  (/build/gl/easybuggy/target/easybuggy-1-SNAPSHOT/WEB-INF/lib/commons-fileupload-1.3.1.jar)
-  derby-10.8.3.0.jar  (/home/tidharm/.m2/repository/org/apache/derby/derby/10.8.3.0/derby-10.8.3.0.jar)
+  derby-10.8.3.0.jar  (/home/gl/.m2/repository/org/apache/derby/derby/10.8.3.0/derby-10.8.3.0.jar)
 
 Policy Name: Review LGPL
 Policy Type: LICENSE
