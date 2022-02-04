@@ -6,6 +6,8 @@ This repository contains scripts for use with WhiteSource Unified agent scanning
 - [Reports Within a Pipeline](#reports-within-a-pipeline)
 - [Pipeline SBOM Generation](#pipeline-sbom-generation)
 - [Display Vulnerabilities Affecting a Project](#display-vulnerabilities-affecting-a-project)
+- [Display Policy Violations Following a Scan](#display-policy-violations-following-a-scan)
+- [Cache the Latest Version of the Unified Agent](#cache-the-latest-version-of-the-unified-agent)
 
 <br>
 <hr>
@@ -189,6 +191,87 @@ Alerts: 10 High, 4 Medium, 2 Low
 ```
 
 See known limitations [here](list-project-alerts.sh).  
+
+<br>
+<hr>
+
+## Display Policy Violations Following a Scan
+
+[list-policy-violations.sh](list-policy-violations.sh)  
+
+This script parses the `policyRejectionSummary.json` file, following a WhiteSource Unified Agent scan, and prints to the standard output (`stdout`) the policies that where violated, as well as the libraries that violated them.  
+
+The `policyRejectionSummary.json` file is created automatically under the agent log directory (`./whitesource`) during a scan that's configured to check policies.  
+Every policy check overwrites this file, so this list is always specific to the last scan (that had policy check enabled).  
+
+<br>
+
+**Prerequisites:**  
+
+* `jq` must be installed
+* ENV variables must be set
+  * `WS_CHECKPOLICIES: true`
+
+<br>
+
+**Execution:**  
+
+```
+./list-policy-violations.sh [-p|--includePath]
+```
+**Sample Outputs:**  
+```
+$ ./list-policy-violations.sh
+
+WhiteSource Policy Violations
+=============================
+Product: vulnerable-node
+Project: master
+Total Rejected Libraries: 9
+
+Policy Name: Reject Vuln CVSS 9+
+Policy Type: VULNERABILITY_SCORE
+Rejected Libraries:
+  morgan-1.6.1.tgz
+  pg-5.1.0.tgz
+  ejs-2.7.4.tgz
+  lodash-4.17.11.tgz
+  ejs-0.8.8.tgz
+
+Policy Name: Review BSD2
+Policy Type: LICENSE
+Rejected Libraries:
+  semver-4.3.2.tgz
+  source-map-0.1.43.tgz
+  qs-4.0.0.tgz
+  uglify-js-2.3.0.tgz
+
+```
+
+```
+$ ./list-policy-violations.sh --includePath
+
+WhiteSource Policy Violations
+=============================
+Product: easybuggy
+Project: master
+Total Rejected Libraries: 6
+
+Policy Name: Reject Vuln CVSS 9+
+Policy Type: VULNERABILITY_SCORE
+Rejected Libraries:
+  log4j-1.2.13.jar  (/build/gl/easybuggy/target/easybuggy-1-SNAPSHOT/WEB-INF/lib/log4j-1.2.13.jar)
+  commons-fileupload-1.3.1.jar  (/build/gl/easybuggy/target/easybuggy-1-SNAPSHOT/WEB-INF/lib/commons-fileupload-1.3.1.jar)
+  derby-10.8.3.0.jar  (/home/tidharm/.m2/repository/org/apache/derby/derby/10.8.3.0/derby-10.8.3.0.jar)
+
+Policy Name: Review LGPL
+Policy Type: LICENSE
+Rejected Libraries:
+  xom-1.2.5.jar  (/build/gl/easybuggy/target/easybuggy-1-SNAPSHOT/WEB-INF/lib/xom-1.2.5.jar)
+  bsh-core-2.0b4.jar  (/build/gl/easybuggy/target/easybuggy-1-SNAPSHOT/WEB-INF/lib/bsh-core-2.0b4.jar)
+  javassist-3.12.1.GA.jar  (/build/gl/easybuggy/target/easybuggy-1-SNAPSHOT/WEB-INF/lib/javassist-3.12.1.GA.jar)
+
+```
 
 <br>
 <hr>
