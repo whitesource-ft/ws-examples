@@ -38,7 +38,6 @@ pipeline {
                         echo "Integrity Check Passed"
                     } else {
                         echo "Integrity Check Failed"
-                        exit 1
                         }
                   }
              }
