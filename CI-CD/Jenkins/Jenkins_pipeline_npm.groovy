@@ -1,6 +1,7 @@
 pipeline {
+    
   agent any
-
+  
   environment {
        WS_APIKEY = "${APIKEY}" //Taken from Jenkins Global Environment Variables 
        WS_WSS_URL = "${WSURL}" //Taken from Jenkins Global Environment Variables
@@ -8,22 +9,21 @@ pipeline {
        WS_PRODUCTNAME = "Jenkins_Pipeline"
        WS_PROJECTNAME = "${JOB_NAME}"
    }
-
+  
   tools {
-    maven "mvn_3.6.3"
+    nodejs "nodejs-17.3.1"
   }
-
+  
   stages {
-
     stage('Cloning Git') {
       steps {
         git 'https://github.com/Some/Java/Project/URL'
       }
     }
-
+    
     stage('Install dependencies') {
       steps {
-        sh 'mvn clean install -DskipTests'
+        sh 'npm install'
       }
     }
 
@@ -42,11 +42,11 @@ pipeline {
                   }
              }
     }
-                       
+    
     stage('Run WS Script') {
-      steps { 
+      steps {
         sh 'java -jar wss-unified-agent.jar'
       }
     }
   }
-} 
+}
