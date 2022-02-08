@@ -41,7 +41,13 @@ jobs:
         WS_PROJECTNAME: ${{github.ref}}_ghaction
         WS_EXCLUDES: "**/*conan_export.tgz **/*conan_package.tgz **/*conanfile.py **/node_modules **/src/test **/testdata **/*sources.jar **/*javadoc.jar"
       run: |
+        echo Downloading WhiteSource Unified Agent
         curl -LJO https://unified-agent.s3.amazonaws.com/wss-unified-agent.jar
-        echo Unified Agent downloaded successfully
-        cp -r ~/.conan/data ./conan-libraries
-        java -jar wss-unified-agent.jar
+        if [[ "$(curl -sL https://unified-agent.s3.amazonaws.com/wss-unified-agent.jar.sha256)" != "$(sha256sum wss-unified-agent.jar)" ]] ; then
+          echo "Integrity Check Failed"
+        else
+          echo "Integrity Check Passed"
+          cp -r ~/.conan/data ./conan-libraries
+          echo Starting WhiteSource Scan
+          java -jar wss-unified-agent.jar
+        fi

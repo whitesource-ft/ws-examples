@@ -26,6 +26,7 @@ echo "saving alerts.json"
 ### getProjectSecurityAlertsbyVulnerabilityReport - finds Red Shields
 curl --request POST $WS_URL'/api/v1.3' --header 'Content-Type: application/json' --header 'Accept-Charset: UTF-8'  --data-raw '{   'requestType' : 'getProjectSecurityAlertsByVulnerabilityReport',   'userKey' : '$WS_USERKEY',   'projectToken': '$WS_PROJECTTOKEN', 'format' : 'json'}' | jq -r '.alerts[] | select(.euaShield=="RED") | .vulnerabilityId' >> redshields.txt
 echo 'saving redshields.txt'
+cat redshields.txt && echo "cat of redshields"
 
 redshieldlist=`cat redshields.txt`
 ### Get CVE by Red Shield
@@ -34,7 +35,7 @@ do
 echo "REDSHIELDVULN:"$REDSHIELDVULN
 
 ## Get Github issue number by CVE
-REDSHIELDGHISSUE=$(gh issue list -S $REDSHIELDVULN --json number --jq '.[] | .number ')
+REDSHIELDGHISSUE=$(gh issue list -S "$REDSHIELDVULN in:title" --json number --jq '.[] | .number ')
 echo "REDSHIELDGHISSUE:"$REDSHIELDGHISSUE
 
 ### Get keyUuid
@@ -71,7 +72,7 @@ do
 echo "GREENSHIELDVULN:"$GREENSHIELDVULN
 
 ## Get Github issue number by CVE
-GREENSHIELDGHISSUE=$(gh issue list -S $GREENSHIELDVULN --json number --jq '.[] | .number ')
+GREENSHIELDGHISSUE=$(gh issue list -S "$GREENSHIELDVULN in:title" --json number --jq '.[] | .number ')
 echo "GREENSHIELDGHISSUE:"$GREENSHIELDGHISSUE
 
 gh issue comment $GREENSHIELDGHISSUE --body "Green Shield Alert - This vulnerability is not effective and has been automatically ignored."
