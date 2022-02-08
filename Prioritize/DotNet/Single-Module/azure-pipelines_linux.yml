@@ -5,8 +5,9 @@ pool:
   vmImage: 'ubuntu-latest'
 
 variables:
-  group: 'WhiteSource Keys'
-  buildConfiguration: 'Release'
+  - group: 'WhiteSource Keys'
+  - Name: 'buildConfiguration'
+    value: 'Release'
 
 steps:
 - script: dotnet build --configuration $(buildConfiguration)
