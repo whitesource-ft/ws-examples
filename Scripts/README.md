@@ -299,4 +299,4 @@ curl -LJO https://raw.githubusercontent.com/whitesource-ft/ws-examples/main/Scri
 chmod +x ./cache-ua.sh.sh && ./cache-ua.sh.sh
 ```
 
-See additional example for implementation within a build pipeline under [CI-CD](https://github.com/whitesource-ft/ws-examples/tree/main/CI-CD) (`*-cached-ua.yml`).  
+See additional example for implementation within a build pipeline under [CI-CD](../CI-CD/README.md#caching-the-unified-agent) (`*-cached-ua.yml`).  
