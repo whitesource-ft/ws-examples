@@ -11,15 +11,28 @@
 # WS_GENERATEPROJECTDETAILSJSON: true
 # WS_USERKEY (admin assignment is required)
 # WS_WSS_URL
+# WS_UPDATEINVENTORY: true (defaults to true)
 
 # Known Limitations:
-# The API response will be filtered by default based on the .cvss3_severity
-# property. If a given vulnerability alert does not have a CVSS3 severity (i.e.
-# the .vulnerability.cvss3_severity property is blank), that alert will not be
-# included in the results. To use CVSS2 for filtering, change the jq condition
-# below from `.vulnerability.cvss3_severity` to `.vulnerability.severity`.
-# Note that when doing so, however, while the alert count will be accurate,
-# some alerts might display a different severity than in the UI.
+# - CVSS Score Filtering
+#   The API response will be filtered by default based on the .cvss3_severity
+#   property. If a given vulnerability alert does not have a CVSS3 severity (i.e.
+#   the .vulnerability.cvss3_severity property is blank), that alert will not be
+#   included in the results. To use CVSS2 for filtering, change the jq condition
+#   below from `.vulnerability.cvss3_severity` to `.vulnerability.severity`.
+#   Note that when doing so, however, while the alert count will be accurate,
+#   some alerts might display a different severity than in the UI.
+#
+# - Inventory Update
+#   The scanProjectDetails.json file is only created when an inventory update has
+#   occurred, so this script won't work if WS_UPDATEINVENTORY is set to false.
+#   Moreover, if policy check is enabled (WS_CHECKPOLICIES), and a policy
+#   violation was found, the scan will be aborted without updating the inventory
+#   (and as a result, scanProjectDetails.json won't be created), so it is also
+#   required to enable WS_FORCEUPDATE.
+#   Note that WS_FORCEUPDATE enabled would result in exit code 0 even upon policy
+#   violation, so if you rely on the exit code (-2) for other tasks in your
+#   pipeline, make sure to also enable WS_FORCEUPDATE_FAILBUILDONPOLICYVIOLATION.
 
 WS_API_URL="$(echo "${WS_WSS_URL/agent/'api/v1.3'}")"
 PROJECT_DETAILS="./whitesource/scanProjectDetails.json"
