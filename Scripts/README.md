@@ -159,6 +159,7 @@ This script parses the `scanProjectDetails.json` file to get the `name` and `pro
   * `WS_GENERATEPROJECTDETAILSJSON: true`
   * `WS_USERKEY` (admin assignment is required)
   * `WS_WSS_URL`
+  * `WS_UPDATEINVENTORY: true` (defaults to true)
 
 <br>
 
