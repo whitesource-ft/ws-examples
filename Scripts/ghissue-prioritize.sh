@@ -12,7 +12,7 @@
 # TODO - use libraryname + CVE instead of just CVE, ignores too many right now
 
 WS_PROJECTTOKEN=$(jq -r '.projects | .[] | .projectToken' ./whitesource/scanProjectDetails.json)
-WS_URL=$(echo $WS_WSS_URL | awk -F "agent" '{print $1}')
+WS_URL=$(echo $WS_WSS_URL | awk -F "/agent" '{print $1}')
 echo "productName" $WS_PRODUCTNAME
 echo "projectName" $WS_PROJECTNAME
 echo "projectToken" $WS_PROJECTTOKEN
@@ -35,7 +35,7 @@ do
 echo "REDSHIELDVULN:"$REDSHIELDVULN
 
 ## Get Github issue number by CVE
-REDSHIELDGHISSUE=$(gh issue list -S "$REDSHIELDVULN in:title" --json number --jq '.[] | .number ')
+REDSHIELDGHISSUE=$(gh issue list -S "$REDSHIELDVULN in:title,body" --json number --jq '.[] | .number ')
 echo "REDSHIELDGHISSUE:"$REDSHIELDGHISSUE
 
 ### Get keyUuid
@@ -72,11 +72,10 @@ do
 echo "GREENSHIELDVULN:"$GREENSHIELDVULN
 
 ## Get Github issue number by CVE
-GREENSHIELDGHISSUE=$(gh issue list -S "$GREENSHIELDVULN in:title" --json number --jq '.[] | .number ')
+GREENSHIELDGHISSUE=$(gh issue list -S "$GREENSHIELDVULN in:title,body" --json number --jq '.[] | .number ')
 echo "GREENSHIELDGHISSUE:"$GREENSHIELDGHISSUE
 
 gh issue comment $GREENSHIELDGHISSUE --body "Green Shield Alert - This vulnerability is not effective and has been automatically ignored."
-gh issue close $GREENSHIELDGHISSUE
 
 IGNORES=$(jq -r --arg GREENSHIELDVULN $GREENSHIELDVULN '[.alerts[] | select(.vulnerability.name==$GREENSHIELDVULN)|.alertUuid] |@csv '  productalerts.json)
 echo "Ignoring the following alertUuids"$IGNORES
