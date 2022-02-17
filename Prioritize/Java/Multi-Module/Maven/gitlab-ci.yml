@@ -14,7 +14,6 @@ build:
     productName=GL_$CI_PROJECT_DIR
     projectName=$CI_COMMIT_BRANCH-_Prioritize
     enableImpactAnalysis=true
-    requireKnownSha1=false
     resolveAllDependencies=false
     maven.resolveDependencies=true
     maven.aggregateModules=true

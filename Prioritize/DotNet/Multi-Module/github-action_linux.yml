@@ -26,7 +26,6 @@ jobs:
         WS_WSS_URL: https://saas.whitesourcesoftware.com/agent
         WS_PRODUCTNAME: GH_${{github.event.repository.name}}
         WS_ENABLEIMPACTANALYSIS: true
-        WS_REQUIREKNOWNSHA1: false
         WS_RESOLVEALLDEPENDENCIES: false
         WS_NUGET_RESOLVEDEPENDENCIES: true
         WS_NUGET_RUNPRESTEP: true
