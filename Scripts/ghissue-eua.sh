@@ -48,6 +48,6 @@ echo "PROJECTID:" $PROJECTID
 EUALINK="$WS_URL/Wss/WSS.html#!libraryVulnerabilities;uuid=$KEYUUID;project=$PROJECTID"
 echo $EUALINK
 
-gh issue comment $GHISSUE --body "Red Shield Alert - An effective vulnerability has been found in your open-source code demanding urgent remediation steps.  $EUALINK"
+gh issue comment $GHISSUE --body "Red Shield Alert: $REDSHIELDVULN An effective vulnerability has been found in your open-source code demanding urgent remediation steps.  $EUALINK"
 
 done
