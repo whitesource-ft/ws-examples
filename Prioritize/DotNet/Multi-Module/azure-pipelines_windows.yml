@@ -31,7 +31,6 @@ steps:
       Set-Content -Value "userKey=$(USERKEY)" -Path ./eua.config
       Set-Content -Value "wss.url=https://saas.whitesourcesoftware.com/agent" -Path ./eua.config
       Add-Content -Value "enableImpactAnalysis=true" -Path ./eua.config
-      Add-Content -Value "requireKnownSha1=false" -Path ./eua.config
       Add-Content -Value "resolveAllDependencies=false" -Path ./eua.config
       Add-Content -Value "nuget.resolveDependencies=true" -Path ./eua.config
       Add-Content -Value "nuget.runPreStep=true" -Path ./eua.config

@@ -37,7 +37,6 @@ jobs:
     - name: WhiteSource Unified Agent Scan
       env:
         WS_ENABLEIMPACTANALYSIS: true
-        WS_REQUIREKNOWNSHA1: false
         WS_RESOLVEALLDEPENDENCIES: false
         WS_MAVEN_RESOLVEDEPENDENCIES: true
         WS_MAVEN_AGGREGATEMODULES: true
