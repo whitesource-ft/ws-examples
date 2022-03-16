@@ -43,7 +43,6 @@ jobs:
         productName=GH_${{ github.event.repository.name }}
         projectName=${{ github.ref }}_Prioritize
         enableImpactAnalysis=true
-        requireKnownSha1=false
         resolveAllDependencies=false
         maven.resolveDependencies=true
         maven.aggregateModules=true

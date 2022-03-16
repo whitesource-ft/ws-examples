@@ -27,7 +27,6 @@ steps:
       productName=$(System.TeamProject)
       projectName=$(Build.Repository.Name)_$(Build.SourceBranchName)_Prioritize
       enableImpactAnalysis=true
-      requireKnownSha1=false
       resolveAllDependencies=false
       maven.resolveDependencies=true
       maven.aggregateModules=true
