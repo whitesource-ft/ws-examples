@@ -45,6 +45,32 @@ jobs:
             echo WS_URL: $WS_URL
             echo === Installing WhiteSource SBOM Generator ===
             pip  install ws_sbom_generator
+            echo === Checking Project State before generating SBOM ===
+            IFS="|"
+            scan_status=true
+            pass_status=("UPDATE"${IFS}"FINISH"${IFS}"DIFF")
+            fail_status=("UNKONWN"${IFS}"FAIL")
+            scan_status=true
+            pass_status=("UPDATE"${IFS}"FINISH"${IFS}"DIFF")
+            fail_status=('UNKONWN'${IFS}'FAIL')
+            while $scan_status
+            do
+              new_status=$(curl -s -X POST -H "Content-Type: application/json" -d '{"requestType":"getProjectState", "userKey": "$WS_USERKEY", "projectToken":"$WS_PROJECTTOKEN"}' $WS_URL/api/v1.3 | jq '.projectState|.lastProcess' | tr -d '"')
+              if [[ "${IFS}${pass_status[*]}${IFS}" =~ "${IFS}${new_status}${IFS}" ]];
+              then
+                      scan_status=false
+                      echo "Project infromation has been uploaded successfully!"
+              else
+                      echo "Scan is still processing..."
+                      sleep 10
+              fi
+              if [[ "${IFS}${fail_status[*]}${IFS}" =~ "${IFS}${new_status}${IFS}" ]];
+              then
+                      echo "Scan failed to upload...exiting program"
+                      exit 1
+              fi
+            done
+            unset IFS
             echo === Generating SBOM ===
             ws_sbom_generator -u ${{secrets.USERKEY}} -k ${{secrets.APIKEY}} -s $WS_PROJECTTOKEN -a $WS_URL -t tv -o ./whitesource-spdx
 
