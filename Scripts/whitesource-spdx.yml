@@ -1,3 +1,4 @@
+Verisure:
 name: WhiteSource scan and SPDX report 
 
 on: 
@@ -79,4 +80,3 @@ jobs:
         with:
            name: WhiteSource SPDX report
            path: ${{github.workspace}}/whitesource-spdx
-
