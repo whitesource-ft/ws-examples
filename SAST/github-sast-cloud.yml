@@ -12,8 +12,6 @@ jobs:
       SAST_ORGANIZATION: ${{secrets.SAST_ORGANIZATION}}
       SASTCLI_TOKEN: ${{secrets.SASTCLI_TOKEN}}
       SAST_SERVER: https://sast-demo.whitesourcesoftware.com
-      SASTCLI_TARGET_APPLICATION: ${{github.event.repository.name}}
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -23,5 +21,5 @@ jobs:
       # Run CLI
       - name: Run WS-SAST
         run: |
-          ./wscli --dir ./ --name=${{github.event.repository.name}}-${{github.ref_name}}-${{github.sha}} \
+          ./wscli --dir ./ --name=${{github.event.repository.name}}-${{github.ref_name}}-${{github.sha}} \ -app=${{github.event.repository.name}}
           --baseline=true 
