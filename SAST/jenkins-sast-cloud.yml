@@ -12,7 +12,7 @@ pipeline {
 
     stage('Cloning Git') {
       steps {
-        git 'https://github.com/lukebroganws/WebGoat'
+        git 'https://github.com/some/gitrepo'
       }
     }
 
