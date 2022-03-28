@@ -1,0 +1,32 @@
+pipeline {
+  agent any
+  
+  environment {
+       SAST_ORGANIZATION = "$SAST_ORGANIZATION" //Taken from Jenkins Global Environment Variables 
+       SASTCLI_TOKEN = "$SASTCLI_TOKEN"
+       SAST_SERVER = "https://sast-demo.whitesourcesoftware.com"
+   }
+
+
+  stages {
+
+    stage('Cloning Git') {
+      steps {
+        git 'https://github.com/lukebroganws/WebGoat'
+      }
+    }
+
+    
+    stage('Downloading WS SAST Tool') {
+      steps {
+                sh 'curl -LJO https://downloads-demo.whitesourcesoftware.com/sast-cli/linux/wscli && chmod +x wscli'
+             }
+    }
+                       
+    stage('Run WS SAST') {
+      steps { 
+        sh './wscli --dir ./ --name=$CI_PROJECT_NAME_$CI_COMMIT_BRANCH -app=$CI_PROJECT_NAME'
+      }
+    }
+  }
+} 
