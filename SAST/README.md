@@ -3,3 +3,6 @@ This repository contains tool specific examples of how to scan using the SAST cl
 
 
 * [AzureDevOps](azure-pipelines_sast.yml)
+* [GitHub](github-sast-cloud.yml)
+* [GitLab](gitlab-sast-cloud.yml)
+* [Jenkins](jenkins-sast-cloud.yml)
