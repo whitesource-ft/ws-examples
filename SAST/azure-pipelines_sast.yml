@@ -8,7 +8,7 @@ steps:
 - script: curl -LJO https://downloads-demo.whitesourcesoftware.com/sast-cli/linux/wscli && chmod +x wscli
   displayName: 'Downloading WS SAST Tool'
 
-- script: ./wscli --dir ./ --name=$(Build.Repository.Name)$(Build.SourceBranchName) -app AZ$(System.TeamProject)
+- script: ./wscli --dir ./ --name=$(Build.Repository.Name)$(Build.SourceBranchName) --app AZ$(System.TeamProject)
   displayName: 'Run WS SAST'
   env:
     SAST_ORGANIZATION: $(SAST_ORGANIZATION)
