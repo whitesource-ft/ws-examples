@@ -25,7 +25,7 @@ pipeline {
                        
     stage('Run WS SAST') {
       steps { 
-        sh './wscli --dir ./ --name=$CI_PROJECT_NAME_$CI_COMMIT_BRANCH -app=$CI_PROJECT_NAME'
+        sh './wscli --dir ./ --name=$CI_PROJECT_NAME_$CI_COMMIT_BRANCH --app=$CI_PROJECT_NAME'
       }
     }
   }
