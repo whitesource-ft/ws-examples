@@ -12,7 +12,7 @@
 # TODO - use libraryname + CVE instead of just CVE, ignores too many right now
 
 WS_PROJECTTOKEN=$(jq -r '.projects | .[] | .projectToken' ./whitesource/scanProjectDetails.json)
-WS_URL=$(echo $WS_WSS_URL | awk -F "agent" '{print $1}')
+WS_URL=$(echo $WS_WSS_URL | awk -F "/agent" '{print $1}')
 echo "productName" $WS_PRODUCTNAME
 echo "projectName" $WS_PROJECTNAME
 echo "projectToken" $WS_PROJECTTOKEN
@@ -26,6 +26,7 @@ echo "saving alerts.json"
 ### getProjectSecurityAlertsbyVulnerabilityReport - finds Red Shields
 curl --request POST $WS_URL'/api/v1.3' --header 'Content-Type: application/json' --header 'Accept-Charset: UTF-8'  --data-raw '{   'requestType' : 'getProjectSecurityAlertsByVulnerabilityReport',   'userKey' : '$WS_USERKEY',   'projectToken': '$WS_PROJECTTOKEN', 'format' : 'json'}' | jq -r '.alerts[] | select(.euaShield=="RED") | .vulnerabilityId' >> redshields.txt
 echo 'saving redshields.txt'
+cat redshields.txt && echo "cat of redshields"
 
 redshieldlist=`cat redshields.txt`
 ### Get CVE by Red Shield
@@ -34,7 +35,7 @@ do
 echo "REDSHIELDVULN:"$REDSHIELDVULN
 
 ## Get Github issue number by CVE
-REDSHIELDGHISSUE=$(gh issue list -S $REDSHIELDVULN --json number --jq '.[] | .number ')
+REDSHIELDGHISSUE=$(gh issue list -S "$REDSHIELDVULN in:title,body" --json number --jq '.[] | .number ')
 echo "REDSHIELDGHISSUE:"$REDSHIELDGHISSUE
 
 ### Get keyUuid
@@ -48,7 +49,7 @@ echo "PROJECTID:" $PROJECTID
 EUALINK="$WS_URL/Wss/WSS.html#!libraryVulnerabilities;uuid=$KEYUUID;project=$PROJECTID"
 echo $EUALINK
 
-gh issue comment $GHISSUE --body "Red Shield Alert - An effective vulnerability has been found in your open-source code demanding urgent remediation steps.  $EUALINK"
+gh issue comment $GHISSUE --body "Red Shield Alert:$REDSHIELDVULN - An effective vulnerability has been found in your open-source code demanding urgent remediation steps.  $EUALINK"
 
 done
 
@@ -71,11 +72,10 @@ do
 echo "GREENSHIELDVULN:"$GREENSHIELDVULN
 
 ## Get Github issue number by CVE
-GREENSHIELDGHISSUE=$(gh issue list -S $GREENSHIELDVULN --json number --jq '.[] | .number ')
+GREENSHIELDGHISSUE=$(gh issue list -S "$GREENSHIELDVULN in:title,body" --json number --jq '.[] | .number ')
 echo "GREENSHIELDGHISSUE:"$GREENSHIELDGHISSUE
 
 gh issue comment $GREENSHIELDGHISSUE --body "Green Shield Alert - This vulnerability is not effective and has been automatically ignored."
-gh issue close $GREENSHIELDGHISSUE
 
 IGNORES=$(jq -r --arg GREENSHIELDVULN $GREENSHIELDVULN '[.alerts[] | select(.vulnerability.name==$GREENSHIELDVULN)|.alertUuid] |@csv '  productalerts.json)
 echo "Ignoring the following alertUuids"$IGNORES

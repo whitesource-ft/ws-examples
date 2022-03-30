@@ -5,8 +5,9 @@ pool:
   vmImage: 'ubuntu-latest'
 
 variables:
-  group: 'WhiteSource Keys'
-  buildConfiguration: 'Release'
+  - group: 'WhiteSource Keys'
+  - Name: 'buildConfiguration'
+    value: 'Release'
 
 steps:
 - script: dotnet build --configuration $(buildConfiguration)
@@ -26,7 +27,6 @@ steps:
     WS_PRODUCTNAME: AZ_$(System.TeamProject)
     WS_PROJECTNAME: $(Build.Repository.Name)_$(Build.SourceBranchName)_Prioritize
     WS_ENABLEIMPACTANALYSIS: true
-    WS_REQUIREKNOWNSHA1: false
     WS_RESOLVEALLDEPENDENCIES: false
     WS_NUGET_RESOLVEDEPENDENCIES: true
     WS_NUGET_RUNPRESTEP: true

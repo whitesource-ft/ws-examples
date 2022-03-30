@@ -32,7 +32,6 @@ steps:
     WS_PROJECTNAME: $(Build.Repository.Name)_$(Build.SourceBranchName)_Prioritize
     WS_ENABLEIMPACTANALYSIS: true
     WS_RESOLVEALLDEPENDENCIES: false
-    WS_REQUIREKNOWNSHA1: false
     WS_FILESYSTEMSCAN: false
     WS_NPM_RESOLVEDEPENDENCIES: true
     WS_NPM_RESOLVELOCKFILE: false

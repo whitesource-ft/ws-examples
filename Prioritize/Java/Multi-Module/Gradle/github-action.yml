@@ -44,12 +44,9 @@ jobs:
         productName=GH_${{ github.event.repository.name }}
         projectName=${{ github.ref }}_Prioritize
         enableImpactAnalysis=true
-        requireKnownSha1=false
         resolveAllDependencies=false
         gradle.resolveDependencies=true
         gradle.aggregateModules=true
-        gradle.preferredEnvironment=wrapper
-        gradle.wrapperPath=./gradlew
         fileSystemScan=false
         generateProjectDetailsJson=true
         EOF
