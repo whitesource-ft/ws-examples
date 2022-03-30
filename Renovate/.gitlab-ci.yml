@@ -4,7 +4,7 @@ include:
 
 renovate:
   variables:
-    RENOVATE_EXTRA_FLAGS: --autodiscover=true --onboarding=true --autodiscover-filter=dima.gorbonos/*
+    RENOVATE_EXTRA_FLAGS: --autodiscover=true --onboarding=true --autodiscover-filter=group1/*
   rules:
     - if: '$CI_PIPELINE_SOURCE == "schedule"'
     - if: '$CI_PIPELINE_SOURCE == "push"'
