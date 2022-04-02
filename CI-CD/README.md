@@ -4,6 +4,7 @@ This repository contains tool specific examples of how to scan using the WhiteSo
 
 * [AWSCodeBuild](AWSCodeBuild)
 * [AzureDevOps](AzureDevOps)
+* [Bamboo](Bamboo)
 * [Bitbucket](Bitbucket)
 * [CodeFresh](CodeFresh)
 * [CircleCI](CircleCI)
