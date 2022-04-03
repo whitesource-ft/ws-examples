@@ -1,0 +1,34 @@
+pipeline {
+  agent any
+  
+  environment {
+       SAST_ORGANIZATION = "$SAST_ORGANIZATION" //Taken from Jenkins Global Environment Variables 
+       SASTCLI_TOKEN = "$SASTCLI_TOKEN"
+       SAST_SERVER = "https://sast-demo.whitesourcesoftware.com"
+   }
+
+
+  stages {
+
+    stage('Cloning Git') {
+      steps {
+        git 'https://github.com/some/gitrepo'
+      }
+    }
+
+    
+    stage('Downloading WS SAST Tool') {
+      steps {
+                sh 'curl -LJO https://downloads-demo.whitesourcesoftware.com/sast-cli/linux/wscli && chmod +x wscli'
+             }
+    }
+                       
+    stage('Run WS SAST') {
+      steps { 
+        repo=$(basename -s .git $(git config --get remote.origin.url))
+        branch=$(git branch --show-current)
+        sh './wscli --dir ./ --name=$repo_$branch --app=$repo'
+      }
+    }
+  }
+} 
