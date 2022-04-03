@@ -48,7 +48,10 @@ ws_scan:
     else
         echo "Already using the latest version of the WhiteSource Unified Agent"
     fi
-
+    if [[ "$(curl -sL https://unified-agent.s3.amazonaws.com/wss-unified-agent.jar.sha256)" != "$(sha256sum wss-unified-agent.jar)" ]] ; then
+        echo "Integrity Check Failed"
+      else
+        echo "Integrity Check Passed"
     echo "WhiteSource Scan"
     java -jar ./wss-unified-agent.jar
    tags:
