@@ -16,5 +16,3 @@ ws_scan:
     - curl -LJO https://downloads-demo.whitesourcesoftware.com/sast-cli/linux/wscli && chmod +x wscli
     - echo "Run WS SAST"
     - ./wscli --dir ./ --name=$CI_PROJECT_NAME_$CI_COMMIT_BRANCH --app=$CI_PROJECT_NAME
-  tags:
-    - docker-runner
