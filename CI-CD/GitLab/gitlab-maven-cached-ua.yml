@@ -51,5 +51,3 @@ ws_scan:
 
     echo "WhiteSource Scan"
     java -jar ./wss-unified-agent.jar
-   tags:
-    - docker-runner
