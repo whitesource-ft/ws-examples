@@ -49,17 +49,14 @@ jobs:
             IFS="|"
             scan_status=true
             pass_status=("UPDATE"${IFS}"FINISH"${IFS}"DIFF")
-            fail_status=("UNKONWN"${IFS}"FAIL")
-            scan_status=true
-            pass_status=("UPDATE"${IFS}"FINISH"${IFS}"DIFF")
-            fail_status=('UNKONWN'${IFS}'FAIL')
+            fail_status=("UNKNOWN"${IFS}"FAIL")
             while $scan_status
             do
-              new_status=$(curl -s -X POST -H "Content-Type: application/json" -d '{"requestType":"getProjectState", "userKey": "$WS_USERKEY", "projectToken":"$WS_PROJECTTOKEN"}' $WS_URL/api/v1.3 | jq '.projectState|.lastProcess' | tr -d '"')
+              new_status=$(curl -s -X POST -H "Content-Type: application/json" -d '{"requestType":"getProjectState", "userKey": "'$WS_USERKEY'", "projectToken":"'$WS_PROJECTTOKEN'"}' $WS_URL/api/v1.3 | jq '.projectState|.lastProcess' | tr -d '"')
               if [[ "${IFS}${pass_status[*]}${IFS}" =~ "${IFS}${new_status}${IFS}" ]];
               then
                       scan_status=false
-                      echo "Project infromation has been uploaded successfully!"
+                      echo "Project information has been uploaded successfully!"
               else
                       echo "Scan is still processing..."
                       sleep 10
