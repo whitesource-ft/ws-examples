@@ -10,8 +10,6 @@ maven_build:
   image: maven:3.8.4-eclipse-temurin-17-alpine
   stage: build
   script: "mvn clean install -DskipTests"
-  tags: 
-  - docker-runner
 
 cache:
   key: "cache-$MVN_PKG-$CI_PIPELINE_ID"
