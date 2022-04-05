@@ -10,8 +10,6 @@ pip_build:
   image: rappdw/docker-java-python
   stage: build
   script: "pip install -r requirements.txt"
-  tags: 
-  - docker-runner
 
   cache:
     key: "cache-$PIP_PKG-$CI_PIPELINE_ID"
