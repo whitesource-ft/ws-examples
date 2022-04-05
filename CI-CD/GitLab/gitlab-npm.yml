@@ -29,8 +29,6 @@ npm_build:
       else
         npm install --package-lock
       fi
-  tags:
-    - docker-runner
 
 ws_scan:
   stage: scan
