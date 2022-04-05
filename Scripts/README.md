@@ -9,6 +9,7 @@ This repository contains scripts for use with WhiteSource Unified agent scanning
 - [Display Policy Violations Following a Scan](#display-policy-violations-following-a-scan)
 - [Cache the Latest Version of the Unified Agent](#cache-the-latest-version-of-the-unified-agent)
 
+All scripts should call [check-project-state.sh](check-project-state.sh) before running to ensure that the project scan has completed.
 <br>
 <hr>
 
