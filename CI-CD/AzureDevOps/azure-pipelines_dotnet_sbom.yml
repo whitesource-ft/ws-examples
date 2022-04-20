@@ -23,7 +23,7 @@ steps:
     curl -LJO https://unified-agent.s3.amazonaws.com/wss-unified-agent.jar
     echo Unified Agent downloaded successfully
     java -jar wss-unified-agent.jar
-  displayName: 'Unified Agent Prioritize Scan'
+  displayName: 'Unified Agent Scan'
   env:
     WS_APIKEY: $(APIKEY)
     WS_USERKEY: $(USERKEY)
