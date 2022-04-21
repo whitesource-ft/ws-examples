@@ -19,7 +19,7 @@ pipeline {
     
     stage('Downloading WS SAST Tool') {
       steps {
-                sh 'curl -LJO https://downloads-demo.whitesourcesoftware.com/sast-cli/linux/wscli && chmod +x wscli'
+                sh 'curl -LJO https://downloads-sast.whitesourcesoftware.com/sast-cli/linux/wscli && chmod +x wscli'
              }
     }
                        
