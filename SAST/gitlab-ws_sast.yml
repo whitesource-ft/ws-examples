@@ -13,6 +13,6 @@ ws_scan:
     SAST_SERVER: "https://sast-demo.whitesourcesoftware.com"
   script:
     - echo "Downloading WS SAST Tool"
-    - curl -LJO https://downloads-demo.whitesourcesoftware.com/sast-cli/linux/wscli && chmod +x wscli
+    - curl -LJO https://downloads-sast.whitesourcesoftware.com/sast-cli/linux/wscli && chmod +x wscli
     - echo "Run WS SAST"
     - ./wscli --dir ./ --name=$CI_PROJECT_NAME_$CI_COMMIT_BRANCH --app=$CI_PROJECT_NAME
