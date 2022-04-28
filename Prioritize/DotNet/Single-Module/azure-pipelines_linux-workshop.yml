@@ -1,5 +1,5 @@
 trigger:
-- release*
+- main
 
 pool:
   vmImage: 'ubuntu-latest'
@@ -33,4 +33,15 @@ steps:
     WS_GENERATEPROJECTDETAILSJSON: true
     WS_EXCLUDES: '**/build/** **/tests/**'
   displayName: 'Unified Agent Prioritize Scan'
+
+- script: curl -LJO https://downloads-sast.whitesourcesoftware.com/sast-cli/linux/wscli && chmod +x wscli
+  displayName: 'Downloading WS SAST Tool'
+
+- script: ./wscli --dir ./ --name=$(Build.Repository.Name)$(Build.SourceBranchName) --app AZ$(System.TeamProject)
+  displayName: 'Run WS SAST'
+  env:
+    SAST_ORGANIZATION: $(SAST_ORGANIZATION)
+    SASTCLI_TOKEN: $(SASTCLI_TOKEN)
+    SAST_SERVER: https://sast-demo.whitesourcesoftware.com
+
   

@@ -44,11 +44,11 @@ chmod +x ./ghissue-eua.sh && ./ghissue-eua.sh
 <br>
 <hr>
 
-## Adding Red Shield Comments Links to GitHub Issues and Closing Green Shield Issues
+## Ignoring Alerts Based on Prioritize
 
 [ghissue-prioritize.sh](ghissue-prioritize.sh)  
 
-Add the following lines after the Unified Agent command in a GitHub action to add comments to your GitHub issues that are created by the WhiteSource GitHub integration. These comments will indicate if the vulnerability has a red shield and provide a link to the WhiteSource UI for further examination.  If a the vulnerability has a green shield a comment will be made, the issue will be closed, and the vulnerability will be ignored in WhiteSource.  
+Add the following lines after the Unified Agent command in a CI/CD pipeline to ignore vulnerabilities based on WhiteSource Prioritize Green shields in a repository that is scanned via the Github Integration.
 
 <br>
 
@@ -69,8 +69,8 @@ Add the following lines after the Unified Agent command in a GitHub action to ad
 **Execution:**  
 
 ```
-curl -LJO https://raw.githubusercontent.com/whitesource-ft/ws-examples/main/Scripts/ghissue-prioritize.sh 
-chmod +x ./ghissue-prioritize.sh && ./ghissue-prioritize.sh
+curl -LJO https://raw.githubusercontent.com/whitesource-ft/ws-examples/main/Scripts/prioritize-ignore.sh 
+chmod +x ./prioritize-ignore.sh && ./prioritize-ignore.sh
 ```
 
 <br>
