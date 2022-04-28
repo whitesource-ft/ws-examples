@@ -11,10 +11,13 @@
 
 WS_PROJECTTOKEN=$(jq -r '.projects | .[] | .projectToken' ./whitesource/scanProjectDetails.json)
 WS_URL=$(echo $WS_WSS_URL | awk -F "/agent" '{print $1}')
-echo "WS_PRODUCTNAME=" $WS_PRODUCTNAME
-echo "WS_PROJECTNAME=" $WS_PROJECTNAME
-echo "WS_PROJECTTOKEN=" $WS_PROJECTTOKEN
-echo "WS_URL=" $WS_URL
+echo "variables for local debugging"
+echo "export WS_APIKEY=<add your key>"
+echo "export WS_USERKEY=<add your key>"
+echo "export WS_PRODUCTNAME="$WS_PRODUCTNAME
+echo "export WS_PROJECTNAME="$WS_PROJECTNAME
+echo "export WS_PROJECTTOKEN="$WS_PROJECTTOKEN
+echo "export WS_URL="$WS_URL
 
 ### getProjectAlertsbyType
 curl --request POST $WS_URL'/api/v1.3' --header 'Content-Type: application/json' --header 'Accept-Charset: UTF-8'  --data-raw '{   'requestType' : 'getProjectAlertsByType',   'userKey' : '$WS_USERKEY', 'alertType': 'SECURITY_VULNERABILITY',  'projectToken': '$WS_PROJECTTOKEN','format' : 'json'}' | jq '.alerts[]' >>alerts.json
