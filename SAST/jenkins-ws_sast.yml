@@ -19,7 +19,7 @@ pipeline {
     
     stage('Downloading WS SAST Tool') {
       steps {
-                sh 'curl -LJO https://downloads-sast.whitesourcesoftware.com/sast-cli/linux/wscli && chmod +x wscli'
+                sh 'curl -LJO https://downloads-sast.whitesourcesoftware.com/sast-cli/linux/wssastcli && chmod +x wssastcli'
              }
     }
                        
@@ -27,7 +27,7 @@ pipeline {
       steps { 
         repo=$(basename -s .git $(git config --get remote.origin.url))
         branch=$(git branch --show-current)
-        sh './wscli --dir ./ --name=$repo_$branch --app=$repo'
+        sh './wssastcli --dir ./ --name=$repo_$branch --app=$repo'
       }
     }
   }
