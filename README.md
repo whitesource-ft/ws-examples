@@ -10,6 +10,10 @@ If you can't find something, use search to [search in this repository](https://d
 
 <br>
 
+## Example SCM Integration Configs
+
+* [.whitesource](https://github.com/whitesource-ft/ws-examples/blob/main/.whitesource)
+* [Unified Agent Config](https://github.com/whitesource-ft/ws-examples/blob/main/whitesource.config) - contains SCM integration default settings
 
 ## [CI-CD by Pipeline](CI-CD)
 
