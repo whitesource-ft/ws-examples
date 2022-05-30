@@ -6,10 +6,10 @@ pool:
 
 steps:
 - script: curl -LJO https://downloads-sast.mend.io/sast-cli/linux/mendsastcli && chmod +x mendsastcli
-  displayName: 'Downloading WS SAST Tool'
+  displayName: 'Downloading Mend SAST Tool'
 
 - script: ./mendsastcli --dir ./ --name=$(Build.Repository.Name)$(Build.SourceBranchName) --app AZ$(System.TeamProject)
-  displayName: 'Run WS SAST'
+  displayName: 'Run Mend SAST'
   env:
     SAST_ORGANIZATION: $(SAST_ORGANIZATION)
     SASTCLI_TOKEN: $(SASTCLI_TOKEN)
