@@ -17,13 +17,13 @@ pipeline {
     }
 
     
-    stage('Downloading WS SAST Tool') {
+    stage('Downloading Mend SAST Tool') {
       steps {
                 sh 'curl -LJO https://downloads-sast.mend.io/sast-cli/linux/mendsastcli && chmod +x mendsastcli'
              }
     }
                        
-    stage('Run WS SAST') {
+    stage('Run Mend SAST') {
       steps { 
         repo=$(basename -s .git $(git config --get remote.origin.url))
         branch=$(git branch --show-current)
