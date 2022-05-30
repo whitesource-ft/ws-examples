@@ -10,9 +10,9 @@ ws_scan:
   variables:
     SAST_ORGANIZATION: $SAST_ORGANIZATION
     SASTCLI_TOKEN: $SASTCLI_TOKEN
-    SAST_SERVER: "https://sast-demo.whitesourcesoftware.com"
+    SAST_SERVER: "https://saas.mend.io/sast/"
   script:
     - echo "Downloading WS SAST Tool"
-    - curl -LJO https://downloads-sast.whitesourcesoftware.com/sast-cli/linux/wssastcli && chmod +x wssastcli
+    - curl -LJO https://downloads-sast.mend.io/sast-cli/linux/mendsastcli && chmod +x mendsastcli
     - echo "Run WS SAST"
-    - ./wssastcli --dir ./ --name=$CI_PROJECT_NAME_$CI_COMMIT_BRANCH --app=$CI_PROJECT_NAME
+    - ./mendsastcli --dir ./ --name=$CI_PROJECT_NAME_$CI_COMMIT_BRANCH --app=$CI_PROJECT_NAME
