@@ -12,7 +12,7 @@ ws_scan:
     SASTCLI_TOKEN: $SASTCLI_TOKEN
     SAST_SERVER: "https://saas.mend.io/sast/"
   script:
-    - echo "Downloading WS SAST Tool"
+    - echo "Downloading Mend SAST Tool"
     - curl -LJO https://downloads-sast.mend.io/sast-cli/linux/mendsastcli && chmod +x mendsastcli
-    - echo "Run WS SAST"
+    - echo "Run Mend SAST"
     - ./mendsastcli --dir ./ --name=$CI_PROJECT_NAME_$CI_COMMIT_BRANCH --app=$CI_PROJECT_NAME
