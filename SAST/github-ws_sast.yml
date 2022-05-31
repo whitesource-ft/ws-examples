@@ -5,7 +5,7 @@ on:
     branches: [ main ]
 
 jobs:
-  ws-sast:
+  mend-sast:
     name: Mend-SAST
     runs-on: ubuntu-latest
     env:
@@ -17,7 +17,7 @@ jobs:
         uses: actions/checkout@v2
       # Download CLI
       - name: Download CLI
-        run: curl -LJO downloads-sast.mend.io/sast-cli/linux/mendsastcli && chmod +x mendsastcli
+        run: curl -LJO https://downloads-sast.mend.io/sast-cli/linux/mendsastcli && chmod +x mendsastcli
       # Run CLI
       - name: Run Mend-SAST
         run: ./mendsastcli --dir ./ --name=${{github.event.repository.name}}-${{github.ref_name}}-${{github.sha}} --app=${{github.event.repository.name}} --baseline=true
