@@ -3,9 +3,9 @@ services:
 
   remediate:
     build: 
-      context: ${BASE_DIR}/wss-remediate/docker
+      context: ${BASE_DIR}/latest/wss-remediate/docker
     image: wss-remediate:${TAG}
-    container_name: wss-remediate 
+    container_name: remediate-server
     ports:
       - "8080:8080"
     volumes: 
@@ -38,7 +38,7 @@ services:
     
   scanner:
     build: 
-      context: ${BASE_DIR}/wss-scanner/docker
+      context: ${BASE_DIR}/latest/wss-scanner/docker
     image: wss-scanner:${SCANNER}
     container_name: wss-scanner
     ports:
