@@ -4,7 +4,6 @@
 [![GitHub release](https://img.shields.io/github/release/whitesource-ft/ws-template.svg)](https://github.com/whitesource-ft/ws-template/releases/latest)  
 # Repository Integration Automation Scripts
 When used, these scripts will stand up a new repository integration environment in Docker.<BR />
-- Repository Agent
 - Remediate Server
 - Controller
 - Scanner
@@ -25,7 +24,9 @@ Options Defined:<BR />
 
 ## Execution
 Execution instructions:  
+```
 git clone https://github.com/whitesource-ft/ws-examples.git && cd ws-examples/Repo-Integration<BR />
 export ws_key='&lt;your-activation-key&gt;'<BR />
 chmod +x ./setup.sh && ./setup.sh gls<BR />
 docker-compose up<BR />
+```
