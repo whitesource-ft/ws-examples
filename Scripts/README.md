@@ -1,5 +1,5 @@
 # Scripts
-This repository contains scripts for use with WhiteSource Unified agent scanning within a CI/CD pipeline.
+This repository contains scripts for use with Mend Unified agent scanning within a CI/CD pipeline.
 
 - [Adding Red Shield Comment Links to GitHub Issues](#adding-red-shield-comment-links-to-github-issues)
 - [Adding Red Shield Comments Links to GitHub Issues and Closing Green Shield Issues](#adding-red-shield-comments-links-to-github-issues-and-closing-green-shield-issues)
@@ -17,7 +17,7 @@ All scripts should call [check-project-state.sh](check-project-state.sh) before 
 
 [ghissue-eua.sh](ghissue-eua.sh)  
 
-Add the following lines after the Unified Agent command in a GitHub action to add comments to your GitHub issues that are created by the WhiteSource GitHub integration. These comments will indicate if the vulnerability has a red shield and provide a link to the WhiteSource UI for further examination.  
+Add the following lines after the Unified Agent command in a GitHub action to add comments to your GitHub issues that are created by the Mend GitHub integration. These comments will indicate if the vulnerability has a red shield and provide a link to the Mend UI for further examination.  
 
 <br>
 
@@ -48,7 +48,7 @@ chmod +x ./ghissue-eua.sh && ./ghissue-eua.sh
 
 [ghissue-prioritize.sh](ghissue-prioritize.sh)  
 
-Add the following lines after the Unified Agent command in a CI/CD pipeline to ignore vulnerabilities based on WhiteSource Prioritize Green shields in a repository that is scanned via the Github Integration.
+Add the following lines after the Unified Agent command in a CI/CD pipeline to ignore vulnerabilities based on Mend Prioritize Green shields in a repository that is scanned via the Github Integration.
 
 <br>
 
