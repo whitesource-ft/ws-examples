@@ -1,4 +1,4 @@
-![Logo](https://www.mend.io/wp-content/media/2022/05/mend-logo-final.svg)  
+![Logo](https://resources.mend.io/mend-sig/logo/mend-dark-logo-horizontal.png)  
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-yellowgreen.svg)](https://opensource.org/licenses/Apache-2.0)
 # Mend Examples
