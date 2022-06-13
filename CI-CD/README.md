@@ -1,5 +1,5 @@
 # Examples by CI/CD Tool
-This repository contains tool specific examples of how to scan using the WhiteSource Unified Agent within a CI/CD pipeline.
+This repository contains tool specific examples of how to scan using the Mend Unified Agent within a CI/CD pipeline.
 
 
 * [AWSCodeBuild](AWSCodeBuild)
@@ -15,11 +15,11 @@ This repository contains tool specific examples of how to scan using the WhiteSo
 * [TeamCity](TeamCity)
 
 ## Caching the Unified Agent
-Typically, the best practice with all of the above pipeline integrations is to have the [WhiteSource Unified Agent](https://whitesource.atlassian.net/wiki/spaces/WD/pages/1140852201/Getting+Started+with+the+Unified+Agent#Downloading-the-Unified-Agent) downloaded onto the build's workspace during the build job, so that you always use the latest version.  
+Typically, the best practice with all of the above pipeline integrations is to have the [Unified Agent](https://docs.mend.io/bundle/unified_agent/page/getting_started_with_the_unified_agent.html) downloaded onto the build's workspace during the build job, so that you always use the latest version.  
 
 It is possible, however, to utilize your CI tool's built-in caching functionality, so that you only download the latest version of the agent once every release.  
 
-In the following examples, the `wss-unified-agent.jar` artifact is stored in the pipeline's cache, and the WhiteSource pipeline task first checks whether a newer version of the agent was published since the last time the agent was cached, and if so, it downloads the latest version to be cached instead, before proceeding to the scan itself.  
+In the following examples, the `wss-unified-agent.jar` artifact is stored in the pipeline's cache, and the Mend pipeline task first checks whether a newer version of the agent was published since the last time the agent was cached, and if so, it downloads the latest version to be cached instead, before proceeding to the scan itself.  
 * [Caching the Unified Agent - GitLab Pipelines](GitLab/gitlab-maven-cached-ua.yml)
 
 See also: [Cache the Latest Version of the Unified Agent](../Scripts/README.md#cache-the-latest-version-of-the-unified-agent) (generic example script)  
@@ -47,4 +47,4 @@ See also: [Cache the Latest Version of the Unified Agent](../Scripts/README.md#c
     retention-days: 1
 ```
 
-## [WhiteSource Report Publishing](../Scripts/README.md)
+## [Mend Report Publishing](../Scripts/README.md)
