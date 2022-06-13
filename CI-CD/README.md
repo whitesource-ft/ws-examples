@@ -15,7 +15,7 @@ This repository contains tool specific examples of how to scan using the Mend Un
 * [TeamCity](TeamCity)
 
 ## Caching the Unified Agent
-Typically, the best practice with all of the above pipeline integrations is to have the [Unified Agent](https://docs.mend.io/bundle/unified_agent/page/getting_started_with_the_unified_agent.html) downloaded onto the build's workspace during the build job, so that you always use the latest version.  
+Typically, the best practice with all of the above pipeline integrations is to have the [Unified Agent](https://docs.mend.io/bundle/unified_agent/page/getting_started_with_the_unified_agent.html#GettingStartedwiththeUnifiedAgent-DownloadingtheUnifiedAgent) downloaded onto the build's workspace during the build job, so that you always use the latest version.  
 
 It is possible, however, to utilize your CI tool's built-in caching functionality, so that you only download the latest version of the agent once every release.  
 
