@@ -1,8 +1,8 @@
-![Logo](https://whitesource-resources.s3.amazonaws.com/ws-sig-images/Whitesource_Logo_178x44.png)  
+![Logo](https://www.mend.io/wp-content/media/2022/05/mend-logo-final.svg)  
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-yellowgreen.svg)](https://opensource.org/licenses/Apache-2.0)
-# WhiteSource Examples
-This repository contains examples of different ways to scan open source component using the [Unified Agent](https://whitesource.atlassian.net/wiki/spaces/WD/pages/804814917/Unified+Agent+Overview)
+# Mend Examples
+This repository contains examples of different ways to scan open source component using the [Unified Agent](https://docs.mend.io/bundle/unified_agent/page/overview_of_the_unified_agent.html)
 
 <br>
 
