@@ -1,5 +1,5 @@
 # Prioritize Examples by Language
-This repository contains language specific examples of different ways to scan using [WhiteSource Prioritize](https://whitesource.atlassian.net/wiki/spaces/WD/pages/1526530050/WhiteSource+Prioritize)
+This repository contains language specific examples of different ways to scan using [Mend Prioritize](https://docs.mend.io/bundle/sca_user_guide/page/scanning_with_mend_prioritize.html)
 
 * [.NET](DotNet)
   * [Multi-Module](DotNet/Multi-Module)
@@ -21,17 +21,17 @@ For all examples above, make sure to change the branches defined within the .yml
 YAML files beginning with "github-action"
 * Add the yml file to a subfolder named workflows underneath the .github folder in the branch you would like to scan and adjust branch triggers (on:) within the yml file.
     * `.github/workflows/github-action.yml`
-* Add a [repository secret](https://docs.github.com/en/actions/reference/encrypted-secrets) named "APIKEY" to the repository with your WhiteSource API Key from the Integrate page, "USERKEY" from your profile page, and update WS_WSS_URL if necessary
+* Add a [repository secret](https://docs.github.com/en/actions/reference/encrypted-secrets) named "APIKEY" to the repository with your Mend API Key from the Integrate page, "USERKEY" from your profile page, and update WS_WSS_URL if necessary
 
 ## [Azure DevOps pipelines](https://docs.microsoft.com/en-us/azure/devops/pipelines/?view=azure-devops)
 YAML files containing "azure-pipelines"
 * Create a new pipeline by selecting Pipelines>Create Pipeline>Azure Repos Git> your imported repository, then select starter pipeline and replace contents with the .yml file
-* Add a [pipeline variable](https://docs.microsoft.com/en-us/azure/devops/pipelines/process/variables?view=azure-devops&tabs=yaml%2Cbatch) named "apiKey" with your WhiteSource API Key from the integrate page, "userKey" from your profile page, and update WS_WSS_URL if necessary
+* Add a [pipeline variable](https://docs.microsoft.com/en-us/azure/devops/pipelines/process/variables?view=azure-devops&tabs=yaml%2Cbatch) named "apiKey" with your Mend API Key from the integrate page, "userKey" from your profile page, and update WS_WSS_URL if necessary
 
 ## [GitLab pipelines](https://docs.gitlab.com/ee/ci/pipelines/)
 YAML files containing "gitlab-ci"
 * Add the gitlab-ci.yml file to the root of your repository
-* Add a [variable](https://docs.gitlab.com/ee/ci/variables/) named "APIKEY" with your WhiteSource API Key from the integrate page, "USERKEY" from your profile page, and update WS_WSS_URL if necessary
+* Add a [variable](https://docs.gitlab.com/ee/ci/variables/) named "APIKEY" with your Mend API Key from the integrate page, "USERKEY" from your profile page, and update WS_WSS_URL if necessary
 
 ## Branching
 The default for many of these yml files is enabled to scan on every push & pull request to a release branch.  It is recommended to run Prioritize on pull requests to a protected branch.  An example of this config for GitHub actions can be seen below
@@ -69,7 +69,7 @@ on:
 ```
 
 ### Single Folder Log Publish
-If your pipeline publish does not allow for multi folder publishing like GitHub actions, then add the following script after your scan to copy all required folders to the whitesource folder. [AzureDevOps](../CI-CD#Azure-DevOps-Pipelines) is a good example where only single folder publishing is allowed.
+If your pipeline publish does not allow for multi folder publishing like GitHub actions, then add the following script after your scan to copy all required folders to the Mend folder. [AzureDevOps](../CI-CD#Azure-DevOps-Pipelines) is a good example where only single folder publishing is allowed.
 
 #### Azure DevOps Linux based machines (Bash script)
 ```
