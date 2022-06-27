@@ -16,10 +16,16 @@ echo  JAVA_HOME:$JAVA_HOME
 #### Run WS Prioritize
 curl -LJO https://unified-agent.s3.amazonaws.com/wss-unified-agent.jar
 echo Unified Agent downloaded successfully
+if [[ "$(curl -sL https://unified-agent.s3.amazonaws.com/wss-unified-agent.jar.sha256)" != "$(sha256sum wss-unified-agent.jar)" ]] ; then
+    echo "Integrity Check Failed"
+else
+    echo "Integrity Check Passed"
+fi
 # replace .war with .ear or the following for WARFILE if needed
 # JARFILE=$(find ./build/libs -type f -wholename "*.jar" ! -wholename "*javadoc*" ! -wholename "*groovydoc*" ! -wholename "*sources*")
 export WARFILE=$(find ./build/libs -type f -wholename "*.war")
 echo $WARFILE will be added to appPath
+echo Starting WhiteSource Prioritize Scan
 export WS_APIKEY=<your-api-key>
 export WS_USERKEY=<your-user-key>
 export WS_WSS_URL=https://saas.whitesourcesoftware.com/agent

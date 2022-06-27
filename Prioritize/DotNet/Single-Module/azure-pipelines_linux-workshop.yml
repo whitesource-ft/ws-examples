@@ -15,9 +15,15 @@ steps:
 - script: |
     curl -LJO https://unified-agent.s3.amazonaws.com/wss-unified-agent.jar
     echo Unified Agent downloaded successfully
+    if [[ "$(curl -sL https://unified-agent.s3.amazonaws.com/wss-unified-agent.jar.sha256)" != "$(sha256sum wss-unified-agent.jar)" ]] ; then
+      echo "Integrity Check Failed"
+    else
+      echo "Integrity Check Passed"
+    fi
     CSPROJ=$(basename $(find ./src -type f -wholename "*.csproj" ! -wholename "*build*" ! -wholename "*test*") .csproj)
     DLL=$(find ./ -type f -wholename "*/bin/$(buildConfiguration)/*/$CSPROJ.dll" ! -wholename "*build*" ! -wholename "*test*")
     echo $DLL will be added to appPath
+    echo Starting WhiteSource Scan
     java -jar wss-unified-agent.jar -appPath $DLL -d $PWD/src
   env:
     WS_APIKEY: $(WS_APIKEY)

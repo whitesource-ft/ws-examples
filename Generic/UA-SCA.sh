@@ -8,4 +8,10 @@ export WS_PROJECTNAME=<your-project-name>
 export WS_WSS_URL=https://saas.whitesourcesoftware.com/agent
 curl -LJO https://unified-agent.s3.amazonaws.com/wss-unified-agent.jar
 echo Unified Agent downloaded successfully
-java -jar wss-unified-agent.jar
+if [[ "$(curl -sL https://unified-agent.s3.amazonaws.com/wss-unified-agent.jar.sha256)" != "$(sha256sum wss-unified-agent.jar)" ]] ; then
+    echo "Integrity Check Failed"
+else
+    echo "Integrity Check Passed"
+    echo Starting WhiteSource Scan
+    java -jar wss-unified-agent.jar
+fi
