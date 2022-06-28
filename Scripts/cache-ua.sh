@@ -15,6 +15,12 @@ curVerDate="$(stat -c %Y "$(find $UADir -name "wss-unified-agent.jar")")"
 if [ $latestVerDate -gt $curVerDate ] ; then
     echo "Downloading the latest version ($latestVer)"
     curl -LJO https://unified-agent.s3.amazonaws.com/wss-unified-agent.jar
+    if [[ "$(curl -sL https://unified-agent.s3.amazonaws.com/wss-unified-agent.jar.sha256)" != "$(sha256sum wss-unified-agent.jar)" ]] ; then
+    echo "Integrity Check Failed"
+    else
+        echo "Integrity Check Passed"
+        echo "Starting WhiteSource Scan"
+    fi
 else
     echo "No newer versions"
 fi

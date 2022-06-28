@@ -35,4 +35,10 @@ export WS_ARCHIVEEXTRACTIONDEPTH=2
 export WS_ARCHIVEINCLUDES='**/*war **/*ear **/*zip **/*whl **/*tar.gz **/*tgz **/*tar **/*car **/*jar'
 curl -LJO https://unified-agent.s3.amazonaws.com/wss-unified-agent.jar
 echo Unified Agent downloaded successfully
-java -jar wss-unified-agent.jar 
+if [[ "$(curl -sL https://unified-agent.s3.amazonaws.com/wss-unified-agent.jar.sha256)" != "$(sha256sum wss-unified-agent.jar)" ]] ; then
+    echo "Integrity Check Failed"
+else
+    echo "Integrity Check Passed"
+    echo Starting WhiteSource Scan
+    java -jar wss-unified-agent.jar
+fi 
