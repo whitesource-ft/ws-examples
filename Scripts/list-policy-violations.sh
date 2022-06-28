@@ -2,11 +2,11 @@
 
 # Description:
 # This script parses the policyRejectionSummary.json file, following a 
-# WhiteSource Unified Agent scan, and prints to the stdout the policies
+# Mend Unified Agent scan, and prints to the stdout the policies
 # that where violated, as well as the libraries that violated them.
 
 # The policyRejectionSummary.json file is created automatically under
-# the agent log directory (./whitesource) during a scan that's configured
+# the agent log directory (./Mend) during a scan that's configured
 # to check policies.
 # Every policy check overwrites this file, so this list is always specific
 # to the last scan (that had policy check enabled).
@@ -15,7 +15,7 @@
 # apt install jq
 # WS_CHECKPOLICIES: true
 
-jsonFile="./whitesource/policyRejectionSummary.json"
+jsonFile="./Mend/policyRejectionSummary.json"
 
 ShowLibSystemPath=false
 if [[ "$1" =~ ^(--includePath|-p)$ ]] ; then
@@ -23,7 +23,7 @@ if [[ "$1" =~ ^(--includePath|-p)$ ]] ; then
 fi
 
 echo ""
-echo "WhiteSource Policy Violations"
+echo "Mend Policy Violations"
 echo "============================="
 if [[ ! -f $jsonFile ]] ; then
     echo "[ERROR] File not found: $jsonFile"
