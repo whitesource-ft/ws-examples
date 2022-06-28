@@ -33,8 +33,8 @@ See also: [Cache the Latest Version of the Unified Agent](../Scripts/README.md#c
 ### Azure DevOps Pipelines
 
 ```
-- publish: $(System.DefaultWorkingDirectory)/Mend
-  artifact: Mend
+- publish: $(System.DefaultWorkingDirectory)/whitesource
+  artifact: Whitesource
 ```
 ### GitHub Actions
 
