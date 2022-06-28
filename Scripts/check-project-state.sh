@@ -5,7 +5,7 @@
 # WS_USERKEY
 # WS_WSS_URL
 
-WS_PROJECTTOKEN=$(jq -r '.projects | .[] | .projectToken' ./Mend/scanProjectDetails.json)
+WS_PROJECTTOKEN=$(jq -r '.projects | .[] | .projectToken' ./whitesource/scanProjectDetails.json)
 WS_URL=$(echo $WS_WSS_URL | awk -F "/agent" '{print $1}')
 
 IFS="|"
