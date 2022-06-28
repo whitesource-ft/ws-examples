@@ -1,9 +1,9 @@
-# Multi-Organizational Pipeline
-
-## Introduction
+# Introduction
 Planning and implementing source code branching is a complex topic.  When done properly, it’s easy to manage, otherwise it can be a nightmare.  The same applies to how you manage your Mend organizations.  With proper planning and implementation, finding results and knowing what you have in production can be easy.
 
-## Pipeline Integration Notes
+## Multi-Organizational Pipeline or (multi-org)
+
+### Pipeline Integration Notes
 Two options to store the “key” information
 
 * Global Properties
