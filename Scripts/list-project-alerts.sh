@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Description:
-# This script uses WhiteSource's API to display (in the stdout) a list of
+# This script uses Mend's API to display (in the stdout) a list of
 # vulnerabilities affecting the last scanned project(s).
 # It is intended to be executed from the scan's working directory, either
 # independently or following a Unified Agent scan.
@@ -35,7 +35,7 @@
 #   pipeline, make sure to also enable WS_FORCEUPDATE_FAILBUILDONPOLICYVIOLATION.
 
 WS_API_URL="$(echo "${WS_WSS_URL/agent/'api/v1.3'}")"
-PROJECT_DETAILS="./whitesource/scanProjectDetails.json"
+PROJECT_DETAILS="./Mend/scanProjectDetails.json"
 showColors=true
 
 if $showColors ; then
@@ -50,7 +50,7 @@ declare -a projects=( $(cat $PROJECT_DETAILS | jq -r '.projects[] | (.projectTok
 
 for project in "${projects[@]}"; do
     IFS=, read projectToken projectName <<< "$project"
-    printf "\nWhiteSource Vulnerability Alerts for project: ${BL}%s${NC}\n" "$projectName"
+    printf "\nMend Vulnerability Alerts for project: ${BL}%s${NC}\n" "$projectName"
     apiRes="$(curl -s -X POST -H "Content-Type: application/json" -d '{ "requestType": "getProjectAlertsByType", "alertType": "SECURITY_VULNERABILITY", "userKey": "'"$WS_USERKEY"'", "projectToken": '"$projectToken"' }' $WS_API_URL)"
 
     # High severity CVEs
