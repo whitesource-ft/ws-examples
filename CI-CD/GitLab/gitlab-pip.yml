@@ -25,7 +25,7 @@ ws_scan:
     WS_PRODUCTNAME: $CI_PROJECT_NAME
     WS_PROJECTNAME: $CI_COMMIT_REF_NAME
   script:
-    - echo "Downloading WhiteSource Unified Agent"
+    - echo "Downloading Mend Unified Agent"
     - curl -LJO https://unified-agent.s3.amazonaws.com/wss-unified-agent.jar
-    - echo "WhiteSource Scan"
+    - echo "Mend Scan"
     - java -jar ./wss-unified-agent.jar
