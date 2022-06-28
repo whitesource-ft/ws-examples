@@ -9,7 +9,7 @@
 
 # TODO - Add ERROR handling
 
-WS_PROJECTTOKEN=$(jq -r '.projects | .[] | .projectToken' ./whitesource/scanProjectDetails.json)
+WS_PROJECTTOKEN=$(jq -r '.projects | .[] | .projectToken' ./Mend/scanProjectDetails.json)
 WS_URL=$(echo $WS_WSS_URL | awk -F "/agent" '{print $1}')
 echo "variables for local debugging"
 echo "export WS_APIKEY=<add your key>"
