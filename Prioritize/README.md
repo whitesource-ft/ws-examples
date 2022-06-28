@@ -46,7 +46,7 @@ on:
 ## Prioritize Troubleshooting
 * Add ```-viaDebug true``` at the end of the Unified Agent command
 * Publish the following folders using your pipeline publish tool, [GitHub Prioritize Log Publish example](#GitHub-Prioritize-Log-Publish)
-  * /tmp/whitesource*
+  * /tmp/Mend*
   * /tmp/ws-ua*
 * For GitHub actions use ```continue-on-error: true``` in the Priortize step if the step is failing before the log publish
 
@@ -62,8 +62,8 @@ on:
       with:
         name: Prioritize-Logs
         path: |
-          ${{github.workspace}}/whitesource
-          /tmp/whitesource*
+          ${{github.workspace}}/Mend
+          /tmp/Mend*
           /tmp/ws-ua*
         retention-days: 1
 ```
@@ -73,8 +73,8 @@ If your pipeline publish does not allow for multi folder publishing like GitHub 
 
 #### Azure DevOps Linux based machines (Bash script)
 ```
-if [ -d "/tmp/whitesource*" ] ; then cp /tmp/whitesource* ./whitesource ; else echo "/tmp/whitesource* does not exist" ; fi
-if [ -d "/tmp/ws-ua*" ] ; then cp /tmp/whitesource* ./whitesource ; else echo "/tmp/ws-ua* does not exist" ; fi
+if [ -d "/tmp/Mend*" ] ; then cp /tmp/Mend* ./Mend ; else echo "/tmp/Mend* does not exist" ; fi
+if [ -d "/tmp/ws-ua*" ] ; then cp /tmp/Mend* ./Mend ; else echo "/tmp/ws-ua* does not exist" ; fi
 ```
 #### Azure DevOps Windows based machines (Powershell script)
 ```
@@ -82,15 +82,15 @@ if [ -d "/tmp/ws-ua*" ] ; then cp /tmp/whitesource* ./whitesource ; else echo "/
   inputs:
     targetType: 'inline'
     script: |
-      $Folder = "$env:USERPROFILE\appdata\local\temp\whitesource*"
+      $Folder = "$env:USERPROFILE\appdata\local\temp\Mend*"
       if (Test-Path -Path $Folder)
       {
         Write-Host "Copying Prioritize logs"
-        cp -R $Folder $(System.DefaultWorkingDirectory)/whitesource/
+        cp -R $Folder $(System.DefaultWorkingDirectory)/Mend/
       }
       else
       {
         Write-Host "No Prioritize logs found"
       } 
-  displayName: 'Copy WhiteSource Prioritize Logs'
+  displayName: 'Copy Mend Prioritize Logs'
 ```
