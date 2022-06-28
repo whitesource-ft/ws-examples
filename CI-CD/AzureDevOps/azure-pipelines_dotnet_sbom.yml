@@ -37,7 +37,7 @@ steps:
     WS_USERKEY: $(USERKEY)
 
 - script: |
-    export WS_PROJECTTOKEN=$(jq -r '.projects | .[] | .projectToken' ./Mend/scanProjectDetails.json)
+    export WS_PROJECTTOKEN=$(jq -r '.projects | .[] | .projectToken' ./whitesource/scanProjectDetails.json)
     pip install ws-sbom-generator
     ws_sbom_generator -u $WS_USERKEY -k $WS_APIKEY -s $WS_PROJECTTOKEN -a $WS_URL -t tv -o ./Mend
   displayName: 'Generate SBOM'
@@ -46,8 +46,8 @@ steps:
     WS_USERKEY: $(USERKEY)
 
 - script: |
-    export WS_PROJECTTOKEN=$(jq -r '.projects | .[] | .projectToken' ./Mend/scanProjectDetails.json)
-    curl --output ./Mend/riskreport.pdf --request POST $WS_URL'/api/v1.3' -H 'Content-Type: application/json'  --data-raw '{"requestType":"getProjectRiskReport","userKey":"'$WS_USERKEY'","projectToken":"'$WS_PROJECTTOKEN'"}'
+    export WS_PROJECTTOKEN=$(jq -r '.projects | .[] | .projectToken' ./whitesource/scanProjectDetails.json)
+    curl --output ./whitesource/riskreport.pdf --request POST $WS_URL'/api/v1.3' -H 'Content-Type: application/json'  --data-raw '{"requestType":"getProjectRiskReport","userKey":"'$WS_USERKEY'","projectToken":"'$WS_PROJECTTOKEN'"}'
   displayName: 'Generate Risk Report'
   env:
     WS_APIKEY: $(APIKEY)
