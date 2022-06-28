@@ -45,7 +45,7 @@ jobs:
         env:
           WS_WSS_URL: https://saas.whitesourcesoftware.com/agent
         run: |
-            export WS_PROJECTTOKEN=$(jq -r '.projects | .[] | .projectToken' ./Mend/scanProjectDetails.json)
+            export WS_PROJECTTOKEN=$(jq -r '.projects | .[] | .projectToken' ./whitesource/scanProjectDetails.json)
             echo WS_PROJECTTOKEN: $WS_PROJECTTOKEN
             export WS_URL=$(echo $WS_WSS_URL | awk -F "agent" '{print $1}')
             echo WS_URL: $WS_URL
@@ -75,11 +75,11 @@ jobs:
             done
             unset IFS
             echo === Generating SBOM ===
-            ws_sbom_generator -u ${{secrets.USERKEY}} -k ${{secrets.APIKEY}} -s $WS_PROJECTTOKEN -a $WS_URL -t tv -o ./Mend-spdx
+            ws_sbom_generator -u ${{secrets.USERKEY}} -k ${{secrets.APIKEY}} -s $WS_PROJECTTOKEN -a $WS_URL -t tv -o ./whitesource-spdx
 
       - name: Publish Mend SPDX Report
         uses: actions/upload-artifact@master
         with:
-           name: Mend SPDX report
+           name: WhiteSource SPDX report
            path: ${{github.workspace}}/whitesource-spdx
 
