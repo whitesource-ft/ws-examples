@@ -35,7 +35,7 @@
 #   pipeline, make sure to also enable WS_FORCEUPDATE_FAILBUILDONPOLICYVIOLATION.
 
 WS_API_URL="$(echo "${WS_WSS_URL/agent/'api/v1.3'}")"
-PROJECT_DETAILS="./Mend/scanProjectDetails.json"
+PROJECT_DETAILS="./whitesource/scanProjectDetails.json"
 showColors=true
 
 if $showColors ; then
