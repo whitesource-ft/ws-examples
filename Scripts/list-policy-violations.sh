@@ -6,7 +6,7 @@
 # that where violated, as well as the libraries that violated them.
 
 # The policyRejectionSummary.json file is created automatically under
-# the agent log directory (./Mend) during a scan that's configured
+# the agent log directory (./whitesource) during a scan that's configured
 # to check policies.
 # Every policy check overwrites this file, so this list is always specific
 # to the last scan (that had policy check enabled).
@@ -15,7 +15,7 @@
 # apt install jq
 # WS_CHECKPOLICIES: true
 
-jsonFile="./Mend/policyRejectionSummary.json"
+jsonFile="./whitesource/policyRejectionSummary.json"
 
 ShowLibSystemPath=false
 if [[ "$1" =~ ^(--includePath|-p)$ ]] ; then
