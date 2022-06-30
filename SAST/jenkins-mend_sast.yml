@@ -12,7 +12,7 @@ pipeline {
 
     stage('Cloning Git') {
       steps {
-        git 'https://github.com/some/gitrepo.got'
+        git 'https://github.com/some/gitrepo'
       }
     }
 
