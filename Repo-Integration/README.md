@@ -25,8 +25,8 @@ Options Defined:<BR />
 ## Execution
 Execution instructions:  
 ```
-git clone https://github.com/whitesource-ft/ws-examples.git && cd ws-examples/Repo-Integration<BR />
-export ws_key='&lt;your-activation-key&gt;'<BR />
-chmod +x ./setup.sh && ./setup.sh gls<BR />
-docker-compose up<BR />
+git clone https://github.com/whitesource-ft/ws-examples.git && cd ws-examples/Repo-Integration
+export ws_key='<your-activation-key>'
+chmod +x ./setup.sh && ./setup.sh gls
+docker-compose up
 ```
