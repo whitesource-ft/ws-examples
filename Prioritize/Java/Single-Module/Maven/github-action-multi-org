@@ -1,0 +1,76 @@
+#Remember to create additional secrets for both DEVAPIKEY and DEVUSERKEY
+name: Whitesource Prioritize Java with Maven & Github Issue comments
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    env:
+      GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+      WS_WSS_URL: https://saas.whitesourcesoftware.com/agent
+      WS_PRODUCTNAME: GH_${{github.event.repository.name}}
+      WS_PROJECTNAME: ${{github.event.repository.name}}_${{github.ref_name}}_Prioritize
+      WS_ProductionBranches: "main,release"
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up JDK
+        uses: actions/setup-java@v2
+        with:
+          java-version: '8'
+          distribution: 'adopt'
+      - name: Cache local Maven repository
+        uses: actions/cache@v2
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
+
+      - name: Build with Maven
+        run: mvn clean install -DskipTests=true
+
+      - name: Set Environment Var for Branch
+        run:  echo PROJECT_TO_TEST=","${GITHUB_REF_NAME}"," >> $GITHUB_ENV
+
+      - name: Reformat Environment Variable
+        run:  echo WS_ProductionBranches=","$WS_ProductionBranches"," >> $GITHUB_ENV   
+      
+      - name: Set Org API Key if branch is marked as production
+        if: contains(env.WS_ProductionBranches, env.PROJECT_TO_TEST)
+        run: |
+          echo WS_APIKEY=${{secrets.APIKEY}} >> $GITHUB_ENV   
+          echo WS_USERKEY=${{secrets.USERKEY}} >> $GITHUB_ENV   
+      
+      - name: Set Org API Key if branch is non-production
+        if: contains(env.WS_ProductionBranches, env.PROJECT_TO_TEST) == false
+        run: |
+          echo WS_APIKEY=${{secrets.DEVAPIKEY}} >> $GITHUB_ENV   
+          echo WS_USERKEY=${{secrets.DEVUSERKEY}} >> $GITHUB_ENV   
+        
+      - name: WhiteSource Unified Agent Scan
+        env:
+          WS_ENABLEIMPACTANALYSIS: true
+          WS_RESOLVEALLDEPENDENCIES: false
+          WS_MAVEN_RESOLVEDEPENDENCIES: true
+          WS_MAVEN_AGGREGATEMODULES: true
+          WS_FILESYSTEMSCAN: false
+          WS_GENERATEPROJECTDETAILSJSON: true
+        run: |
+          curl -LJO https://unified-agent.s3.amazonaws.com/wss-unified-agent.jar
+          echo Unified Agent downloaded successfully
+          WARFILE=$(find ./ -type f -wholename "*/target/*.war")
+          echo $WARFILE will be added to appPath
+          java -jar wss-unified-agent.jar -appPath $WARFILE -d ./
+      - name: Check Project State
+        run: |
+          curl -LJO https://raw.githubusercontent.com/whitesource-ft/ws-examples/main/Scripts/check-project-state.sh
+          chmod +x ./check-project-state.sh && ./check-project-state.sh
+      - name: Prioritize GH Issue Comments
+        run: |
+          curl -LJO https://raw.githubusercontent.com/whitesource-ft/ws-examples/main/Scripts/ghissue-eua.sh
+          chmod +x ./ghissue-eua.sh && ./ghissue-eua.sh
