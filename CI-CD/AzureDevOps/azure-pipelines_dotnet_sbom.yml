@@ -1,7 +1,8 @@
 name: 'whitesource-ua-azdo-dotnet-sbom'
 
 trigger:
-- main
+  tags:
+    - release*
 
 pool:
   vmImage: 'ubuntu-latest'
