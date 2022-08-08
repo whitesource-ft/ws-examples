@@ -11,5 +11,12 @@
 # Step Name: Mend SCA Scan
 # Run: Custom Script
 
-curl -LJO https://unified-agent.s3.amazonaws.com/wss-unified-agent.jar
+echo "Downloading Mend"
+if ! [ -f ./wss-unified-agent.jar ]; then
+    curl -fSL -R -JO https://unified-agent.s3.amazonaws.com/wss-unified-agent.jar
+    if [[ "${'$'}(curl -sL https://unified-agent.s3.amazonaws.com/wss-unified-agent.jar.sha256)" != "${'$'}(sha256sum wss-unified-agent.jar)" ]]; then
+       echo "Integrity Check Failed"
+    fi
+fi
+echo "Execute Mend"
 java -jar wss-unified-agent.jar
