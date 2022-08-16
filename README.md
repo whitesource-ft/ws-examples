@@ -1,5 +1,8 @@
-:no_entry: [DEPRECATED] This repository will be inaccessible starting January 9th, 2023.  
-The new repository is now active at [https://github.com/mend-toolkit/mend-examples](https://github.com/mend-toolkit/mend-examples), which we encourage you to visit today.
+> :no_entry: **[DEPRECATED]**  
+> **This repository will be inaccessible starting January 9th, 2023.**  
+> 
+> The new repository is now active at **[https://github.com/mend-toolkit/mend-examples](https://github.com/mend-toolkit/mend-examples)**, which we encourage you to visit today.  
+---
 
 ![Logo](https://resources.mend.io/mend-sig/logo/mend-dark-logo-horizontal.png)  
 
