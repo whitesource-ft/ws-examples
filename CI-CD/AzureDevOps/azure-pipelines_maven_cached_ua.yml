@@ -1,35 +1,26 @@
-# add APIKEY and USERKEY as an environment variable - https://gitlab.com/help/ci/variables/README
-default:
-  image: maven:3.8-openjdk-11
+name: 'whitesource-cached-ua-azdo-maven'
 
-stages:
-  - build
-  - scan
+trigger:
+- master
 
-maven_build:
-  image: maven:3.8.4-eclipse-temurin-17-alpine
-  stage: build
-  script: "mvn clean install -DskipTests"
+pool:
+  vmImage: 'ubuntu-latest'
 
-cache:
-  key: "cache-$MVN_PKG-$CI_PIPELINE_ID"
-  paths:
-  - ${CI_PROJECT_DIR}/
+steps:
+- task: Maven@3
+  inputs:
+    mavenPomFile: 'pom.xml'
+    goals: 'clean install'
+    mavenOptions: -DskipTests=true
+    publishJUnitResults: false
+    javaHomeOption: 'JDKVersion'
+    jdkVersionOption: '1.11'
+    mavenVersionOption: 'Default'
+    mavenAuthenticateFeed: false
+    effectivePomSkip: false
+    sonarQubeRunAnalysis: false
 
-ws_scan:
-  stage: scan
-  cache:
-    key: WhiteSource
-    paths: 
-      - ./wss-unified-agent.jar
-  variables:
-    WS_APIKEY: $API_KEY
-    WS_USERKEY: $USER_KEY
-    WS_MAVEN_AGGREGATEMODULES: true
-    WS_WSS_URL: "https://saas.whitesourcesoftware.com/agent"
-    WS_PRODUCTNAME: $CI_PROJECT_NAME
-    WS_PROJECTNAME: $CI_COMMIT_REF_NAME
-  script: |
+- script: |
     echo "Checking for the newer versions for WhiteSource Unified Agent"
     res="$(curl -s -H "Accept: application/vnd.github.v3+json" "https://api.github.com/repos/whitesource/unified-agent-distribution/releases")"
     latestRelease="$(echo "$res" | jq -s '.[] | sort_by(.published_at) | last')"
@@ -52,3 +43,10 @@ ws_scan:
         echo "Integrity Check Passed"
     echo "WhiteSource Scan"
     java -jar ./wss-unified-agent.jar
+  env:
+    WS_APIKEY: $(APIKEY)
+    WS_USERKEY: $(USERKEY)
+    WS_WSS_URL: https://saas.whitesourcesoftware.com/agent
+    WS_PRODUCTNAME: AZDO_$(System.TeamProject)
+    WS_PROJECTNAME: $(Build.Repository.Name)_$(Build.SourceBranchName)
+  displayName: 'WhiteSource Scan'
